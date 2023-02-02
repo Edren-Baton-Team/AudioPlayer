@@ -13,6 +13,7 @@ using InventorySystem;
 using System.Collections.Generic;
 using VoiceChat;
 using VoiceChat.Networking;
+using System.Linq;
 
 namespace AudioPlayer
 {
@@ -49,10 +50,9 @@ namespace AudioPlayer
 
         public void OnRoundStart()
         {
-            foreach(Player player in Player.List) 
-            {
-                SpawnDummy(player.Id, player.Position, player.Rotation, "Батон Диджей", "Батон Диджей");
-            }
+            Player player = Player.List.ToList().RandomItem();
+            SpawnDummy(player.Id, player.Position, player.Rotation, Config.BotName, Config.BotName);
+            
         }
         public static void SpawnDummy(int id, Vector3 pos, Vector3 rot, string name, string custominfo)
         {

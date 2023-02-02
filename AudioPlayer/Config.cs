@@ -7,5 +7,6 @@ namespace AudioPlayer
         public bool IsEnabled { get; set; } = true;
         public bool Debug { get; set; } = true;
         public bool AudioDebug { get; set; } = true;
+        public string BotName { get; set; } = "Dedicated Server";
     }
 }
