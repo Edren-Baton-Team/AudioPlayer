@@ -53,7 +53,6 @@ namespace AudioPlayer
         public void OnRoundStart()
         {
             SpawnDummy(133, Config.BotName);
-
         }
         public static void SpawnDummy(int id, string name)
         {
