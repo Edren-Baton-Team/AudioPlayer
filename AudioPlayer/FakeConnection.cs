@@ -3,9 +3,9 @@ using System;
 
 public class FakeConnection : NetworkConnectionToClient
 {
+    //Code from ced777ric#8321
     public FakeConnection(int connectionId) : base(connectionId, false, 0f)
     {
-
     }
 
     public override string address

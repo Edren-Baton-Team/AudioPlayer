@@ -10,20 +10,15 @@ using VoiceChat;
 namespace AudioPlayer.Commands
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
-    class stop : ParentCommand
+    public class Stop : ICommand
     {
-        public override string Command { get; } = "stop";
+        public string Command { get; } = "stop";
 
-        public override string Description { get; } = "stops musics";
+        public string Description { get; } = "stops musics";
 
-        public override string[] Aliases { get; } = { "st" };
+        public string[] Aliases { get; } = { "st" };
 
-        public override void LoadGeneratedCommands()
-        {
-
-        }
-
-        protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
             if (!sender.CheckPermission("audioplayer.stop"))
@@ -31,13 +26,8 @@ namespace AudioPlayer.Commands
                 response = "You dont have perms to do that";
                 return false;
             }
-
-            
-
             var audioPlayer = AudioPlayerBase.Get(Plugin.plugin.hubPlayer);
-
             audioPlayer.Stoptrack(true);
-
             response = "Stop";
             return true;
         }

@@ -10,20 +10,17 @@ using VoiceChat;
 namespace AudioPlayer.Commands
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
-    class Play : ParentCommand
+    public class Play : ICommand, IUsageProvider
     {
-        public override string Command { get; } = "play";
+        public string Command { get; } = "play";
 
-        public override string Description { get; } = "Playing Audio From Path";
+        public string Description { get; } = "Playing Audio From Path";
 
-        public override string[] Aliases { get; } = { "pl" };
+        public string[] Aliases { get; } = { "pl" };
 
-        public override void LoadGeneratedCommands()
-        {
+        public string[] Usage { get; set; } = new string[] { "File .ogg" };
 
-        }
-
-        protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
             if (!sender.CheckPermission("audioplayer.play"))
