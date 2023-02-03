@@ -41,8 +41,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="API\API.cs" />
     <Compile Include="Commands\Audio.cs" />
-    <Compile Include="Commands\Stop.cs" />
-    <Compile Include="Commands\Volume.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
