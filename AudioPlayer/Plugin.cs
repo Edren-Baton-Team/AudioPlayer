@@ -6,6 +6,7 @@ using SCPSLAudioApi;
 using SCPSLAudioApi.AudioCore;
 using System;
 using System.IO;
+using VoiceChat;
 
 namespace AudioPlayer
 {
@@ -14,7 +15,7 @@ namespace AudioPlayer
         public override string Prefix => "AudioPlayer";
         public override string Name => "AudioPlayer";
         public override string Author => "Rysik5318 and Mariki";
-        public override System.Version Version { get; } = new System.Version(1, 0, 1);
+        public override System.Version Version { get; } = new System.Version(1, 0, 2);
 
         public static Plugin plugin;
 
@@ -22,8 +23,10 @@ namespace AudioPlayer
         public ReferenceHub hubPlayer;
         public AudioPlayerBase audioplayer;
         public Harmony _harmonyInstance;
+        public UnityEngine.GameObject newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
+        public bool BotReady = false;
 
-        public readonly string AudioPath = Path.Combine($"{Paths.Plugins}", "Audio");
+        public readonly string AudioPath = Path.Combine(Paths.Plugins, "Audio");
 
         public override void OnEnabled()
         {
@@ -52,22 +55,23 @@ namespace AudioPlayer
 
         public void OnRoundStart()
         {
+            BotReady = true;
             SpawnDummy(133, Config.BotName);
         }
         public static void SpawnDummy(int id, string name)
         {
-            var newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
             int idplayer = id;
             var hubPlayer = plugin.hubPlayer;
-            var fakeConnection = plugin.fakeConnection;
-            fakeConnection = new FakeConnection(idplayer++);
-            hubPlayer = newPlayer.GetComponent<ReferenceHub>();
-            NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
+            var audioPlayer = plugin.audioplayer;
+            plugin.fakeConnection = new FakeConnection(idplayer++);
+            hubPlayer = plugin.newPlayer.GetComponent<ReferenceHub>();
+            NetworkServer.AddPlayerForConnection(plugin.fakeConnection, plugin.newPlayer);
             hubPlayer.characterClassManager._privUserId = $"Audio-Player-{idplayer}@server";
             hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Unverified;
             hubPlayer.characterClassManager.GodMode = true;
             hubPlayer.nicknameSync.SetNick(name);
             hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
+            audioPlayer.BroadcastChannel = VoiceChatChannel.Intercom;
         }
         public override void OnDisabled()
         {
