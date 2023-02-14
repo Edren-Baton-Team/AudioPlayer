@@ -10,6 +10,13 @@ It also has a convenient API for using it in your plugins.
 Put AudioPlayer.dll into Exiled Plugins Folder.
 Put SCPSLAudioApi ito Exiled dependencies folder.
 
+**Important**
+* Sound files must be in .ogg format.
+* The sound file must be mono channel
+* The sound frequency should be 48000 Hz
+
+ I recommend using the website https://audio.online-convert.com/convert/mp3-to-ogg
+
 ```yml
 AudioPlayer:
   # Plugin Enabled?
@@ -18,7 +25,7 @@ AudioPlayer:
   debug: true
   # The name of the bot when the file will sound
   bot_name: INTERCOM
-  
+
 ```
 **VoiceChannel**
 
