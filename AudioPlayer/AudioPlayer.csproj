@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AudioPlayer</RootNamespace>
     <AssemblyName>AudioPlayer</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -47,10 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\Desktop\RP New Old\RP\bin\x64\Release\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\Dev\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\Desktop\Dev\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\RP New Old\RP\bin\x64\Release\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-Publicized">
       <HintPath>..\..\..\..\Desktop\Dev\Assembly-CSharp-Publicized.dll</HintPath>
@@ -93,9 +93,8 @@
     <Reference Include="Mirror">
       <HintPath>..\..\..\..\Desktop\Dev\Mirror.dll</HintPath>
     </Reference>
-    <Reference Include="NorthwoodLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\NorthwoodLib.dll</HintPath>
+    <Reference Include="NorthwoodLib">
+      <HintPath>..\..\..\..\Desktop\RP New Old\RP\bin\x64\Release\NorthwoodLib.dll</HintPath>
     </Reference>
     <Reference Include="PluginAPI">
       <HintPath>..\..\..\..\Desktop\Dev\PluginAPI.dll</HintPath>

@@ -1,62 +1,79 @@
-﻿using PlayerRoles.FirstPersonControl;
-using SCPSLAudioApi.AudioCore;
-using Exiled.API.Features;
-using UnityEngine;
+﻿using SCPSLAudioApi.AudioCore;
 using VoiceChat;
 using Mirror;
+using MEC;
+using System;
+using PlayerRoles;
 using System.Linq;
-using HarmonyLib;
 
 namespace AudioPlayer.API
 {
     public class API
     {
-        public FakeConnection fakeConnection;
-        public ReferenceHub hubPlayer;
-        public AudioPlayerBase audioplayer;
-        public Harmony _harmonyInstance;
-        public Object newPlayer = Object.Instantiate(NetworkManager.singleton.playerPrefab);
-        public static API api;
-        public static void PlayAudioFromFile(string path, float volume, VoiceChatChannel channel)
+        public static void PlayAudioFromFile(int id, string path, float volume = 100, VoiceChatChannel channel = VoiceChatChannel.Intercom)
         {
-            var audioPlayer = AudioPlayerBase.Get(api.hubPlayer);
-            audioPlayer.Volume = volume;
-            audioPlayer.BroadcastChannel = channel;
-            audioPlayer.Enqueue(path, -1);
-            audioPlayer.Play(0);
-            Log.Debug("Bot AudioPlayer is Ready!");
+            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+            {
+                var audioPlayer = AudioPlayerBase.Get(hub);
+                audioPlayer.BroadcastChannel = channel;
+                audioPlayer.Volume = volume;
+                audioPlayer.Enqueue(path, -1);
+                audioPlayer.Play(0);
+            }
         }
-        public static void SpawnDummy()
+        public static void SpawnDummy(int id, string name = "Intercom")
         {
-            var newPlayer = Object.Instantiate(NetworkManager.singleton.playerPrefab);
-            int idplayer = Player.List.Count() + 1;
-            api.fakeConnection = new FakeConnection(idplayer++);
-            api.hubPlayer = newPlayer.GetComponent<ReferenceHub>();
-            NetworkServer.AddPlayerForConnection(api.fakeConnection, newPlayer);
-            api.hubPlayer.characterClassManager._privUserId = $"{idplayer}";
-            api.hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Unverified;
-            api.hubPlayer.characterClassManager.GodMode = true;
-            api.hubPlayer.TryOverridePosition(new Vector3(0, 0), new Vector3(0, 0));
-            api.hubPlayer.roleManager.ServerSetRole(PlayerRoles.RoleTypeId.Overwatch, PlayerRoles.RoleChangeReason.RemoteAdmin);
-            api.hubPlayer.nicknameSync.DisplayName = Plugin.plugin.Config.BotName;
-            Log.Debug("Bot AudioPlayer is Ready!");
+            var newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
+            var fakeConnection = new FakeConnection(id);
+            var hubPlayer = newPlayer.GetComponent<ReferenceHub>();
+            Plugin.plugin.FakeConnections.Add(fakeConnection, hubPlayer);
+            Plugin.plugin.FakeConnectionsIds.Add(id, hubPlayer);
+
+            NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
+            try
+            {
+                hubPlayer.characterClassManager.UserId = $"player{id}@server";
+            }
+            catch (Exception)
+            {
+            }
+            hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+            try
+            {
+                hubPlayer.nicknameSync.SetNick(name);
+            }
+            catch (Exception)
+            {
+            }
+            Timing.CallDelayed(0.1f, () =>
+            {
+                hubPlayer.roleManager.ServerSetRole(RoleTypeId.CustomRole, RoleChangeReason.RemoteAdmin);
+            });
         }
-        public static void StopAudio()
+        public static void StopAudio(int id)
         {
-            var audioPlayer = AudioPlayerBase.Get(api.hubPlayer);
-            audioPlayer.Stoptrack(true);
-            Log.Debug("AudioPlayer stopped playing sound");
+            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+            {
+                var audioPlayer = AudioPlayerBase.Get(hub);
+                audioPlayer.Stoptrack(true);
+            }
         }
-        public static void VolimeAudio(float volume)
+        public static void VolimeAudio(int id, float volume)
         {
-            var audioPlayer = AudioPlayerBase.Get(api.hubPlayer);
-            audioPlayer.Volume = volume;
-            Log.Debug($"AudioPlayer sound has been changed to - {volume}");
+            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+            {
+                var audioPlayer = AudioPlayerBase.Get(hub);
+                audioPlayer.Volume = volume;
+            }
         }
-        public static void DisconnectDummy()
+        public static void DisconnectDummy(int id)
         {
-            NetworkServer.DestroyPlayerForConnection(api.fakeConnection);
-            Log.Debug("AudioPlayer bot was kicked out of game!");
+            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+            {
+                Plugin.plugin.FakeConnections.Remove(Plugin.plugin.FakeConnections.FirstOrDefault(s => s.Value == hub).Key);
+                Plugin.plugin.FakeConnectionsIds.Remove(id);
+                NetworkServer.Destroy(hub.gameObject);
+            }
         }
     }
 }

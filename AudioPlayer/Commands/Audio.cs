@@ -1,5 +1,6 @@
 ﻿using Exiled.Permissions.Extensions;
 using System.Collections.Generic;
+using SCPSLAudioApi.AudioCore;
 using CommandSystem;
 using PlayerRoles;
 using RemoteAdmin;
@@ -9,16 +10,12 @@ using VoiceChat;
 using Mirror;
 using System;
 using MEC;
-using SCPSLAudioApi.AudioCore;
 
 namespace AudioPlayer
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class AudioCommand : ICommand
     {
-        public static Dictionary<FakeConnection, ReferenceHub> FakeConnections = new Dictionary<FakeConnection, ReferenceHub>();
-        public static Dictionary<int, ReferenceHub> FakeConnectionsIds = new Dictionary<int, ReferenceHub>();
-
         public string Command { get; } = "audio";
 
         public string[] Aliases { get; } = { "au" };
@@ -40,7 +37,7 @@ namespace AudioPlayer
             }
 
             AudioPlayerBase player = AudioPlayerBase.Get(raSender.ReferenceHub);
-
+            
             if (arguments.Count == 0)
             {
                 response = "" +
@@ -70,8 +67,8 @@ namespace AudioPlayer
 
 
                         var hubPlayer = newPlayer.GetComponent<ReferenceHub>();
-                        FakeConnections.Add(fakeConnection, hubPlayer);
-                        FakeConnectionsIds.Add(id, hubPlayer);
+                        Plugin.plugin.FakeConnections.Add(fakeConnection, hubPlayer);
+                        Plugin.plugin.FakeConnectionsIds.Add(id, hubPlayer);
 
                         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
                         try
@@ -84,7 +81,8 @@ namespace AudioPlayer
                         hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Host;
                         try
                         {
-                            hubPlayer.nicknameSync.SetNick($"Dummy player {id}");
+                            hubPlayer.nicknameSync.SetNick($"{Plugin.plugin.Config.BotName} {id}");
+                            hubPlayer.nicknameSync.DisplayName = "";
                         }
                         catch (Exception)
                         {
@@ -106,7 +104,7 @@ namespace AudioPlayer
                             return false;
                         }
                         int id = int.Parse(arguments.At(1));
-                        if (FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+                        if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
                         {
                             hub.nicknameSync.SetNick(arguments.At(2));
                         }
@@ -121,7 +119,7 @@ namespace AudioPlayer
                             return false;
                         }
                         int id = int.Parse(arguments.At(1));
-                        if (FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+                        if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
                         {
                             var audioPlayer = AudioPlayerBase.Get(hub);
                             string path = arguments.At(2);
@@ -151,7 +149,7 @@ namespace AudioPlayer
                             return false;
                         }
                         int id = int.Parse(arguments.At(1));
-                        if (FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+                        if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
                         {
                             var audioPlayer = AudioPlayerBase.Get(hub);
                             audioPlayer.Stoptrack(true);
@@ -159,6 +157,7 @@ namespace AudioPlayer
                     }
                     break;
                 case "kick":
+                case "remove":
                 case "destroy":
                     {
                         if (!sender.CheckPermission("audioplayer.kickbot"))
@@ -172,10 +171,10 @@ namespace AudioPlayer
                             return false;
                         }
                         int id = int.Parse(arguments.At(1));
-                        if (FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+                        if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
                         {
-                            FakeConnections.Remove(FakeConnections.FirstOrDefault(s => s.Value == hub).Key);
-                            FakeConnectionsIds.Remove(id);
+                            Plugin.plugin.FakeConnections.Remove(Plugin.plugin.FakeConnections.FirstOrDefault(s => s.Value == hub).Key);
+                            Plugin.plugin.FakeConnectionsIds.Remove(id);
                             NetworkServer.Destroy(hub.gameObject);
                         }
                     }
@@ -195,7 +194,7 @@ namespace AudioPlayer
                             return false;
                         }
                         int id = int.Parse(arguments.At(1));
-                        if (FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+                        if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
                         {
                             var audioPlayer = AudioPlayerBase.Get(hub);
                             audioPlayer.Volume = Convert.ToInt32(arguments.At(2));
@@ -218,7 +217,7 @@ namespace AudioPlayer
                         }
 
                         int id = int.Parse(arguments.At(1));
-                        if (FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
+                        if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out ReferenceHub hub))
                         {
                             var audioPlayer = AudioPlayerBase.Get(hub);
                             audioPlayer.BroadcastChannel = (VoiceChatChannel)Enum.Parse(typeof(VoiceChatChannel), arguments.At(2));

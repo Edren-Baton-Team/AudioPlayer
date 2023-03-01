@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Interfaces;
 using System.ComponentModel;
+using VoiceChat;
 
 namespace AudioPlayer
 {

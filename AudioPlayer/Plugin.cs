@@ -3,6 +3,8 @@ using SCPSLAudioApi;
 using HarmonyLib;
 using System.IO;
 using System;
+using SCPSLAudioApi.AudioCore;
+using System.Collections.Generic;
 
 namespace AudioPlayer
 {
@@ -11,9 +13,16 @@ namespace AudioPlayer
         public override string Prefix => "AudioPlayer";
         public override string Name => "AudioPlayer";
         public override string Author => "Rysik5318 and Mariki";
-        public override System.Version Version { get; } = new System.Version(1, 0, 3);
+        public override Version Version { get; } = new System.Version(1, 0, 3);
 
         public static Plugin plugin;
+
+        public Dictionary<FakeConnection, ReferenceHub> FakeConnections = new Dictionary<FakeConnection, ReferenceHub>();
+        public Dictionary<int, ReferenceHub> FakeConnectionsIds = new Dictionary<int, ReferenceHub>();
+
+        public FakeConnection fakeConnection;
+        public ReferenceHub hubPlayer;
+        public AudioPlayerBase audioplayer;
 
         public Harmony _harmonyInstance;
 
