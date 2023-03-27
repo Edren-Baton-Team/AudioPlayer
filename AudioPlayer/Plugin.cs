@@ -24,7 +24,6 @@ namespace AudioPlayer
         public static FakeConnection fakeConnection;
         public static ReferenceHub hubPlayer;
         public static AudioPlayerBase audioplayer;
-        public bool spawnbot = false;
 
         public readonly string AudioPath = Path.Combine(Paths.Plugins, "audio");
 

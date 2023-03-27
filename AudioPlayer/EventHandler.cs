@@ -10,7 +10,6 @@ namespace AudioPlayer
     {
         public void OnWaitingForPlayers()
         {
-            Plugin.plugin.spawnbot = true;
             SpawnDummyStartRound();
         }
         public void SpawnDummy(string name, int id = 99)
