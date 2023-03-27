@@ -3,7 +3,7 @@
 This plugin uses as dependency [SCPSLAudioApi](https://github.com/CedModV2/SCPSLAudioApi)
 
 # AudioPlayer
-This plugin adds the ability to play .ogg audio files in the game.
+This plugin adds the ability to play .ogg audio files in the game.<br>
 It also has a convenient API for using it in your plugins.
 
 # Commands
@@ -15,7 +15,7 @@ It also has a convenient API for using it in your plugins.
 **audio nick {Name}** - Sets name of bot<br>
 
 # Instalation
-Put AudioPlayer.dll into Exiled Plugins Folder.
+Put AudioPlayer.dll into Exiled Plugins Folder.<br>
 Put SCPSLAudioApi ito Exiled dependencies folder.
 
 **Important**
