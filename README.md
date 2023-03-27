@@ -10,6 +10,14 @@ It also has a convenient API for using it in your plugins.
 Put AudioPlayer.dll into Exiled Plugins Folder.
 Put SCPSLAudioApi ito Exiled dependencies folder.
 
+# Commands
+**audio play {index}** - starts playing at the given index<br>
+**audio stop** - Stop music<br>
+**audio volume {volume}** - sets the volume<br>
+**audio channel {VoiceChatChannel}** - Changes bot VoiceChannel<br>
+**audio loop false/true** - Make it cyclic playback?<br>
+**audio nick {Name}** - Sets name of bot<br>
+
 **Important**
 * Sound files must be in .ogg format.
 * The sound file must be mono channel
