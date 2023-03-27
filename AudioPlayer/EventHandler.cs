@@ -43,10 +43,7 @@ namespace AudioPlayer
             {
                 //Ignore
             }
-            MEC.Timing.CallDelayed(0.1f, () =>
-            {
-                Plugin.plugin.FakeConnectionsIds[id].roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
-            });
+            Plugin.plugin.FakeConnectionsIds[id].roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
         }
         private void SpawnDummyStartRound()
         {
@@ -76,10 +73,7 @@ namespace AudioPlayer
             {
                 //Ignore
             }
-            MEC.Timing.CallDelayed(0.1f, () =>
-            {
-                Plugin.hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
-            });
+            Plugin.hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
         }
         public void OnRestartingRound()
         {
