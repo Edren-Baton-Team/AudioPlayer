@@ -6,10 +6,6 @@ This plugin uses as dependency [SCPSLAudioApi](https://github.com/CedModV2/SCPSL
 This plugin adds the ability to play .ogg audio files in the game.
 It also has a convenient API for using it in your plugins.
 
-# Instalation
-Put AudioPlayer.dll into Exiled Plugins Folder.
-Put SCPSLAudioApi ito Exiled dependencies folder.
-
 # Commands
 **audio play {index}** - starts playing at the given index<br>
 **audio stop** - Stop music<br>
@@ -17,6 +13,10 @@ Put SCPSLAudioApi ito Exiled dependencies folder.
 **audio channel {VoiceChatChannel}** - Changes bot VoiceChannel<br>
 **audio loop false/true** - Make it cyclic playback?<br>
 **audio nick {Name}** - Sets name of bot<br>
+
+# Instalation
+Put AudioPlayer.dll into Exiled Plugins Folder.
+Put SCPSLAudioApi ito Exiled dependencies folder.
 
 **Important**
 * Sound files must be in .ogg format.
