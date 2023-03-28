@@ -1,6 +1,7 @@
 
 # Requirements
 This plugin uses as dependency [SCPSLAudioApi](https://github.com/CedModV2/SCPSLAudioApi)
+This plugin uses as dependency [NVorbis](https://github.com/NVorbis/NVorbis)
 
 # AudioPlayer
 This plugin adds the ability to play .ogg audio files in the game.<br>
