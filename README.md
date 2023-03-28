@@ -38,7 +38,7 @@ AudioPlayer:
   # Create a bot automatically when the server starts?
   spawn_bot: true
   # Do not allow the game to start when there are 2 players on the server
-  auto_lobby_lock: false
+  auto_lobby_lock: true
   # The name of the bot when the file will sound
   bot_name: Dedicated Server
   # Special Events Automatic Music, blank to disable.
