@@ -1,6 +1,6 @@
 
 # Requirements
-This plugin uses as dependency [SCPSLAudioApi](https://github.com/CedModV2/SCPSLAudioApi)
+This plugin uses as dependency [SCPSLAudioApi](https://github.com/CedModV2/SCPSLAudioApi)<br>
 This plugin uses as dependency [NVorbis](https://github.com/NVorbis/NVorbis)
 
 # AudioPlayer
