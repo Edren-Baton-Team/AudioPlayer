@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
 using SCPSLAudioApi;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace AudioPlayer;
 
@@ -11,7 +11,7 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 and Mariki";
-    public override Version Version { get; } = new Version(1, 0, 8);
+    public override Version Version { get; } = new Version(1, 0, 9);
 
     public static Plugin plugin;
 
@@ -30,12 +30,13 @@ public class Plugin : Plugin<Config>
             handlers = new EventHandler();
             Exiled.Events.Handlers.Server.WaitingForPlayers += handlers.OnWaitingForPlayers;
             Exiled.Events.Handlers.Server.RoundStarted += handlers.OnRoundStarted;
-            //Exiled.Events.Handlers.Server.RestartingRound += handlers.OnRestartingRound;
+            Exiled.Events.Handlers.Server.RestartingRound += handlers.OnRestartingRound;
             Exiled.Events.Handlers.Server.RoundEnded += handlers.OnRoundEnded;
             Exiled.Events.Handlers.Server.RespawningTeam += handlers.OnRespawningTeam;
             Exiled.Events.Handlers.Warhead.Starting += handlers.OnWarheadStarting;
             Exiled.Events.Handlers.Warhead.Stopping += handlers.OnWarheadStopping;
-            Exiled.Events.Handlers.Player.Verified += handlers.PlayersLobbyLock;
+            Exiled.Events.Handlers.Player.Verified += handlers.OnVerified;
+            Exiled.Events.Handlers.Player.Left += handlers.OnLeft;
 
             //AudioEvents
             SCPSLAudioApi.AudioCore.AudioPlayerBase.OnFinishedTrack += handlers.OnFinishedTrack;
@@ -56,13 +57,14 @@ public class Plugin : Plugin<Config>
         plugin = null;
         handlers = new EventHandler();
         Exiled.Events.Handlers.Server.RoundStarted -= handlers.OnRoundStarted;
-        //Exiled.Events.Handlers.Server.RestartingRound -= handlers.OnRestartingRound;
+        Exiled.Events.Handlers.Server.RestartingRound -= handlers.OnRestartingRound;
         Exiled.Events.Handlers.Server.RoundEnded -= handlers.OnRoundEnded;
         Exiled.Events.Handlers.Server.RespawningTeam -= handlers.OnRespawningTeam;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= handlers.OnWaitingForPlayers;
         Exiled.Events.Handlers.Warhead.Starting -= handlers.OnWarheadStarting;
         Exiled.Events.Handlers.Warhead.Stopping -= handlers.OnWarheadStopping;
-        Exiled.Events.Handlers.Player.Verified -= handlers.PlayersLobbyLock;
+        Exiled.Events.Handlers.Player.Verified -= handlers.OnVerified;
+        Exiled.Events.Handlers.Player.Left -= handlers.OnLeft;
 
         SCPSLAudioApi.AudioCore.AudioPlayerBase.OnFinishedTrack -= handlers.OnFinishedTrack;
 

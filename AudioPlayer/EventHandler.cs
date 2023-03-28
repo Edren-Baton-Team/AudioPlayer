@@ -18,23 +18,11 @@ public class EventHandler
     {
         if (Plugin.plugin.Config.SpawnBot)
         {
-            if (Plugin.plugin.FakeConnectionsIds.ContainsKey(99))
-                Plugin.plugin.FakeConnectionsIds.Remove(99);
             SpawnDummy(Plugin.plugin.Config.BotName);
             List<AudioFile> playlist = Plugin.plugin.Config.LobbyPlaylist;
 
             if (playlist.Count > 0)
-                playlist[UnityEngine.Random.Range(0, playlist.Count)].Play("LobbyPlaylist");
-        }
-    }
-    public void PlayersLobbyLock(VerifiedEventArgs ev)
-    {
-        if (Plugin.plugin.Config.SpawnBot)
-        {
-            if (Player.List.Count() <= 2)
-                Round.IsLobbyLocked = true;
-            else
-                Round.IsLobbyLocked = false;
+                playlist[UnityEngine.Random.Range(0, playlist.Count)].Play(true);
         }
     }
     public void SpawnDummy(string name, int id = 99)
@@ -54,22 +42,22 @@ public class EventHandler
         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
         try
         {
-            Plugin.plugin.FakeConnectionsIds[id].hubPlayer.characterClassManager.UserId = $"player{id}@server";
+            hubPlayer.characterClassManager.UserId = $"player{id}@server";
         }
         catch (Exception)
         {
             //Ignore
         }
-        Plugin.plugin.FakeConnectionsIds[id].hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+        hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Host;
         try
         {
-            Plugin.plugin.FakeConnectionsIds[id].hubPlayer.nicknameSync.SetNick(name);
+            hubPlayer.nicknameSync.SetNick(name);
         }
         catch (Exception)
         {
             //Ignore
         }
-        Plugin.plugin.FakeConnectionsIds[id].hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
+        hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
     }
     // Stole the code from the old AudioPlayer :jermasus:
     public void OnRoundStarted()
@@ -123,7 +111,7 @@ public class EventHandler
 
         if (playlist.Count > 0)
         {
-            playlist[UnityEngine.Random.Range(0, playlist.Count)].Play("LobbyPlaylist");
+            playlist[UnityEngine.Random.Range(0, playlist.Count)].Play(true);
             Log.Debug($"Play music {playlist[UnityEngine.Random.Range(0, playlist.Count)].Path}");
         }
     }
@@ -150,5 +138,22 @@ public class EventHandler
     public void OnRestartingRound()
     {
         Plugin.plugin.FakeConnectionsIds.Clear();
+    }
+
+    public void OnVerified(VerifiedEventArgs ev)
+    {
+        if (Round.IsLobby && Plugin.plugin.Config.AutoLobbyLock) AutoLobbyLock();
+    }
+
+    public void OnLeft(LeftEventArgs ev)
+    {
+        if (Round.IsLobby && Plugin.plugin.Config.AutoLobbyLock) AutoLobbyLock();
+    }
+    public void AutoLobbyLock()
+    {
+        if (Player.List.Count() <= 2)
+            Round.IsLobbyLocked = true;
+        else
+            Round.IsLobbyLocked = false;
     }
 }
