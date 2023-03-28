@@ -13,6 +13,7 @@ It also has a convenient API for using it in your plugins.
 **audio volume {volume}** - sets the volume<br>
 **audio channel {VoiceChatChannel}** - Changes bot VoiceChannel<br>
 **audio loop false/true** - Make it cyclic playback?<br>
+**audio enqueue {path} {position}** - Adds audio to the queue<br>
 **audio nick {Name}** - Sets name of bot<br>
 
 # Instalation
