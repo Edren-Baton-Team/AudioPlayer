@@ -24,8 +24,10 @@ Put SCPSLAudioApi into Exiled dependencies folder.
 * The sound frequency should be 48000 Hz
 
  I recommend using the website https://audio.online-convert.com/convert/mp3-to-ogg
-
+![Screenshot_12](https://user-images.githubusercontent.com/72207886/228310162-4188d665-0a3b-40e1-8e9a-e32cfde1ea22.png)
+# Default Config
 ```yml
+
 AudioPlayer:
   # Plugin Enabled?
   is_enabled: true
