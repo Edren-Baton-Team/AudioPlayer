@@ -43,39 +43,39 @@ AudioPlayer:
   bot_name: Dedicated Server
   # Special Events Automatic Music, blank to disable.
   lobby_playlist:
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test.ogg
     volume: 100
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test2.ogg
     volume: 100
   round_start_clip:
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test.ogg
     volume: 100
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test2.ogg
     volume: 100
   round_end_clip:
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test.ogg
     volume: 100
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test2.ogg
     volume: 100
   mtf_spawn_clip:
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test.ogg
     volume: 100
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test2.ogg
     volume: 100
   chaos_spawn_clip:
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test.ogg
     volume: 100
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test2.ogg
     volume: 100
   warhead_starting_clip:
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test.ogg
     volume: 100
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test2.ogg
     volume: 100
   warhead_stopping_clip:
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test.ogg
     volume: 100
-  - path: /home/rp/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: /home/scp/.config/Exiled/Plugins/audio/test2.ogg
     volume: 100
 ```
 **VoiceChannel**
