@@ -1,4 +1,4 @@
-﻿using Exiled.API.Features;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Warhead;
@@ -137,7 +137,11 @@ public class EventHandler
 
     public void OnRestartingRound()
     {
-        Plugin.plugin.FakeConnectionsIds.Clear();
+        foreach (var au in Plugin.plugin.FakeConnectionsIds)
+        {
+            Plugin.plugin.FakeConnectionsIds.Remove(au.Key);
+            NetworkServer.Destroy(au.Value.hubPlayer.gameObject);
+        }
     }
 
     public void OnVerified(VerifiedEventArgs ev)
@@ -151,7 +155,7 @@ public class EventHandler
     }
     public void AutoLobbyLock()
     {
-        if (Player.List.Count() <= 2)
+        if (Player.List.Count() <= 1)
             Round.IsLobbyLocked = true;
         else
             Round.IsLobbyLocked = false;
