@@ -12,7 +12,7 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 and Mariki";
-    public override Version Version { get; } = new Version(1, 1, 2);
+    public override Version Version { get; } = new Version(2, 2, 1);
 
     public static Plugin plugin;
 
@@ -63,7 +63,6 @@ public class Plugin : Plugin<Config>
             Startup.SetupDependencies();
             Extensions.CreateDirectory();
             Log.Info("Loading AudioPlayer Event...");
-            Log.Warn("This is the beta version of AudioPlayer!");
         }
         catch (Exception e)
         {
