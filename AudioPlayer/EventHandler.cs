@@ -1,4 +1,4 @@
-﻿using Exiled.API.Features;
+using Exiled.API.Features;
 using Mirror;
 using PlayerRoles;
 using SCPSLAudioApi.AudioCore;
@@ -16,7 +16,7 @@ public class EventHandler
         {
             foreach (var cfg in Plugin.plugin.Config.BotsList)
             {
-                SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotID);
+                SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
             }
 
             if (Plugin.plugin.Config.SpecialEventsEnable)
@@ -44,20 +44,11 @@ public class EventHandler
         });
 
         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
-        try
-        {
-            if (showplayer)
-                hubPlayer._playerId = new RecyclablePlayerId(id);
-            else
-                hubPlayer.characterClassManager.UserId = $"player{id}@server";
-            // SetNick it will always give an error but will apply it anyway.
-            hubPlayer.nicknameSync.SetNick(name);
-            hubPlayer.nicknameSync.DisplayName = name;
-        }
-        catch (Exception)
-        {
-            //Ignore
-        }
+        if (showplayer)
+            hubPlayer._playerId = new RecyclablePlayerId(id);
+        else
+            hubPlayer.characterClassManager._privUserId = $"player{id}@server";
+        hubPlayer.nicknameSync.SetNick(name);
         hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Host;
         try
         {
