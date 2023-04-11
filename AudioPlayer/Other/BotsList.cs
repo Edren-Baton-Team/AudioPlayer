@@ -9,8 +9,6 @@ public class BotsList
 
     [Description("Hide the AudioPlayer bot in the Player List?")]
     public bool ShowPlayerList { get; set; } = false; 
-    [Description("Hide the AudioPlayer bot in the RA List?")]
-    public bool ShowRaList { get; set; } = false;
     [Description("What will be written in Badge? (Only works if BadgeBots = true) | Set null to turn off")]
     public string BadgeText { get; set; } = "AudioPlayer BOT";
     [Description("What color will Badge? (Only works if BadgeBots = true)")]
