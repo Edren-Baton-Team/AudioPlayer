@@ -1,4 +1,4 @@
-﻿using AudioPlayer.Other.DLC;
+using AudioPlayer.Other.DLC;
 using Exiled.API.Features;
 using SCPSLAudioApi;
 using System;
@@ -13,6 +13,7 @@ public class Plugin : Plugin<Config>
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 and Mariki";
     public override Version Version { get; } = new Version(2, 0, 2);
+    public override Version RequiredExiledVersion => base.RequiredExiledVersion;
 
     public static Plugin plugin;
 
