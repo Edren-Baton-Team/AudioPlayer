@@ -48,9 +48,7 @@ public class EventHandler
         });
 
         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
-        if (showplayer)
-            hubPlayer._playerId = new RecyclablePlayerId(id);
-        else
+        if (!showplayer)
         {
             try
             {
