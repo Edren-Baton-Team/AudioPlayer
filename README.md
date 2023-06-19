@@ -34,6 +34,7 @@ Put SCPSLAudioApi into Exiled dependencies folder.
 ![Screenshot_12](https://user-images.githubusercontent.com/72207886/228310162-4188d665-0a3b-40e1-8e9a-e32cfde1ea22.png)
 # Default Config
 ```yml
+AudioPlayer:
 # Plugin Enabled?
   is_enabled: true
   # Enable developer mode? (AudioPlayer debug)
@@ -45,7 +46,7 @@ Put SCPSLAudioApi into Exiled dependencies folder.
   # Enable developer mode SCPSLAudioApi?
   scpsl_audio_api_debug: false
   # Create a bot automatically when the server starts?
-  spawn_bot: false
+  spawn_bot: true
   # The name of the bot when the file will sound. (Bot with ID 99 is better not to touch, he is responsible for commands on the server)
   bots_list:
   - bot_name: 'Dedicated Server'
@@ -133,6 +134,8 @@ Put SCPSLAudioApi into Exiled dependencies folder.
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
+  # Stop audio playback if the warhead has been disabled? (true = yes, false = no)
+  warhead_stopping: false
   warhead_stopping_clip:
   - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
