@@ -34,157 +34,156 @@ Put SCPSLAudioApi into Exiled dependencies folder.
 ![Screenshot_12](https://user-images.githubusercontent.com/72207886/228310162-4188d665-0a3b-40e1-8e9a-e32cfde1ea22.png)
 # Default Config
 ```yml
-AudioPlayer:
 # Plugin Enabled?
   is_enabled: true
   # Enable developer mode? (AudioPlayer debug)
   debug: false
   # Command to use AudioPlayer
   command_name:
-  - audio
-  - au
+  - 'audio'
+  - 'au'
   # Enable developer mode SCPSLAudioApi?
   scpsl_audio_api_debug: false
   # Create a bot automatically when the server starts?
   spawn_bot: false
   # The name of the bot when the file will sound. (Bot with ID 99 is better not to touch, he is responsible for commands on the server)
   bots_list:
-  - bot_name: Dedicated Server
+  - bot_name: 'Dedicated Server'
     bot_id: 99
     # Hide the AudioPlayer bot in the Player List?
     show_player_list: false
     # What will be written in Badge? (Only works if BadgeBots = true) | Set null to turn off
-    badge_text: AudioPlayer BOT
+    badge_text: 'AudioPlayer BOT'
     # What color will Badge? (Only works if BadgeBots = true)
-    badge_color: orange
-  - bot_name: Elevator Audio
+    badge_color: 'orange'
+  - bot_name: 'Elevator Audio'
     bot_id: 98
     # Hide the AudioPlayer bot in the Player List?
     show_player_list: false
     # What will be written in Badge? (Only works if BadgeBots = true) | Set null to turn off
-    badge_text: AudioPlayer BOT
+    badge_text: 'AudioPlayer BOT'
     # What color will Badge? (Only works if BadgeBots = true)
-    badge_color: orange
+    badge_color: 'orange'
   # Turn all special events on or off?
   special_events_enable: false
   # Special Events Automatic Music, blank to disable.
   lobby_playlist:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   round_start_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   round_end_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   mtf_spawn_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   chaos_spawn_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   warhead_starting_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   warhead_stopping_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   elevator_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   player_died_target_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   player_died_killer_clip:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
   player_connected_server:
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
     bot_i_d: 0
-  - path: /home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg
+  - path: '/home/container/.config/ExiledTestServer/Plugins/audio/test2.ogg'
     loop: false
     volume: 100
     voice_chat_channel: Intercom
