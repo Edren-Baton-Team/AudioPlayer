@@ -36,7 +36,7 @@ public class Config : IConfig
     public List<AudioFile> WarheadStartingClip { get; set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
 
     [Description("Stop audio playback if the warhead has been disabled? (true = yes, false = no)")]
-    public bool WarheadStopping = false;
+    public bool WarheadStopping { get; set; } = false;
     public List<AudioFile> WarheadStoppingClip { get; set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
     public List<AudioFile> ElevatorClip { get; set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
     public List<AudioFile> PlayerDiedTargetClip { get; set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
