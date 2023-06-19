@@ -17,7 +17,7 @@ It also has a convenient API for using it in your plugins.
 **audio spfp {Bot ID} {Player List}** - Stop a player from music.<br>
 **audio volume {Bot ID} {volume}** - Sets the volume.<br>
 **audio channel {Bot ID} {VoiceChatChannel}** - Changes bot VoiceChannel.<br>
-**audio loop {Bot ID} {false/true}** - Make it cyclic playback?.<br><br>
+**audio loop {Bot ID} {false/true}** - Make it cyclic playback?.<br>
 **audio enqueue {Bot ID} {path} {position}** - Adds audio to the queue.<br>
 **audio nick {Bot ID} {Name}** - Sets name of bot.<br>
 
