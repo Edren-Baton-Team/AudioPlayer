@@ -28,7 +28,8 @@ It also has a convenient API for using it in your plugins.
 
 # Instalation
 Put AudioPlayer.dll into Exiled Plugins Folder.<br>
-Put SCPSLAudioApi into Exiled dependencies folder.
+Put SCPSLAudioApi into Exiled dependencies folder.<br>
+Put NVorbis into Exiled dependencies folder.
 
 **Important**
 * Sound files must be in .ogg format.
