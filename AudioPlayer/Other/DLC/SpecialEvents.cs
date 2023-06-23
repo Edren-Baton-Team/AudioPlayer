@@ -1,4 +1,4 @@
-using AudioPlayer.Other.EventsArgs;
+﻿using AudioPlayer.Other.EventsArgs;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
@@ -72,6 +72,7 @@ namespace AudioPlayer.Other.DLC
             if (plugin.Config.WarheadStopping)
             {
                 API.AudioController.StopAudio(WarheadStartBotId);
+                WarheadStartBotId = 0;
                 return;
             }
             if (playlist.Count > 0)
@@ -81,7 +82,7 @@ namespace AudioPlayer.Other.DLC
         {
             Timing.CallDelayed(0.5f, () => //Yes, I love timings. 
             {
-                if (ev.Player.IsAlive)
+                if (plugin.Config.ElevatoClipStart)
                 {
                     Log.Debug("Add player ElevatorPlayerStatus");
                     Timing.RunCoroutine(ElevatorPlayerStatus(ev.Player));
@@ -159,6 +160,15 @@ namespace AudioPlayer.Other.DLC
                     playlist1[Random.Range(0, playlist1.Count)].PlayFromFilePlayer(new List<int>() { ev1.Attacker.Id });
                     AudioPlayerDiedAttackerEventArgs ev = new(ev1.Player, bots, playlist1[Random.Range(0, playlist1.Count)].Path);
                 }
+        }
+
+        public void OnWarheadDetonated()
+        {
+            if (plugin.Config.WarheadStopping)
+            {
+                API.AudioController.StopAudio(WarheadStartBotId);
+                WarheadStartBotId = 0;
+            }
         }
     }
 }

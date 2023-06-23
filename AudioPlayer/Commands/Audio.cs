@@ -38,7 +38,7 @@ public class AudioCommand : ParentCommand
         {
             if (sender.CheckPermission($"audioplayer.{command.Command}"))
             {
-                response += $"\n\n<color=yellow><b>- {command.Command} ({string.Join(", ", command.Aliases)})</b></color>\n<color=white>{command.Description}</color>";
+                response += $"\n\n<color=yellow><b>- {command.Command} ({string.Join(", ", command.Aliases)})\naudiocommand {command.Command} {"{" + string.Join("} {", (command as IUsageProvider).Usage) + "}"}</b></color>\n<color=white>{command.Description}</color>";
             }
         }
         return false;

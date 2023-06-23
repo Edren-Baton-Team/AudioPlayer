@@ -14,7 +14,7 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 and Mariki";
-    public override Version Version { get; } = new Version(2, 1, 0);
+    public override Version Version { get; } = new Version(2, 1, 1);
     public override Version RequiredExiledVersion { get; } = AutoUpdateExiledVersion.AutoUpdateExiledVersion.RequiredExiledVersion;
 
     public static Plugin plugin; //troll 
@@ -44,6 +44,7 @@ public class Plugin : Plugin<Config>
                 Exiled.Events.Handlers.Server.RoundEnded += specialEvents.OnRoundEnded;
                 Exiled.Events.Handlers.Server.RespawningTeam += specialEvents.OnRespawningTeam;
                 Exiled.Events.Handlers.Warhead.Starting += specialEvents.OnWarheadStarting;
+                Exiled.Events.Handlers.Warhead.Detonated += specialEvents.OnWarheadDetonated;
                 Exiled.Events.Handlers.Warhead.Stopping += specialEvents.OnWarheadStopping;
                 Exiled.Events.Handlers.Player.Verified += specialEvents.OnVerified;
                 Exiled.Events.Handlers.Player.Died += specialEvents.OnDied;
