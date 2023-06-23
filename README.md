@@ -1,4 +1,4 @@
-[![Downloads](https://img.shields.io/github/downloads/Edren-Baton-Team/AudioPlayer/total?color=brown&label=Downloads&style=for-the-badge)](https://github.com/Edren-Baton-Team/AudioPlayer/releases)
+[![Downloads](https://img.shields.io/github/downloads/Edren-Baton-Team/AudioPlayer/total?color=brown&label=Downloads&style=for-the-badge)](https://github.com/Edren-Baton-Team/AudioPlayer/releases)<br>
 ![Lines](https://img.shields.io/tokei/lines/github/Edren-Baton-Team/AudioPlayer?style=for-the-badge)
 # Requirements
 This plugin uses as dependency [SCPSLAudioApi](https://github.com/CedModV2/SCPSLAudioApi)<br>
