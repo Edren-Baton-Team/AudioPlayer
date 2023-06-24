@@ -1,11 +1,13 @@
-﻿using AudioPlayer.Other;
+using AudioPlayer.Other;
 using AudioPlayer.Other.EventsArgs;
 using Exiled.API.Features;
+using MEC;
 using Mirror;
 using PlayerRoles;
 using SCPSLAudioApi.AudioCore;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer;
@@ -15,6 +17,7 @@ public class EventHandler
     private List<AudioFile> LobbyPlaylist = plugin.Config.LobbyPlaylist;
     public void OnWaitingForPlayers()
     {
+        plugin.FakeConnectionsIds.Clear();
         if (plugin.Config.SpawnBot)
         {
             foreach (var cfg in plugin.Config.BotsList)
@@ -36,9 +39,9 @@ public class EventHandler
             Log.Error("This id is already in use");
             return;
         }
-        var newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
-        var fakeConnection = new FakeConnection(id);
-        var hubPlayer = newPlayer.GetComponent<ReferenceHub>();
+        GameObject newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
+        FakeConnection fakeConnection = new FakeConnection(id);
+        ReferenceHub hubPlayer = newPlayer.GetComponent<ReferenceHub>();
         plugin.FakeConnectionsIds.Add(id, new FakeConnectionList()
         {
             BotID = id,
@@ -47,7 +50,6 @@ public class EventHandler
             audioplayer = AudioPlayerBase.Get(hubPlayer),
             hubPlayer = hubPlayer,
         });
-
         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
         if (!showplayer)
         {
@@ -69,17 +71,20 @@ public class EventHandler
         {
             //Ignore
         }
-        try
+        MEC.Timing.CallDelayed(1, () =>
         {
-            hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
-        }
-        catch (Exception e)
-        {
-            Log.Error($"Error on {nameof(SpawnDummy)}: Error on set dummy role {e}");
-        }
-        hubPlayer.characterClassManager.GodMode = true;
-        hubPlayer.serverRoles.SetText(badgetext);
-        hubPlayer.serverRoles.SetColor(bagdecolor);
+            try
+            {
+                hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error on {nameof(SpawnDummy)}: Error on set dummy role {e}");
+            }
+            hubPlayer.characterClassManager.GodMode = true;
+            hubPlayer.serverRoles.SetText(badgetext);
+            hubPlayer.serverRoles.SetColor(bagdecolor);
+        });
     }
     public void OnRoundStarted()
     {
@@ -89,7 +94,6 @@ public class EventHandler
             plugin.LobbySong = false;
         }
     }
-    public void OnRestartingRound() => plugin.FakeConnectionsIds.Clear();
     //thx for the tip ced777ric#8321
     public void HandleInstanceModeChange(ReferenceHub arg1, ClientInstanceMode arg2)
     {
@@ -165,5 +169,25 @@ public class EventHandler
     public void OnAudioPlayerDiedTarget(AudioPlayerDiedTargetEventArgs ev)
     {
         Log.Debug($"OnAudioPlayerDiedTarget\nPlayer - {ev.Player} | BotList {ev.BotsList} | Path - {ev.Path}");
+    }
+
+    public void OnMapGenerated()
+    {
+        if (plugin.Config.SpawnBot)
+        {
+            Timing.CallDelayed(3, () =>
+            {
+                foreach (var cfg in plugin.Config.BotsList)
+                {
+                    SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
+                }
+
+                if (plugin.Config.SpecialEventsEnable)
+                {
+                    if (LobbyPlaylist.Count > 0)
+                        LobbyPlaylist[UnityEngine.Random.Range(0, LobbyPlaylist.Count)].Play(true);
+                }
+            });
+        }
     }
 }
