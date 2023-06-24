@@ -44,3 +44,4 @@ And select the following settings:<br>
 # Credits
 - Plugin is supported by [Rysik5318](https://github.com/Rysik5318)
 - Creator of the first version of AudioPlayer on SCP SL 12.0 [Mariki](https://github.com/Marikider)
+- Creator of SCPSLAudioApi [ced777ric](https://github.com/ced777ric)
