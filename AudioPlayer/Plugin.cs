@@ -1,4 +1,4 @@
-﻿using AudioPlayer.Other.DLC;
+using AudioPlayer.Other.DLC;
 using Exiled.API.Features;
 using SCPSLAudioApi;
 using System;
@@ -30,12 +30,9 @@ public class Plugin : Plugin<Config>
         try
         {
             plugin = this;
-            FakeConnectionsIds.Clear();
             handlers = new EventHandler();
             Exiled.Events.Handlers.Server.WaitingForPlayers += handlers.OnWaitingForPlayers;
-            Exiled.Events.Handlers.Server.RestartingRound += handlers.OnRestartingRound;
             Exiled.Events.Handlers.Server.RoundStarted += handlers.OnRoundStarted;
-
             //SpecialEvents
             if (Config.SpecialEventsEnable)
             {
@@ -88,7 +85,6 @@ public class Plugin : Plugin<Config>
     {
         plugin = null;
         handlers = null;
-        Exiled.Events.Handlers.Server.RestartingRound -= handlers.OnRestartingRound;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= handlers.OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted -= handlers.OnRoundStarted;
 
@@ -97,6 +93,7 @@ public class Plugin : Plugin<Config>
         Exiled.Events.Handlers.Server.RoundEnded -= specialEvents.OnRoundEnded;
         Exiled.Events.Handlers.Server.RespawningTeam -= specialEvents.OnRespawningTeam;
         Exiled.Events.Handlers.Warhead.Starting -= specialEvents.OnWarheadStarting;
+        Exiled.Events.Handlers.Warhead.Detonated -= specialEvents.OnWarheadDetonated;
         Exiled.Events.Handlers.Warhead.Stopping -= specialEvents.OnWarheadStopping;
         Exiled.Events.Handlers.Player.Verified -= specialEvents.OnVerified;
         Exiled.Events.Handlers.Player.Died -= specialEvents.OnDied;
