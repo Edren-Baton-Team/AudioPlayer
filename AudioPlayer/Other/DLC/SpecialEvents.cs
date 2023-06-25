@@ -1,4 +1,4 @@
-﻿using AudioPlayer.Other.EventsArgs;
+using AudioPlayer.Other.EventsArgs;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
@@ -111,6 +111,7 @@ namespace AudioPlayer.Other.DLC
                         foreach (BotsList bots in plugin.Config.BotsList)
                         {
                             AudioElevatorStartEventArgs ev = new(ply, ply.Lift, bots, ElevatorClip[Random.Range(0, ElevatorClip.Count)].Path);
+                            API.AudioEvents.OnAudioElevatorStart(ev);
                         }
                     }
                     Log.Debug("Start Elevator Music");
@@ -123,6 +124,7 @@ namespace AudioPlayer.Other.DLC
                         foreach (BotsList bots in plugin.Config.BotsList)
                         {
                             AudioElevatorUsedEventArgs ev = new(ply, ply.Lift, bots, ElevatorClip[Random.Range(0, ElevatorClip.Count)].Path);
+                            API.AudioEvents.OnAudioElevatorUsed(ev);
                         }
                     Log.Debug("Start Elevator MovingAway");
                 }
@@ -135,6 +137,7 @@ namespace AudioPlayer.Other.DLC
                         foreach (BotsList bots in plugin.Config.BotsList)
                         {
                             AudioElevatorFinishedEventArgs ev = new(ply, ply.Lift, bots, ElevatorClip[Random.Range(0, ElevatorClip.Count)].Path);
+                            API.AudioEvents.OnAudioElevatorFinished(ev);
                         }
                     }
                     Log.Debug("Start Elevator DoorOpening");
@@ -153,12 +156,14 @@ namespace AudioPlayer.Other.DLC
                 {
                     playlist[Random.Range(0, playlist.Count)].PlayFromFilePlayer(new List<int>() { ev1.Player.Id });
                     AudioPlayerDiedTargetEventArgs ev = new(ev1.Player, bots, playlist[Random.Range(0, playlist.Count)].Path);
+                    API.AudioEvents.OnAudioPlayerDiedTarget(ev);
                 }
             if (playlist1.Count > 0)
                 foreach (BotsList bots in plugin.Config.BotsList)
                 {
                     playlist1[Random.Range(0, playlist1.Count)].PlayFromFilePlayer(new List<int>() { ev1.Attacker.Id });
                     AudioPlayerDiedAttackerEventArgs ev = new(ev1.Player, bots, playlist1[Random.Range(0, playlist1.Count)].Path);
+                    API.AudioEvents.OnAudioPlayerDiedAttacker(ev);
                 }
         }
 
