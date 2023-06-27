@@ -1,0 +1,13 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System" #>
+<#@ assembly name="C:\Users\Rysik5318\Desktop\Exiled-New-Version\Exiled.Loader.dll" #>
+<#@ output extension=".cs" #>
+using System;
+
+namespace AutoUpdateExiledVersion
+{
+    public static class AutoUpdateExiledVersion 
+    {
+        public static Version RequiredExiledVersion { get; } = new(<#= typeof(Exiled.Loader.Loader).Assembly.GetName().Version.ToString().Replace('.',',') #>);
+    }
+}
