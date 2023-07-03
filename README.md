@@ -24,11 +24,7 @@ This plugin uses as dependency [NVorbis](https://github.com/NVorbis/NVorbis)<br>
  I recommend using the website [online-convert.com](https://audio.online-convert.com/convert/mp3-to-ogg)<br>
 ![228310162-4188d665-0a3b-40e1-8e9a-e32cfde1ea22](https://github.com/Edren-Baton-Team/AudioPlayer/assets/72207886/51fd2727-e922-4308-86c1-9ae9a9e0f68b)<br>
 or using the website [convertio.co](https://convertio.co/mp3-ogg/)<br>
-![Screenshot_4](https://github.com/Edren-Baton-Team/AudioPlayer/assets/72207886/aa02fd0a-36b0-482e-89e6-1d6ae8af9471)<br>
-Upload a file there<br>
-![Screenshot_7](https://github.com/Edren-Baton-Team/AudioPlayer/assets/72207886/f85518cf-e569-4bb7-b95f-f0741e6f2577)<br>
-And select the following settings:<br>
-![Screenshot_8](https://github.com/Edren-Baton-Team/AudioPlayer/assets/72207886/cf33373b-dcd8-49d2-9fcd-00ff819ce1b9)<br>
+![firefox_b421psKhBS](https://github.com/Edren-Baton-Team/AudioPlayer/assets/72207886/62e4e32e-26d9-4758-b17b-210933f13a0e)<br>
 # VoiceChannel
 ```md
 - None
