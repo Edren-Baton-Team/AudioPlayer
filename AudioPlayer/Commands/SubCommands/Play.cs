@@ -1,10 +1,10 @@
 ﻿using AudioPlayer.Other;
 using CommandSystem;
-using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using System;
 using System.IO;
 using System.Linq;
+using static AudioPlayer.Plugin;
 
 namespace AudioPlayer.Commands.SubCommands
 {
@@ -31,7 +31,7 @@ namespace AudioPlayer.Commands.SubCommands
                 return false;
             }
             int id = int.Parse(arguments.At(0));
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x));
 

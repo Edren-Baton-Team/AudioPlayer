@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using VoiceChat;
+using AudioController = AudioPlayer.API.AudioController;
 
 namespace AudioPlayer.Other;
 
@@ -22,7 +23,7 @@ public class AudioFile
         if (LobbyPlaylist)
             Plugin.plugin.LobbySong = true;
 
-        API.AudioController.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel, id: BotId);
+        AudioController.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel, id: BotId);
     }
     public void PlayFromFilePlayer(List<int> players)
     {
@@ -33,7 +34,7 @@ public class AudioFile
         }
         try
         {
-            API.AudioController.PlayFromFilePlayer(players, Path, Loop, Volume, VoiceChatChannel, id: BotId);
+            AudioController.PlayFromFilePlayer(players, Path, Loop, Volume, VoiceChatChannel, id: BotId);
         }
         catch (Exception ex)
         {
@@ -42,6 +43,6 @@ public class AudioFile
     }
     public void Stop()
     {
-        API.AudioController.StopAudio(BotId);
+        AudioController.StopAudio(BotId);
     }
 }

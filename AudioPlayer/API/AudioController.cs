@@ -1,9 +1,7 @@
 ﻿using VoiceChat;
-using Mirror;
 using System.Collections.Generic;
 using AudioPlayer.Other;
-using System.Collections;
-using UnityEngine;
+using static AudioPlayer.Plugin;
 
 namespace AudioPlayer.API
 {
@@ -11,7 +9,7 @@ namespace AudioPlayer.API
     {
         public static void PlayAudioFromFile(string path, bool loop = false, float volume = 100, VoiceChatChannel channel = VoiceChatChannel.Intercom, bool shuffle = false, bool logdebug = false, bool Continue = true, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 var audioPlayer = hub.audioplayer;
                 audioPlayer.BroadcastChannel = channel;
@@ -26,11 +24,11 @@ namespace AudioPlayer.API
         }
         public static void SpawnDummy(int id, bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
         {
-            Plugin.plugin.handlers.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
+            plugin.handlers.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
         }
         public static void StopPlayerFromPlaying(List<int> players, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 foreach (var ply in players)
                 {
@@ -40,7 +38,7 @@ namespace AudioPlayer.API
         }
         public static void PlayFromFilePlayer(List<int> players, string path, bool loop = false, float volume = 100, VoiceChatChannel channel = VoiceChatChannel.Intercom, bool shuffle = false, bool logdebug = false, bool Continue = true, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 var audioPlayer = hub.audioplayer;
                 audioPlayer.BroadcastTo = players;
@@ -56,63 +54,68 @@ namespace AudioPlayer.API
         }
         public static void AddAudioEnqueue(string audio, int pos, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.Enqueue(audio, pos);
             }
         }
         public static void LogDebugAudio(bool logdebug = true, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.LogDebug = logdebug;
             }
         }
         public static void ContinueAudio(bool Continue = true, int id = 99) //Whether the Dummy Bot should continue playing by itself after the current Track ends?
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.Continue = Continue;
             }
         }
         public static void ShuffleAudio(bool shuffle = false, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.Shuffle = shuffle;
             }
         }
         public static void StopAudio(int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.Stoptrack(true);
-                if (Plugin.plugin.LobbySong)
-                    Plugin.plugin.LobbySong = false;
+                if (plugin.LobbySong)
+                    plugin.LobbySong = false;
             }
         }
         public static void LoopAudio(bool loop, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.Loop = loop;
             }
         }
         public static void VolimeAudio(float volume, int id = 99)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.Volume = volume;
             }
         }
         public static void DisconnectDummy(int id)
         {
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
-                Plugin.plugin.FakeConnectionsIds.Remove(id);
-                CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection);
-                Object.Destroy(hub.hubPlayer.gameObject);
+                if (hub.hubPlayer._playerId.Value <= RecyclablePlayerId._autoIncrement)
+                {
+                    hub.hubPlayer._playerId.Destroy();
+                }
+
                 hub.hubPlayer.OnDestroy();
+                CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection);
+                UnityEngine.Object.Destroy(hub.hubPlayer.gameObject);
+                plugin.FakeConnectionsIds.Remove(id);
             }
         }
     }

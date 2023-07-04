@@ -34,6 +34,7 @@ public class EventHandler
     }
     public void SpawnDummy(string name = "Dedicated Server", bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
     {
+        // I will start developing new code on EXILED NPCs when I am free
         if (plugin.FakeConnectionsIds.ContainsKey(id))
         {
             Log.Error("This id is already in use");
