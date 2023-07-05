@@ -22,9 +22,9 @@ namespace AudioPlayer.API
                 audioPlayer.Play(0);
             }
         }
-        public static void SpawnDummy(int id, bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
+        public static void SpawnDummy(int id, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
         {
-            plugin.handlers.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
+            plugin.handlers.SpawnDummy(name, badgetext, bagdecolor, id);
         }
         public static void StopPlayerFromPlaying(List<int> players, int id = 99)
         {
@@ -113,7 +113,7 @@ namespace AudioPlayer.API
                 }
 
                 hub.hubPlayer.OnDestroy();
-                CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection);
+                CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection.connectionToClient);
                 UnityEngine.Object.Destroy(hub.hubPlayer.gameObject);
                 plugin.FakeConnectionsIds.Remove(id);
             }

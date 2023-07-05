@@ -61,7 +61,6 @@
     <Compile Include="Other\EventsArgs\AudioPlayerDiedAttackerEventArgs.cs" />
     <Compile Include="Other\EventsArgs\AudioPlayerDiedTargetEventArgs.cs" />
     <Compile Include="Other\Extensions.cs" />
-    <Compile Include="Other\FakeConnection.cs" />
     <Compile Include="Other\FakeConnectionList.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

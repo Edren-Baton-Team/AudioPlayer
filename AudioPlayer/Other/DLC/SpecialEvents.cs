@@ -1,5 +1,6 @@
 ﻿using AudioPlayer.Other.EventsArgs;
 using Exiled.API.Features;
+using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Warhead;
@@ -10,25 +11,25 @@ using static AudioPlayer.Plugin;
 
 namespace AudioPlayer.Other.DLC
 {
-    public class SpecialEvents
+    internal class SpecialEvents
     {
         private int WarheadStartBotId = 0;
         // Stole the code from the old AudioPlayer :jermasus:
-        public void OnRoundStarted()
+        internal void OnRoundStarted()
         {
             List<AudioFile> playlist = plugin.Config.RoundStartClip;
 
             if (playlist.Count > 0)
                 playlist[Random.Range(0, playlist.Count)].Play();
         }
-        public void OnRoundEnded(RoundEndedEventArgs ev)
+        internal void OnRoundEnded(RoundEndedEventArgs ev)
         {
             List<AudioFile> playlist = plugin.Config.RoundEndClip;
 
             if (playlist.Count > 0)
                 playlist[Random.Range(0, playlist.Count)].Play();
         }
-        public void OnRespawningTeam(RespawningTeamEventArgs ev)
+        internal void OnRespawningTeam(RespawningTeamEventArgs ev)
         {
             switch (ev.NextKnownTeam)
             {
@@ -51,7 +52,7 @@ namespace AudioPlayer.Other.DLC
             }
         }
 
-        public void OnWarheadStarting(StartingEventArgs ev)
+        internal void OnWarheadStarting(StartingEventArgs ev)
         {
             if (!Warhead.CanBeStarted)
                 return;
@@ -67,7 +68,7 @@ namespace AudioPlayer.Other.DLC
         }
 
 
-        public void OnWarheadStopping(StoppingEventArgs ev)
+        internal void OnWarheadStopping(StoppingEventArgs ev)
         {
             List<AudioFile> playlist = plugin.Config.WarheadStoppingClip;
 
@@ -79,7 +80,7 @@ namespace AudioPlayer.Other.DLC
             if (playlist.Count > 0)
                 playlist[Random.Range(0, playlist.Count)].Play();
         }
-        public void OnVerified(VerifiedEventArgs ev)
+        internal void OnVerified(VerifiedEventArgs ev)
         {
             List<AudioFile> playlist = plugin.Config.PlayerConnectedServer;
 
@@ -87,7 +88,7 @@ namespace AudioPlayer.Other.DLC
                 playlist[Random.Range(0, playlist.Count)].PlayFromFilePlayer(new List<int>() { ev.Player.Id });
         }
 
-        public void OnDied(DiedEventArgs ev1)
+        internal void OnDied(DiedEventArgs ev1)
         {
             if (ev1.Player == null || ev1.Attacker == null || ev1.DamageHandler.Type == Exiled.API.Enums.DamageType.Unknown)
                 return;
@@ -107,13 +108,18 @@ namespace AudioPlayer.Other.DLC
             }
         }
 
-        public void OnWarheadDetonated()
+        internal void OnWarheadDetonated()
         {
             if (plugin.Config.WarheadStopping)
             {
                 API.AudioController.StopAudio(WarheadStartBotId);
                 WarheadStartBotId = 0;
             }
+        }
+
+        internal void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev)
+        {
+            ev.IsAllowed = plugin.Config.CassieMtfSpawn;
         }
     }
 }

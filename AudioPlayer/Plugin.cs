@@ -14,14 +14,14 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 and Mariki";
-    public override Version Version { get; } = new Version(2, 1, 5);
+    public override Version Version { get; } = new Version(2, 1, 6);
     public override Version RequiredExiledVersion { get; } = AutoUpdateExiledVersion.AutoUpdateExiledVersion.RequiredExiledVersion;
 
     public static Plugin plugin; //troll 
 
-    public Dictionary<int, FakeConnectionList> FakeConnectionsIds = new Dictionary<int, FakeConnectionList>(); // It's more convenient.
-    public EventHandler handlers;
-    public SpecialEvents specialEvents;
+    public Dictionary<int, FakeConnectionList> FakeConnectionsIds = new(); // It's more convenient.
+    internal EventHandler handlers;
+    internal SpecialEvents specialEvents;
     public bool LobbySong;
     public readonly string AudioPath = Path.Combine(Paths.Plugins, "audio");
 
@@ -37,6 +37,7 @@ public class Plugin : Plugin<Config>
             if (Config.SpecialEventsEnable)
             {
                 specialEvents = new SpecialEvents();
+                Exiled.Events.Handlers.Map.AnnouncingNtfEntrance += specialEvents.OnAnnouncingNtfEntrance;
                 Exiled.Events.Handlers.Server.RoundStarted += specialEvents.OnRoundStarted;
                 Exiled.Events.Handlers.Server.RoundEnded += specialEvents.OnRoundEnded;
                 Exiled.Events.Handlers.Server.RespawningTeam += specialEvents.OnRespawningTeam;
@@ -86,6 +87,7 @@ public class Plugin : Plugin<Config>
         Exiled.Events.Handlers.Server.RoundStarted -= handlers.OnRoundStarted;
 
         specialEvents = null;
+        Exiled.Events.Handlers.Map.AnnouncingNtfEntrance -= specialEvents.OnAnnouncingNtfEntrance;
         Exiled.Events.Handlers.Server.RoundStarted -= specialEvents.OnRoundStarted;
         Exiled.Events.Handlers.Server.RoundEnded -= specialEvents.OnRoundEnded;
         Exiled.Events.Handlers.Server.RespawningTeam -= specialEvents.OnRespawningTeam;

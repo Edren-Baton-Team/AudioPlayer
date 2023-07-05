@@ -31,6 +31,8 @@ public class Config : IConfig
     public List<AudioFile> LobbyPlaylist { get; private set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
     public List<AudioFile> RoundStartClip { get; private set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
     public List<AudioFile> RoundEndClip { get; private set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
+    [Description("Play CASSIE when the MTF arrives?")]
+    public bool CassieMtfSpawn { get; private set; } = true;
     public List<AudioFile> MtfSpawnClip { get; private set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
     public List<AudioFile> ChaosSpawnClip { get; private set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
     public List<AudioFile> WarheadStartingClip { get; private set; } = new() { new AudioFile(), new AudioFile() { Path = System.IO.Path.Combine(Paths.Plugins, "audio", "test2.ogg") } };
