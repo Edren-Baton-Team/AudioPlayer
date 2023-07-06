@@ -1,6 +1,6 @@
-﻿using VoiceChat;
+﻿using AudioPlayer.Other;
 using System.Collections.Generic;
-using AudioPlayer.Other;
+using VoiceChat;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer.API
@@ -22,9 +22,9 @@ namespace AudioPlayer.API
                 audioPlayer.Play(0);
             }
         }
-        public static void SpawnDummy(int id, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
+        public static void SpawnDummy(int id, bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
         {
-            plugin.handlers.SpawnDummy(name, badgetext, bagdecolor, id);
+            plugin.handlers.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
         }
         public static void StopPlayerFromPlaying(List<int> players, int id = 99)
         {

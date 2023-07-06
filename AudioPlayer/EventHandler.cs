@@ -1,10 +1,13 @@
 ﻿using AudioPlayer.Other;
 using AudioPlayer.Other.EventsArgs;
 using Exiled.API.Features;
+using Exiled.API.Features.Components;
 using Mirror;
 using PlayerRoles;
 using SCPSLAudioApi.AudioCore;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer;
@@ -19,7 +22,7 @@ internal class EventHandler
         {
             foreach (var cfg in plugin.Config.BotsList)
             {
-                SpawnDummy(cfg.BotName, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
+                SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
             }
 
             if (plugin.Config.SpecialEventsEnable)
@@ -29,25 +32,59 @@ internal class EventHandler
             }
         }
     }
-    internal void SpawnDummy(string name = "Dedicated Server", string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
+    internal void SpawnDummy(string name = "Dedicated Server", bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
     {
-        var hubPlayer = Npc.Spawn(name, RoleTypeId.Overwatch, id, $"{id}@audioplayerbot");
         if (plugin.FakeConnectionsIds.ContainsKey(id))
         {
             Log.Error("This id is already in use");
             return;
         }
+        GameObject newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
+        FakeConnection fakeConnection = new FakeConnection(id);
+        ReferenceHub hubPlayer = newPlayer.GetComponent<ReferenceHub>();
         plugin.FakeConnectionsIds.Add(id, new FakeConnectionList()
         {
             BotID = id,
             BotName = name,
-            fakeConnection = hubPlayer.ReferenceHub.GetComponent<NetworkIdentity>(),
-            audioplayer = AudioPlayerBase.Get(hubPlayer.ReferenceHub),
-            hubPlayer = hubPlayer.ReferenceHub,
+            fakeConnection = fakeConnection.identity,
+            audioplayer = AudioPlayerBase.Get(hubPlayer),
+            hubPlayer = hubPlayer,
         });
-        hubPlayer.IsGodModeEnabled = true;
-        hubPlayer.RankName = badgetext;
-        hubPlayer.RankColor = bagdecolor;
+        NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
+        if (!showplayer)
+        {
+            try
+            {
+                hubPlayer.characterClassManager._privUserId = $"player{id}@server";
+            }
+            catch (Exception)
+            {
+                //Ignore
+            }
+        }
+        hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+        try
+        {
+            hubPlayer.nicknameSync.SetNick(name);
+        }
+        catch (Exception)
+        {
+            //Ignore
+        }
+        MEC.Timing.CallDelayed(1, () =>
+        {
+            try
+            {
+                hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error on {nameof(SpawnDummy)}: Error on set dummy role {e}");
+            }
+            hubPlayer.characterClassManager.GodMode = true;
+            hubPlayer.serverRoles.SetText(badgetext);
+            hubPlayer.serverRoles.SetColor(bagdecolor);
+        });
     }
     internal void OnRoundStarted()
     {
