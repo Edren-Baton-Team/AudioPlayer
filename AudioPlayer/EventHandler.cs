@@ -145,10 +145,13 @@ internal class EventHandler
 
     internal void HandleInstanceModeChange(ReferenceHub arg1, ClientInstanceMode arg2)
     {
-        if (arg1.characterClassManager.UserId.Contains("@audioplayerbot"))
+        foreach (FakeConnectionList fake in plugin.FakeConnectionsIds.Values)
         {
-            Log.Debug($"Replaced instancemode for dummy to host.");
-            arg1.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+            if ((arg2 != ClientInstanceMode.Unverified || arg2 != ClientInstanceMode.Host) && fake.hubPlayer == arg1)
+            {
+                Log.Debug($"Replaced instancemode for dummy to host.");
+                arg1.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+            }
         }
     }
 }
