@@ -14,7 +14,7 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 and Mariki";
-    public override Version Version { get; } = new Version(2, 1, 7);
+    public override Version Version { get; } = new Version(2, 1, 8);
     public override Version RequiredExiledVersion { get; } = AutoUpdateExiledVersion.AutoUpdateExiledVersion.RequiredExiledVersion;
 
     public static Plugin plugin; //troll 
@@ -31,6 +31,7 @@ public class Plugin : Plugin<Config>
         {
             plugin = this;
             handlers = new EventHandler();
+            Exiled.Events.Handlers.Map.Generated += handlers.OnGenerated;
             Exiled.Events.Handlers.Server.WaitingForPlayers += handlers.OnWaitingForPlayers;
             Exiled.Events.Handlers.Server.RoundStarted += handlers.OnRoundStarted;
             //SpecialEvents
@@ -51,7 +52,6 @@ public class Plugin : Plugin<Config>
 
             //AudioEvents
             SCPSLAudioApi.AudioCore.AudioPlayerBase.OnFinishedTrack += handlers.OnFinishedTrack;
-            CharacterClassManager.OnInstanceModeChanged += handlers.HandleInstanceModeChange;
 
             if (Config.Debug)
             {
@@ -83,6 +83,7 @@ public class Plugin : Plugin<Config>
     {
         plugin = null;
         handlers = null;
+        Exiled.Events.Handlers.Map.Generated -= handlers.OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= handlers.OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted -= handlers.OnRoundStarted;
 
@@ -101,7 +102,6 @@ public class Plugin : Plugin<Config>
         AudioEvents.AudioPlayerDiedTarget -= handlers.OnAudioPlayerDiedTarget;
 
         SCPSLAudioApi.AudioCore.AudioPlayerBase.OnFinishedTrack -= handlers.OnFinishedTrack;
-        CharacterClassManager.OnInstanceModeChanged -= handlers.HandleInstanceModeChange;
 
         SCPSLAudioApi.AudioCore.AudioPlayerBase.OnTrackSelecting -= handlers.OnTrackSelecting;
         SCPSLAudioApi.AudioCore.AudioPlayerBase.OnTrackSelected -= handlers.OnTrackSelected;

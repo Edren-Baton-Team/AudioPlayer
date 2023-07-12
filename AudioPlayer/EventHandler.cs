@@ -2,6 +2,7 @@
 using AudioPlayer.Other.EventsArgs;
 using Exiled.API.Features;
 using Exiled.API.Features.Components;
+using Exiled.Events.EventArgs.Player;
 using Mirror;
 using PlayerRoles;
 using SCPSLAudioApi.AudioCore;
@@ -17,14 +18,8 @@ internal class EventHandler
     private List<AudioFile> LobbyPlaylist = plugin.Config.LobbyPlaylist;
     internal void OnWaitingForPlayers()
     {
-        plugin.FakeConnectionsIds.Clear();
         if (plugin.Config.SpawnBot)
         {
-            foreach (var cfg in plugin.Config.BotsList)
-            {
-                SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
-            }
-
             if (plugin.Config.SpecialEventsEnable)
             {
                 if (LobbyPlaylist.Count > 0)
@@ -32,7 +27,7 @@ internal class EventHandler
             }
         }
     }
-    internal void SpawnDummy(string name = "Dedicated Server", bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
+    public void SpawnDummy(string name = "Dedicated Server", bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
     {
         if (plugin.FakeConnectionsIds.ContainsKey(id))
         {
@@ -55,7 +50,7 @@ internal class EventHandler
         {
             try
             {
-                hubPlayer.characterClassManager._privUserId = $"player{id}@server";
+                hubPlayer.characterClassManager._privUserId = $"{id}@audioplayerbot";
             }
             catch (Exception)
             {
@@ -85,6 +80,7 @@ internal class EventHandler
             hubPlayer.serverRoles.SetText(badgetext);
             hubPlayer.serverRoles.SetColor(bagdecolor);
         });
+        CharacterClassManager.OnInstanceModeChanged += HandleInstanceModeChange;
     }
     internal void OnRoundStarted()
     {
@@ -145,12 +141,22 @@ internal class EventHandler
 
     internal void HandleInstanceModeChange(ReferenceHub arg1, ClientInstanceMode arg2)
     {
-        foreach (FakeConnectionList fake in plugin.FakeConnectionsIds.Values)
+        if (arg2 != ClientInstanceMode.Host && arg1.characterClassManager._privUserId.Contains("@audioplayerbot"))
         {
-            if ((arg2 != ClientInstanceMode.Unverified || arg2 != ClientInstanceMode.Host) && fake.hubPlayer == arg1)
+            Log.Debug($"Replaced instancemode for dummy to host.");
+            arg1.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+        }
+    }
+
+    internal void OnGenerated()
+    {
+        if (plugin.FakeConnectionsIds != null)
+            plugin.FakeConnectionsIds.Clear();
+        if (plugin.Config.SpawnBot)
+        {
+            foreach (var cfg in plugin.Config.BotsList)
             {
-                Log.Debug($"Replaced instancemode for dummy to host.");
-                arg1.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+                SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
             }
         }
     }

@@ -13,14 +13,14 @@ public class AudioFile
     public int Volume { get; set; } = 100;
     public VoiceChatChannel VoiceChatChannel { get; set; } = VoiceChatChannel.Intercom;
     public int BotId { get; set; }
-    public void Play(bool LobbyPlaylist = false)
+    public void Play(bool lobbyPlaylist = false)
     {
         if (!System.IO.File.Exists(Path))
         {
             Log.Debug($"File not found on path {Path}");
             return;
         }
-        if (LobbyPlaylist)
+        if (lobbyPlaylist)
             Plugin.plugin.LobbySong = true;
 
         AudioController.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel, id: BotId);

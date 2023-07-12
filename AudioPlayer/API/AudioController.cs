@@ -1,5 +1,6 @@
 ﻿using AudioPlayer.Other;
 using System.Collections.Generic;
+using UnityEngine;
 using VoiceChat;
 using static AudioPlayer.Plugin;
 
@@ -108,13 +109,10 @@ namespace AudioPlayer.API
             if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 if (hub.hubPlayer._playerId.Value <= RecyclablePlayerId._autoIncrement)
-                {
                     hub.hubPlayer._playerId.Destroy();
-                }
-
                 hub.hubPlayer.OnDestroy();
                 CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection.connectionToClient);
-                UnityEngine.Object.Destroy(hub.hubPlayer.gameObject);
+                Object.Destroy(hub.hubPlayer.gameObject);
                 plugin.FakeConnectionsIds.Remove(id);
             }
         }
