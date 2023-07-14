@@ -97,7 +97,7 @@ namespace AudioPlayer.API
                 hub.audioplayer.Loop = loop;
             }
         }
-        public static void VolimeAudio(float volume, int id = 99)
+        public static void VolumeAudio(float volume, int id = 99)
         {
             if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
