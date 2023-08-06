@@ -108,10 +108,6 @@ namespace AudioPlayer.API
         {
             if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
-                if (hub.hubPlayer._playerId.Value <= RecyclablePlayerId._autoIncrement)
-                    hub.hubPlayer._playerId.Destroy();
-                hub.hubPlayer.OnDestroy();
-                CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection.connectionToClient);
                 Object.Destroy(hub.hubPlayer.gameObject);
                 plugin.FakeConnectionsIds.Remove(id);
             }

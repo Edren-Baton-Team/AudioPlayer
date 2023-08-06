@@ -1,5 +1,6 @@
 ﻿using AudioPlayer.Other;
 using AudioPlayer.Other.EventsArgs;
+using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Components;
 using Exiled.Events.EventArgs.Player;
@@ -45,6 +46,14 @@ internal class EventHandler
             audioplayer = AudioPlayerBase.Get(hubPlayer),
             hubPlayer = hubPlayer,
         });
+        if (RecyclablePlayerId.FreeIds.Contains(id))
+        {
+            RecyclablePlayerId.FreeIds.RemoveFromQueue(id);
+        }
+        else if (RecyclablePlayerId._autoIncrement >= id)
+        {
+            RecyclablePlayerId._autoIncrement = id = RecyclablePlayerId._autoIncrement + 1;
+        }
         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
         if (!showplayer)
         {
@@ -57,7 +66,7 @@ internal class EventHandler
                 //Ignore
             }
         }
-        hubPlayer.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+
         try
         {
             hubPlayer.nicknameSync.SetNick(name);
@@ -80,7 +89,7 @@ internal class EventHandler
             hubPlayer.serverRoles.SetText(badgetext);
             hubPlayer.serverRoles.SetColor(bagdecolor);
         });
-        CharacterClassManager.OnInstanceModeChanged += HandleInstanceModeChange;
+        
     }
     internal void OnRoundStarted()
     {
@@ -141,7 +150,7 @@ internal class EventHandler
 
     internal void HandleInstanceModeChange(ReferenceHub arg1, ClientInstanceMode arg2)
     {
-        if (arg2 != ClientInstanceMode.Host && arg1.characterClassManager._privUserId.Contains("@audioplayerbot"))
+        if ((arg2 != ClientInstanceMode.Unverified || arg2 != ClientInstanceMode.Host) && arg1.characterClassManager._privUserId.Contains("@audioplayerbot"))
         {
             Log.Debug($"Replaced instancemode for dummy to host.");
             arg1.characterClassManager.InstanceMode = ClientInstanceMode.Host;
