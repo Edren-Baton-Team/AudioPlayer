@@ -1,4 +1,4 @@
-﻿using AudioPlayer.API;
+﻿using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
@@ -19,9 +19,9 @@ namespace AudioPlayer.Commands.SubCommands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("audioplayer.stoppfp"))
+            if (!sender.CheckPermission($"audioplayer.{Command}"))
             {
-                response = "You dont have perms to do that. Not enough perms: audioplayer.stoppfp";
+                response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
                 return false;
             }
             if (arguments.Count <= 1)
@@ -34,13 +34,24 @@ namespace AudioPlayer.Commands.SubCommands
             string texttoresponse = string.Empty;
             foreach (string s in arguments.At(1).Trim('.').Split('.'))
             {
-                var pl = Player.Get(s);
+                Player pl = Player.Get(s);
                 texttoresponse += pl.Nickname + ", ";
                 list.Add(pl.Id);
             }
-            AudioController.StopPlayerFromPlaying(list, id);
-            response = $"Stopped the sound at ID {id} for the next player: {texttoresponse}";
-            return true;
+            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            {
+                foreach (var ply in list)
+                {
+                    hub.audioplayer.BroadcastTo.Remove(ply);
+                }
+                response = $"Stopped the sound at ID {id} for the next player: {texttoresponse}";
+                return true;
+            }
+            else
+            {
+                response = $"Bot with the ID {id} was not found.";
+                return false;
+            }
         }
     }
 }

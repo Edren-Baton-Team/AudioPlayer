@@ -1,4 +1,5 @@
 ﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -17,9 +18,9 @@ namespace AudioPlayer.Commands.SubCommands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("audioplayer.kick"))
+            if (!sender.CheckPermission($"audioplayer.{Command}"))
             {
-                response = "You dont have perms to do that. Not enough perms: audioplayer.kick";
+                response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
                 return false;
             }
             if (arguments.Count == 0)
@@ -28,7 +29,15 @@ namespace AudioPlayer.Commands.SubCommands
                 return false;
             }
             int id = int.Parse(arguments.At(0));
-            AudioController.DisconnectDummy(id);
+            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            {
+                AudioController.DisconnectDummy(id);
+            }
+            else
+            {
+                response = $"Bot with the ID {id} was not found.";
+                return false;
+            }
             response = $"Kicked the bot out of the ID {id}";
             return true;
         }

@@ -17,9 +17,9 @@ namespace AudioPlayer.Commands.SubCommands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("audioplayer.add"))
+            if (!sender.CheckPermission($"audioplayer.{Command}"))
             {
-                response = "You dont have perms to do that. Not enough perms: audioplayer.add";
+                response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
                 return false;
             }
             if (arguments.Count == 0)
@@ -28,7 +28,15 @@ namespace AudioPlayer.Commands.SubCommands
                 return false;
             }
             int id = int.Parse(arguments.At(0));
-            Plugin.plugin.handlers.SpawnDummy(id: id);
+            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            {
+                Plugin.plugin.handlers.SpawnDummy(id: id);
+            }
+            else
+            {
+                response = $"Bot with the ID {id} was not found.";
+                return false;
+            }
             response = $"Added bot with ID {id}";
             return true;
         }

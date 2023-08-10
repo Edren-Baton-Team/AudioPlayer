@@ -17,9 +17,9 @@ namespace AudioPlayer.Commands.SubCommands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("audioplayer.volume"))
+            if (!sender.CheckPermission($"audioplayer.{Command}"))
             {
-                response = "You dont have perms to do that. Not enough perms: audioplayer.volume";
+                response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
                 return false;
             }
             if (arguments.Count <= 1)
@@ -29,9 +29,16 @@ namespace AudioPlayer.Commands.SubCommands
             }
             int id = int.Parse(arguments.At(0));
             if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
-                hub.audioplayer.Volume = Convert.ToInt32(arguments.At(1));
-            response = $"The volume has been changed for ID {id} to {Convert.ToInt32(arguments.At(1))}";
-            return true;
+            {
+                hub.audioplayer.Volume = float.Parse(arguments.At(1));
+                response = $"The volume has been changed for ID {id} to {float.Parse(arguments.At(1))}";
+                return true;
+            }
+            else
+            {
+                response = $"Bot with the ID {id} was not found.";
+                return false;
+            }
         }
     }
 }

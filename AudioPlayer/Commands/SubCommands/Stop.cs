@@ -18,9 +18,9 @@ namespace AudioPlayer.Commands.SubCommands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("audioplayer.stop"))
+            if (!sender.CheckPermission($"audioplayer.{Command}"))
             {
-                response = "You dont have perms to do that. Not enough perms: audioplayer.stop";
+                response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
                 return false;
             }
             if (arguments.Count == 0)
@@ -30,9 +30,16 @@ namespace AudioPlayer.Commands.SubCommands
             }
             int id = int.Parse(arguments.At(0));
             if (plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            {
                 hub.audioplayer.Stoptrack(true);
-            if (plugin.LobbySong)
-                plugin.LobbySong = false;
+                if (plugin.LobbySong)
+                    plugin.LobbySong = false;
+            }
+            else
+            {
+                response = $"Bot with the ID {id} was not found.";
+                return false;
+            }
             response = $"Stopped audio playback at an ID {id}";
             return true;
         }

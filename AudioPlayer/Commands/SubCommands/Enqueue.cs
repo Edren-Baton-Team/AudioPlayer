@@ -17,9 +17,9 @@ namespace AudioPlayer.Commands.SubCommands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("audioplayer.enqueue"))
+            if (!sender.CheckPermission($"audioplayer.{Command}"))
             {
-                response = "You dont have perms to do that. Not enough perms: audioplayer.enqueue";
+                response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
                 return false;
             }
             if (arguments.Count <= 2)
@@ -31,6 +31,11 @@ namespace AudioPlayer.Commands.SubCommands
             if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 hub.audioplayer.Enqueue(arguments.At(1), arguments.Count >= 4 ? Convert.ToInt32(arguments.At(2)) : -1);
+            }
+            else
+            {
+                response = $"Bot with the ID {id} was not found.";
+                return false;
             }
             response = $"Moved the audio playback at ID {id} to the position {(arguments.Count >= 3 ? Convert.ToInt32(arguments.At(2)) : -1)}, on the path {arguments.At(1)}";
             return true;

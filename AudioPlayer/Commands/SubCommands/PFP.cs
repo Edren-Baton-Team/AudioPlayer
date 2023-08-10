@@ -22,9 +22,9 @@ namespace AudioPlayer.Commands.SubCommands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("audioplayer.playfromplayer"))
+            if (!sender.CheckPermission($"audioplayer.{Command}"))
             {
-                response = "You dont have perms to do that. Not enough perms: audioplayer.playfromplayer";
+                response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
                 return false;
             }
             if (arguments.Count <= 2)
@@ -61,7 +61,7 @@ namespace AudioPlayer.Commands.SubCommands
             }
             else
             {
-                response = "No ID found";
+                response = $"Bot with the ID {id} was not found.";
                 return false;
             }
         }
