@@ -35,7 +35,7 @@ namespace AudioPlayer.Commands.SubCommands
                 return false;
             }
 
-            if (!Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+            if (!Extensions.TryGetAudioBot(id, out FakeConnectionList _))
             {
                 Extensions.SpawnDummy(id: id);
             }
