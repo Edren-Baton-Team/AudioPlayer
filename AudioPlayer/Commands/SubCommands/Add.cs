@@ -28,9 +28,16 @@ namespace AudioPlayer.Commands.SubCommands
                 return false;
             }
             int id = int.Parse(arguments.At(0));
-            if (!Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+
+            if (Extensions.IsThereAudioBot(id))
             {
-                Plugin.plugin.handlers.SpawnDummy(id: id);
+                response = $"Bot with an ID {id} already exists";
+                return false;
+            }
+
+            if (!Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+            {
+                Extensions.SpawnDummy(id: id);
             }
             else
             {
