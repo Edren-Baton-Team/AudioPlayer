@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using Exiled.API.Features;
 using SCPSLAudioApi.AudioCore;
 using System.Collections.Generic;
@@ -52,34 +53,25 @@ internal class EventHandler
         }
         //End AudioEvents
     }
-
     internal void OnWaitingForPlayers()
     {
-        if (plugin.Config.SpawnBot)
-        {
-            if (plugin.Config.SpecialEventsEnable)
-            {
-                if (LobbyPlaylist.Count > 0)
-                    LobbyPlaylist.RandomItem().Play(true);
-            }
-        }
+        if (plugin.Config.SpawnBot && plugin.Config.SpecialEventsEnable && LobbyPlaylist.Count > 0)
+            LobbyPlaylist.RandomItem().Play(true);
     }
     internal void OnRoundStarted()
     {
-        if (plugin.LobbySong)
-        {
-            LobbyPlaylist.RandomItem().Stop();
-            plugin.LobbySong = false;
-        }
+        if (!plugin.LobbySong) return;
+
+        LobbyPlaylist.RandomItem().Stop();
+        plugin.LobbySong = false;
     }
     //AudioEvents
     internal void OnFinishedTrack(AudioPlayerBase playerBase, string track, bool directPlay, ref int nextQueuePos)
     {
-        if (!Round.IsLobby || !plugin.Config.SpecialEventsEnable || !plugin.LobbySong)
+        if (!Round.IsLobby || !plugin.Config.SpecialEventsEnable || !plugin.LobbySong || LobbyPlaylist.Count == 0)
             return;
 
-        if (LobbyPlaylist.Count > 0)
-            LobbyPlaylist[UnityEngine.Random.Range(0, LobbyPlaylist.Count)].Play(true);
+        LobbyPlaylist[UnityEngine.Random.Range(0, LobbyPlaylist.Count)].Play(true);
     }
     internal void OnTrackSelected(AudioPlayerBase playerBase, bool directPlay, int queuePos, ref string track) =>
         Log.Info("Loading Audio (Debug SCPSLAudioApi)\n" +
@@ -123,13 +115,15 @@ internal class EventHandler
 
     internal void OnGenerated()
     {
-        if (FakeConnectionsIds != null)
-            FakeConnectionsIds.Clear();
+        if (FakeConnectionsIds != null) FakeConnectionsIds.Clear();
         if (plugin.Config.SpawnBot)
         {
+            Log.Info(1);
             foreach (var cfg in plugin.Config.BotsList)
             {
+                Log.Info(2);
                 Extensions.SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
+                Log.Info(3);
             }
         }
     }

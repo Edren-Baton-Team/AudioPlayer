@@ -10,7 +10,7 @@ public class Stop : ICommand, IUsageProvider
 {
     public string Command => "stop";
 
-    public string[] Aliases { get; } = Array.Empty<string>();
+    public string[] Aliases => Array.Empty<string>();
 
     public string Description => "Stop AudioPlayer bot audio playback";
 
