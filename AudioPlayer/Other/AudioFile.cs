@@ -12,7 +12,7 @@ public class AudioFile
     public bool Loop { get; set; } = false;
     public int Volume { get; set; } = 100;
     public VoiceChatChannel VoiceChatChannel { get; set; } = VoiceChatChannel.Intercom;
-    public int BotId { get; set; }
+    public int BotId { get; set; } = 99;
     public void Play(bool lobbyPlaylist = false)
     {
         if (!System.IO.File.Exists(Path))

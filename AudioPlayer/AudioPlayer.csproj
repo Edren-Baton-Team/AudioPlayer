@@ -35,7 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="API\AudioEvents.cs" />
     <Compile Include="Commands\Audio.cs" />
     <Compile Include="Commands\SubCommands\Add.cs" />
     <Compile Include="Commands\SubCommands\Loop.cs" />
@@ -49,17 +48,10 @@
     <Compile Include="Commands\SubCommands\Stop.cs" />
     <Compile Include="Commands\SubCommands\Volume.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Other\AutoUpdateExiledVersion.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AutoUpdateExiledVersion.tt</DependentUpon>
-    </Compile>
     <Compile Include="Other\DLC\SpecialEvents.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Other\BotsList.cs" />
     <Compile Include="Other\AudioFile.cs" />
-    <Compile Include="Other\EventsArgs\AudioPlayerDiedAttackerEventArgs.cs" />
-    <Compile Include="Other\EventsArgs\AudioPlayerDiedTargetEventArgs.cs" />
     <Compile Include="Other\Extensions.cs" />
     <Compile Include="Other\FakeConnectionList.cs" />
     <Compile Include="Plugin.cs" />
@@ -72,12 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Other\AutoUpdateExiledVersion.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AutoUpdateExiledVersion.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -107,37 +93,26 @@
     <Reference Include="DnsClient">
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\DnsClient.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API, Version=7.2.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API.dll</HintPath>
+    <Reference Include="Exiled.API %281%29">
+      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.API (1).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CreditTags, Version=7.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="Exiled.CreditTags, Version=8.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags.dll</HintPath>
+      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.CreditTags.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomItems, Version=7.2.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CustomItems.dll</HintPath>
+    <Reference Include="Exiled.Events %281%29">
+      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Events (1).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomRoles, Version=7.2.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CustomRoles.dll</HintPath>
+    <Reference Include="Exiled.Loader %281%29">
+      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Loader (1).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events, Version=7.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="Exiled.Permissions, Version=8.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Loader, Version=7.2.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Permissions, Version=7.2.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions.dll</HintPath>
+      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Permissions.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Updater, Version=3.1.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Updater.dll</HintPath>
+      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Facepunch.Steamworks.Posix">
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Facepunch.Steamworks.Posix.dll</HintPath>

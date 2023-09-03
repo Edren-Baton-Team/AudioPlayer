@@ -1,17 +1,11 @@
-﻿using Exiled.API.Enums;
-using Exiled.API.Features;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using static AudioPlayer.Plugin;
+﻿using System.ComponentModel;
 
 namespace AudioPlayer.Other;
 
 public class BotsList
 {
-    public string BotName { get; set; }
-    public int BotId { get; set; }
+    public string BotName { get; set; } = "Dedicated Server";
+    public int BotId { get; set; } = 99;
 
     [Description("Hide the AudioPlayer bot in the Player List?")]
     public bool ShowPlayerList { get; set; } = false;
@@ -19,6 +13,4 @@ public class BotsList
     public string BadgeText { get; set; } = "AudioPlayer BOT";
     [Description("What color will Badge? (Only works if BadgeBots = true)")]
     public string BadgeColor { get; set; } = "orange";
-    public static BotsList Get(int id) => plugin.Config.BotsList.FirstOrDefault(x => x.BotId == id);
-    public static BotsList Get(string name) => plugin.Config.BotsList.FirstOrDefault(x => x.BotName == name);
 }
