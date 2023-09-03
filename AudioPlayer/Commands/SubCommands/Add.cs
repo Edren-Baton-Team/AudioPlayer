@@ -28,7 +28,7 @@ namespace AudioPlayer.Commands.SubCommands
                 return false;
             }
             int id = int.Parse(arguments.At(0));
-            if (Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
+            if (!Plugin.plugin.FakeConnectionsIds.TryGetValue(id, out FakeConnectionList hub))
             {
                 Plugin.plugin.handlers.SpawnDummy(id: id);
             }
