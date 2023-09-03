@@ -1,5 +1,4 @@
 [![Downloads](https://img.shields.io/github/downloads/Edren-Baton-Team/AudioPlayer/total?color=brown&label=Downloads&style=for-the-badge)](https://github.com/Edren-Baton-Team/AudioPlayer/releases)
-![Lines](https://img.shields.io/tokei/lines/github/Edren-Baton-Team/AudioPlayer?style=for-the-badge)
 # AudioPlayer
 This plugin adds the ability to play .ogg audio files in the game.<br>
 It also has a convenient API for using it in your plugins.
