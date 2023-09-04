@@ -1,5 +1,4 @@
-﻿using AudioPlayer.API;
-using AudioPlayer.Other;
+﻿using AudioPlayer.Other;
 using Exiled.API.Features;
 using SCPSLAudioApi.AudioCore;
 using System.Collections.Generic;
@@ -17,6 +16,7 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated += OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+        Exiled.Events.Handlers.Server.RestartingRound += OnRestartingRound;
 
 
         //AudioEvents
@@ -38,6 +38,7 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated -= OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
+        Exiled.Events.Handlers.Server.RestartingRound -= OnRestartingRound;
 
 
         //AudioEvents
@@ -52,6 +53,11 @@ internal class EventHandler
             Log.Warn($"SCPSLAudioApi Debug Enabled!");
         }
         //End AudioEvents
+    }
+    internal void OnRestartingRound()
+    {
+        if(FakeConnectionsIds.Count > 1)
+            ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart; //DONE TEMPORARILY, I DON'T KNOW HOW TO FIX IT: https://ibb.co/9ybq127
     }
     internal void OnWaitingForPlayers()
     {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using AudioPlayer.Other;
+using HarmonyLib;
 
 namespace AudioPlayer;
 
@@ -32,7 +33,6 @@ public class Plugin : Plugin<Config>
             {
                 specialEvents = new SpecialEvents();
             }
-            //ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart; //DONE TEMPORARILY, I DON'T KNOW HOW TO FIX IT: https://ibb.co/9ybq127
 
             Startup.SetupDependencies();
             Extensions.CreateDirectory();

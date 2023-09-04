@@ -25,7 +25,6 @@ namespace AudioPlayer.API
         }
         public static void SpawnDummy(int id, bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
         {
-            // Не ебу
             Extensions.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
         }
         public static void StopPlayerFromPlaying(List<int> players, int id = 99)
@@ -83,11 +82,11 @@ namespace AudioPlayer.API
                 hub.audioplayer.Shuffle = shuffle;
             }
         }
-        public static void StopAudio(int id = 99)
+        public static void StopAudio(int id = 99, bool clearAudioList = true)
         {
             if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
             {
-                hub.audioplayer.Stoptrack(true);
+                hub.audioplayer.Stoptrack(clearAudioList);
                 if (plugin.LobbySong)
                     plugin.LobbySong = false;
             }

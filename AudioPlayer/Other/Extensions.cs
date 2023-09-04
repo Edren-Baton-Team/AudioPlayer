@@ -92,6 +92,7 @@ public static class Extensions
             {
                 Log.Error($"Error on {nameof(SpawnDummy)}: Error on set dummy role {e}");
             }
+            Player.Get(hubPlayer).IsNPC = true;
             hubPlayer.characterClassManager.GodMode = true;
             hubPlayer.serverRoles.SetText(badgetext);
             hubPlayer.serverRoles.SetColor(bagdecolor);
