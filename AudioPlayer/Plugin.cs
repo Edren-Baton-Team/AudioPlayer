@@ -12,8 +12,8 @@ public class Plugin : Plugin<Config>
 {
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
-    public override string Author => "Rysik5318 and Mariki";
-    public override Version Version { get; } = new Version(3, 0, 1);
+    public override string Author => "Rysik5318 & Mariki & swd";
+    public override Version Version { get; } = new Version(3, 0, 2);
     public static Plugin plugin; //troll 
 
     public static Dictionary<int, FakeConnectionList> FakeConnectionsIds = new(); // It's more convenient.
@@ -32,7 +32,7 @@ public class Plugin : Plugin<Config>
             {
                 specialEvents = new SpecialEvents();
             }
-            ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart; //DONE TEMPORARILY, I DON'T KNOW HOW TO FIX IT: https://ibb.co/9ybq127
+            //ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart; //DONE TEMPORARILY, I DON'T KNOW HOW TO FIX IT: https://ibb.co/9ybq127
 
             Startup.SetupDependencies();
             Extensions.CreateDirectory();
