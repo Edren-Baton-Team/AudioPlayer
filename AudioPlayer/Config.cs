@@ -35,6 +35,14 @@ public class Config : IConfig
             Loop = false,
             VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
             Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
         }
     };
     public List<AudioFile> RoundStartClip { get; private set; } = new();
