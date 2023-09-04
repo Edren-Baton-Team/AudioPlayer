@@ -56,7 +56,7 @@ internal class EventHandler
     }
     internal void OnRestartingRound()
     {
-        if(FakeConnectionsIds.Count > 1)
+        if (FakeConnectionsIds.Count > 0)
             ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart; //DONE TEMPORARILY, I DON'T KNOW HOW TO FIX IT: https://ibb.co/9ybq127
     }
     internal void OnWaitingForPlayers()
