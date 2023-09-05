@@ -2,7 +2,6 @@
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
-using UnityEngine;
 
 namespace AudioPlayer.Commands.SubCommands;
 
@@ -36,7 +35,7 @@ public class Volume : ICommand, IUsageProvider
         }
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
-            hub.audioplayer.Volume = Mathf.Clamp(volume, 0, 100) / 100;
+            hub.audioplayer.Volume = volume;
             response = $"The volume has been changed for ID {id} to {float.Parse(arguments.At(1))}";
             return true;
         }

@@ -20,8 +20,6 @@ internal class EventHandler
 
 
         //AudioEvents
-        AudioPlayerBase.OnFinishedTrack += OnFinishedTrack;
-
         if (plugin.Config.ScpslAudioApiDebug)
         {
             AudioPlayerBase.OnTrackSelecting += OnTrackSelecting;
@@ -42,8 +40,6 @@ internal class EventHandler
 
 
         //AudioEvents
-        AudioPlayerBase.OnFinishedTrack -= OnFinishedTrack;
-
         if (plugin.Config.ScpslAudioApiDebug)
         {
             AudioPlayerBase.OnTrackSelecting -= OnTrackSelecting;
@@ -124,12 +120,9 @@ internal class EventHandler
         if (FakeConnectionsIds != null) FakeConnectionsIds.Clear();
         if (plugin.Config.SpawnBot)
         {
-            Log.Info(1);
             foreach (var cfg in plugin.Config.BotsList)
             {
-                Log.Info(2);
                 Extensions.SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
-                Log.Info(3);
             }
         }
     }
