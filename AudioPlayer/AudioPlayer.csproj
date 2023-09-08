@@ -66,7 +66,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\0Harmony.dll</HintPath>
     </Reference>
@@ -74,9 +74,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized.dll</HintPath>
+    <Reference Include="Assembly-CSharp-Publicized%281%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized(1).dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -90,36 +89,34 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DnsClient">
+    <Reference Include="DnsClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\DnsClient.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API %281%29">
-      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.API (1).dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.CreditTags, Version=8.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="Exiled.API %281%29, Version=8.0.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.CreditTags.dll</HintPath>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API (1).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events %281%29">
-      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Events (1).dll</HintPath>
+    <Reference Include="Exiled.CreditTags %281%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags (1).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader %281%29">
-      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Loader (1).dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Permissions, Version=8.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="Exiled.Events %281%29, Version=8.0.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Permissions.dll</HintPath>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events (1).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Updater, Version=3.1.2.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="Exiled.Loader %281%29, Version=8.0.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\source\repos\Core\Core\bin\Debug\Exiled.Updater.dll</HintPath>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader (1).dll</HintPath>
     </Reference>
-    <Reference Include="Facepunch.Steamworks.Posix">
+    <Reference Include="Exiled.Permissions %281%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions (1).dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Updater %281%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Updater (1).dll</HintPath>
+    </Reference>
+    <Reference Include="Facepunch.Steamworks.Posix, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Facepunch.Steamworks.Posix.dll</HintPath>
-    </Reference>
-    <Reference Include="MapEditorReborn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\MapEditorReborn.dll</HintPath>
     </Reference>
     <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,7 +126,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mirror.Components.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Posix">
+    <Reference Include="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mono.Posix.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
@@ -139,7 +137,7 @@
     <Reference Include="netstandard">
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\netstandard.dll</HintPath>
     </Reference>
-    <Reference Include="NorthwoodLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NorthwoodLib, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\NorthwoodLib.dll</HintPath>
     </Reference>
@@ -155,7 +153,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Downloads\SCPSLAudioApi.dll</HintPath>
     </Reference>
-    <Reference Include="SemanticVersioning">
+    <Reference Include="SemanticVersioning, Version=2.0.2.0, Culture=neutral, PublicKeyToken=a89bb7dc6f7a145c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\SemanticVersioning.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -524,7 +523,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\YamlDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="zxing, Version=0.16.8.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+    <Reference Include="zxing, Version=0.16.9.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\zxing.dll</HintPath>
     </Reference>
