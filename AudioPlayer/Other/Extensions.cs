@@ -66,7 +66,7 @@ public static class Extensions
         {
             try
             {
-                hubPlayer.characterClassManager._privUserId = $"{id}@audioplayerbot";
+                hubPlayer.characterClassManager.UserId = $"{id}@audioplayerbot";
             }
             catch (Exception)
             {
@@ -76,7 +76,7 @@ public static class Extensions
 
         try
         {
-            hubPlayer.nicknameSync.SetNick(name);
+            hubPlayer.nicknameSync.Network_myNickSync = name;
         }
         catch (Exception)
         {

@@ -27,7 +27,11 @@ namespace AudioPlayer.Commands.SubCommands
                 response = "Usage: audio add {Bot ID}";
                 return false;
             }
-            int id = int.Parse(arguments.At(0));
+            if (!int.TryParse(arguments.At(0), out int id))
+            {
+                response = "Specify a number, other characters are not accepted";
+                return true;
+            }
 
             if (Extensions.IsThereAudioBot(id))
             {

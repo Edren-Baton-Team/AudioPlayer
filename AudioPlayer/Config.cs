@@ -45,18 +45,180 @@ public class Config : IConfig
             Volume = 100,
         }
     };
-    public List<AudioFile> RoundStartClip { get; private set; } = new();
-    public List<AudioFile> RoundEndClip { get; private set; } = new();
+    public List<AudioFile> RoundStartClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
+    public List<AudioFile> RoundEndClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
     [Description("Play CASSIE when the MTF arrives?")]
     public bool CassieMtfSpawn { get; private set; } = true;
-    public List<AudioFile> MtfSpawnClip { get; private set; } = new();
-    public List<AudioFile> ChaosSpawnClip { get; private set; } = new();
-    public List<AudioFile> WarheadStartingClip { get; private set; } = new();
+    public List<AudioFile> MtfSpawnClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
+    public List<AudioFile> ChaosSpawnClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
+    public List<AudioFile> WarheadStartingClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
 
     [Description("Stop audio playback if the warhead has been disabled? (true = yes, false = no)")]
     public bool WarheadStopping { get; private set; } = false;
-    public List<AudioFile> WarheadStoppingClip { get; private set; } = new();
-    public List<AudioFile> PlayerDiedTargetClip { get; private set; } = new();
-    public List<AudioFile> PlayerDiedKillerClip { get; private set; } = new();
-    public List<AudioFile> PlayerConnectedServer { get; private set; } = new();
+    public List<AudioFile> WarheadStoppingClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
+    public List<AudioFile> PlayerDiedTargetClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
+    public List<AudioFile> PlayerDiedKillerClip { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
+    public List<AudioFile> PlayerConnectedServer { get; private set; } = new()
+    {
+        new AudioFile()
+        {
+            Path = "/my/path/to/file.ogg",
+            BotId = 100,
+            Loop = false,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Intercom,
+            Volume = 100,
+        },
+        new AudioFile()
+        {
+            Path = "/my/path/to/file1.ogg",
+            BotId = 101,
+            Loop = true,
+            VoiceChatChannel = VoiceChat.VoiceChatChannel.Proximity,
+            Volume = 100,
+        }
+    };
 }

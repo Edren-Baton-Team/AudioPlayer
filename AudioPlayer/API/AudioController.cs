@@ -1,8 +1,10 @@
 ﻿using AudioPlayer.Other;
+using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 using VoiceChat;
 using static AudioPlayer.Plugin;
+using Extensions = AudioPlayer.Other.Extensions;
 
 namespace AudioPlayer.API
 {
@@ -109,6 +111,7 @@ namespace AudioPlayer.API
         {
             if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
             {
+                hub.hubPlayer.OnDestroy();
                 Object.Destroy(hub.hubPlayer.gameObject);
                 FakeConnectionsIds.Remove(id);
             }

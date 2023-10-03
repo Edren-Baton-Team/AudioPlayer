@@ -14,7 +14,7 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 & Mariki & swd";
-    public override Version Version { get; } = new Version(3, 0, 4);
+    public override Version Version { get; } = new Version(3, 0, 6);
     public static Plugin plugin; // troll 
 
     public static Dictionary<int, FakeConnectionList> FakeConnectionsIds = new(); // It's more convenient.
