@@ -28,12 +28,16 @@ public class Stop : ICommand, IUsageProvider
             response = "Usage: audio stop {Bot ID}";
             return false;
         }
-        int id = int.Parse(arguments.At(0));
+        if (!int.TryParse(arguments.At(0), out int id))
+        {
+            response = "Specify a number, other characters are not accepted";
+            return true;
+        }
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             hub.audioplayer.Stoptrack(true);
-            if (plugin.LobbySong)
-                plugin.LobbySong = false;
+            if (plugin.LobbySong != null)
+                plugin.LobbySong = null;
         }
         else
         {

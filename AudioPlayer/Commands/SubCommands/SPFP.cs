@@ -29,7 +29,11 @@ public class SPFP : ICommand, IUsageProvider
             response = "Usage: audio spfp {Bot ID} {PlayerList}";
             return false;
         }
-        int id = int.Parse(arguments.At(0));
+        if (!int.TryParse(arguments.At(0), out int id))
+        {
+            response = "Specify a number, other characters are not accepted";
+            return true;
+        }
 
         List<int> list = new();
         string textToResponse = string.Empty;

@@ -5,6 +5,7 @@ using Mirror;
 using PlayerRoles;
 using SCPSLAudioApi.AudioCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -14,10 +15,9 @@ using static AudioPlayer.Plugin;
 namespace AudioPlayer.Other;
 public static class Extensions
 {
-    internal static void CreateDirectory() //Creates a directory if it does not exist.
+    internal static void CreateDirectory() // Creates a directory if it does not exist.
     {
-        if (!Directory.Exists(plugin.AudioPath))
-            Directory.CreateDirectory(plugin.AudioPath);
+        if (!Directory.Exists(plugin.AudioPath)) Directory.CreateDirectory(plugin.AudioPath);
     }
     public static bool IsAudioBot(this ReferenceHub player) => FakeConnectionsIds.Values.Any(x => x.hubPlayer == player);
     public static bool IsAudioBot(this Player player) => FakeConnectionsIds.Values.Any(x => x.hubPlayer == player.ReferenceHub);
@@ -26,7 +26,30 @@ public static class Extensions
         fakeConnectionList = GetAudioBotFakeConnectionList(BotId);
         return fakeConnectionList is not null;
     }
+    public static AudioFile PlayRandomAudioFile(List<AudioFile> audioClip, bool lobbyPlaylist = false, bool noBaseEvent = false)
+    {
+        if (audioClip == null) audioClip = plugin.Config.LobbyPlaylist; // Solves two problems, the first is that I don't have to write lobbysong every time. The second is that there may never be a null value here :troll:
+        if ((!noBaseEvent && !plugin.Config.SpecialEventsEnable) || audioClip.Count == 0) return null;
+
+        var randomClip = audioClip.RandomItem();
+        randomClip.Play();
+
+        if (lobbyPlaylist && GetAllAudioBots().Count > 0 && Round.IsLobby) plugin.LobbySong = randomClip;
+
+        return randomClip;
+    }
+    public static AudioFile PlayRandomAudioFileFromPlayer(List<AudioFile> audioClip, Player player, bool noBaseEvent = false)
+    {
+        if (audioClip == null) audioClip = plugin.Config.LobbyPlaylist;
+        if ((!noBaseEvent && !plugin.Config.SpecialEventsEnable) || audioClip.Count == 0) return null;
+
+        var randomClip = audioClip.RandomItem();
+        randomClip.PlayFromFilePlayer(new List<int>() { player.Id });
+
+        return randomClip;
+    }
     public static bool IsThereAudioBot(this int BotId) => GetAudioBotFakeConnectionList(BotId) is not null;
+    public static List<FakeConnectionList> GetAllAudioBots() => FakeConnectionsIds.Values.ToList();
     public static Player GetAudioBot(this int BotId) => Player.Get(FakeConnectionsIds.Values.FirstOrDefault(x => x.BotID == BotId).hubPlayer);
     public static Player GetAudioBot(this string BotName) => Player.Get(FakeConnectionsIds.Values.FirstOrDefault(x => x.BotName == BotName).hubPlayer);
     public static Player GetAudioBot(this NetworkIdentity fakeConnection) => Player.Get(FakeConnectionsIds.Values.FirstOrDefault(x => x.fakeConnection == fakeConnection).hubPlayer);

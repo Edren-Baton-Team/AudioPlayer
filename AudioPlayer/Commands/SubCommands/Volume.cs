@@ -27,7 +27,11 @@ public class Volume : ICommand, IUsageProvider
             response = "Usage: audio volume {Bot ID} {Number}";
             return false;
         }
-        int id = int.Parse(arguments.At(0));
+        if (!int.TryParse(arguments.At(0), out int id))
+        {
+            response = "Specify a number, other characters are not accepted";
+            return true;
+        }
         if (!float.TryParse(arguments.At(1), out float volume))
         {
             response = "Couldn't parse that volume, make sure it is a integer between 0 and 100";

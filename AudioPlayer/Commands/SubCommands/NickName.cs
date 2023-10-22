@@ -29,11 +29,15 @@ public class NickName : ICommand, IUsageProvider
             response = "Usage: audio nick {Bot ID} {Text}";
             return false;
         }
-        int id = int.Parse(arguments.At(0));
+        if (!int.TryParse(arguments.At(0), out int id))
+        {
+            response = "Specify a number, other characters are not accepted";
+            return true;
+        }
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             string nickname = string.Join(" ", arguments.Where(x => arguments.At(0) != x));
-            hub.hubPlayer.nicknameSync.SetNick(nickname);
+            hub.hubPlayer.nicknameSync.Network_myNickSync = nickname;
             response = $"Set the nickname ID {id}, at {nickname}";
             return true;
         }

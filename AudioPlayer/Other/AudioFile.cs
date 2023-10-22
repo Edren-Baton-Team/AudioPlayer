@@ -13,15 +13,13 @@ public class AudioFile
     public int Volume { get; set; } = 100;
     public VoiceChatChannel VoiceChatChannel { get; set; } = VoiceChatChannel.Intercom;
     public int BotId { get; set; } = 99;
-    public void Play(bool lobbyPlaylist = false)
+    public void Play()
     {
         if (!System.IO.File.Exists(Path))
         {
             Log.Debug($"File not found on path {Path}");
             return;
         }
-        if (lobbyPlaylist)
-            Plugin.plugin.LobbySong = true;
 
         AudioController.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel, id: BotId);
     }
@@ -41,8 +39,9 @@ public class AudioFile
             Log.Debug(ex.ToString());
         }
     }
-    public void Stop()
+    public void Stop(bool lobbyPlaylist = false)
     {
+        if (lobbyPlaylist) Plugin.plugin.LobbySong = null;
         AudioController.StopAudio(BotId);
     }
 }

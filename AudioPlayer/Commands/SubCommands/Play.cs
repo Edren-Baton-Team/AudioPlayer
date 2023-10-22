@@ -29,7 +29,11 @@ public class Play : ICommand, IUsageProvider
             response = "Usage: audio play {Bot ID} {Path}";
             return false;
         }
-        int id = int.Parse(arguments.At(0));
+        if (!int.TryParse(arguments.At(0), out int id))
+        {
+            response = "Specify a number, other characters are not accepted";
+            return true;
+        }
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x));

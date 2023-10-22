@@ -4,14 +4,13 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Warhead;
 using Respawning;
-using System.Collections.Generic;
-using UnityEngine;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer.Other.DLC;
 
 internal class SpecialEvents
 {
+    private int WarheadStartBotId = 0;
     public SpecialEvents()
     {
         Exiled.Events.Handlers.Map.AnnouncingNtfEntrance += OnAnnouncingNtfEntrance;
@@ -36,104 +35,52 @@ internal class SpecialEvents
         Exiled.Events.Handlers.Player.Verified -= OnVerified;
         Exiled.Events.Handlers.Player.Died -= OnDied;
     }
-    private int WarheadStartBotId = 0;
     // Stole the code from the old AudioPlayer :jermasus:
-    internal void OnRoundStarted()
+    internal void OnRoundStarted() => Extensions.PlayRandomAudioFile(plugin.Config.RoundStartClip);
+    internal void OnRoundEnded(RoundEndedEventArgs ev) => Extensions.PlayRandomAudioFile(plugin.Config.RoundEndClip);
+    internal void OnVerified(VerifiedEventArgs ev) => Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerConnectedServer, ev.Player);
+    internal void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev) => ev.IsAllowed = plugin.Config.CassieMtfSpawn;
+    internal void OnDied(DiedEventArgs ev)
     {
-        List<AudioFile> playlist = plugin.Config.RoundStartClip;
+        if (ev.Player == null || ev.Attacker == null || ev.DamageHandler.Type == Exiled.API.Enums.DamageType.Unknown) return;
 
-        if (playlist.Count > 0)
-            playlist.RandomItem().Play();
+        Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerDiedTargetClip, ev.Player);
+        Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerDiedKillerClip, ev.Attacker);
     }
-    internal void OnRoundEnded(RoundEndedEventArgs ev)
-    {
-        List<AudioFile> playlist = plugin.Config.RoundEndClip;
 
-        if (playlist.Count > 0)
-            playlist.RandomItem().Play();
-    }
     internal void OnRespawningTeam(RespawningTeamEventArgs ev)
     {
         switch (ev.NextKnownTeam)
         {
             case SpawnableTeamType.ChaosInsurgency:
-                {
-                    List<AudioFile> playlist = plugin.Config.ChaosSpawnClip;
-
-                    if (playlist.Count > 0)
-                        playlist.RandomItem().Play();
-                }
+                Extensions.PlayRandomAudioFile(plugin.Config.ChaosSpawnClip);
                 break;
             case SpawnableTeamType.NineTailedFox:
-                {
-                    List<AudioFile> playlist1 = plugin.Config.MtfSpawnClip;
-
-                    if (playlist1.Count > 0)
-                        playlist1.RandomItem().Play();
-                }
+                Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip);
                 break;
         }
     }
 
     internal void OnWarheadStarting(StartingEventArgs ev)
     {
-        if (!Warhead.CanBeStarted || plugin.Config.WarheadStartingClip.Count == 0)
-            return;
-
-        AudioFile playlist = plugin.Config.WarheadStartingClip.RandomItem();
-
-        if (plugin.Config.WarheadStopping) WarheadStartBotId = playlist.BotId;
-
-        playlist.Play();
+        if (!Warhead.CanBeStarted) return;
+        var song = Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip);
+        if (plugin.Config.WarheadStopping) WarheadStartBotId = song.BotId; // Getting a bot ID through a song, lol
     }
-
-
-    internal void OnWarheadStopping(StoppingEventArgs ev)
-    {
-        List<AudioFile> playlist = plugin.Config.WarheadStoppingClip;
-
-        if (plugin.Config.WarheadStopping)
-        {
-            API.AudioController.StopAudio(WarheadStartBotId);
-            WarheadStartBotId = 0;
-        }
-        if (playlist.Count > 0) playlist.RandomItem().Play();
-    }
-    internal void OnVerified(VerifiedEventArgs ev)
-    {
-        List<AudioFile> playlist = plugin.Config.PlayerConnectedServer;
-
-        if (playlist.Count > 0)
-            playlist.RandomItem().PlayFromFilePlayer(new List<int>() { ev.Player.Id });
-    }
-
-    internal void OnDied(DiedEventArgs ev1)
-    {
-        if (ev1.Player == null || ev1.Attacker == null || ev1.DamageHandler.Type == Exiled.API.Enums.DamageType.Unknown)
-            return;
-        AudioFile playlist = plugin.Config.PlayerDiedTargetClip.RandomItem();
-        AudioFile playlist1 = plugin.Config.PlayerDiedKillerClip.RandomItem();
-        if (plugin.Config.PlayerDiedTargetClip.Count > 0)
-        {
-            playlist.PlayFromFilePlayer(new List<int>() { ev1.Player.Id });
-        }
-        if (plugin.Config.PlayerDiedKillerClip.Count > 0)
-        {
-            playlist1.PlayFromFilePlayer(new List<int>() { ev1.Attacker.Id });
-        }
-    }
-
     internal void OnWarheadDetonated()
     {
+        if (!plugin.Config.WarheadStopping) return;
+
+        API.AudioController.StopAudio(WarheadStartBotId);
+        WarheadStartBotId = 0;
+    }
+    internal void OnWarheadStopping(StoppingEventArgs ev)
+    {
         if (plugin.Config.WarheadStopping)
         {
             API.AudioController.StopAudio(WarheadStartBotId);
             WarheadStartBotId = 0;
         }
-    }
-
-    internal void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev)
-    {
-        ev.IsAllowed = plugin.Config.CassieMtfSpawn;
+        Extensions.PlayRandomAudioFile(plugin.Config.WarheadStoppingClip);
     }
 }
