@@ -38,10 +38,10 @@ namespace AudioPlayer
             {
                 while (Plugin.FakeConnectionsIds.Count() > 0) // Waiting for all AudioPlayer bots to leave the server.
                 {
-                    Log.Info("1");
+                    //Log.Info("1");
                     foreach (var all in Plugin.FakeConnectionsIds.ToList())
                     {
-                        Log.Info("Clear");
+                        //Log.Info("Clear");
                         all.Value.audioplayer.OnDestroy();
                         AudioController.DisconnectDummy(all.Key);
                     }
