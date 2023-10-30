@@ -89,7 +89,7 @@ public static class Extensions
         {
             try
             {
-                hubPlayer.characterClassManager.UserId = $"{id}@audioplayerbot";
+                hubPlayer.authManager.UserId = $"{id}@audioplayerbot";
             }
             catch (Exception)
             {

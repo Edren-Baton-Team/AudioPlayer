@@ -1,4 +1,5 @@
 ﻿using AudioPlayer.Other;
+using CentralAuth;
 using Exiled.API.Features;
 using SCPSLAudioApi.AudioCore;
 using static AudioPlayer.Plugin;
@@ -9,11 +10,10 @@ internal class EventHandler
 {
     internal EventHandler()
     {
-        CharacterClassManager.OnInstanceModeChanged += OnInstanceModeChanged;
+        PlayerAuthenticationManager.OnInstanceModeChanged += OnInstanceModeChanged;
         Exiled.Events.Handlers.Map.Generated += OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
-        Exiled.Events.Handlers.Server.RestartingRound += OnRestartingRound;
         AudioPlayerBase.OnFinishedTrack += OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -25,11 +25,10 @@ internal class EventHandler
     }
     ~EventHandler()
     {
-        CharacterClassManager.OnInstanceModeChanged -= OnInstanceModeChanged;
+        PlayerAuthenticationManager.OnInstanceModeChanged -= OnInstanceModeChanged;
         Exiled.Events.Handlers.Map.Generated -= OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
-        Exiled.Events.Handlers.Server.RestartingRound -= OnRestartingRound;
         AudioPlayerBase.OnFinishedTrack -= OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -41,7 +40,7 @@ internal class EventHandler
     }
     internal void OnGenerated()
     {
-        if (FakeConnectionsIds != null) FakeConnectionsIds.Clear();
+        if (FakeConnectionsIds != null || FakeConnectionsIds.Count > 0) FakeConnectionsIds.Clear();
         if (plugin.Config.SpawnBot)
             foreach (var cfg in plugin.Config.BotsList)
                 Extensions.SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
@@ -52,17 +51,13 @@ internal class EventHandler
         if (plugin.LobbySong != null)
             plugin.LobbySong.Stop(true);
     }
-    internal void OnRestartingRound()
-    {
-        if (FakeConnectionsIds.Count > 0)
-            ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart; //DONE TEMPORARILY, I DON'T KNOW HOW TO FIX IT: https://ibb.co/9ybq127
-    }
     internal void OnInstanceModeChanged(ReferenceHub arg1, ClientInstanceMode arg2)
     {
-        if ((arg2 != ClientInstanceMode.Unverified || arg2 != ClientInstanceMode.Host) && arg1.characterClassManager._privUserId.Contains("@audioplayerbot"))
+        if ((arg2 != ClientInstanceMode.Unverified || arg2 != ClientInstanceMode.Host) && arg1.authManager.UserId.Contains("@audioplayerbot"))
         {
             Log.Debug($"Replaced instancemode for dummy to host.");
-            arg1.characterClassManager.InstanceMode = ClientInstanceMode.Host;
+            arg1.authManager.InstanceMode = ClientInstanceMode.Host;
+           
         }
     }
     internal void OnFinishedTrack(AudioPlayerBase playerBase, string track, bool directPlay, ref int nextQueuePos)

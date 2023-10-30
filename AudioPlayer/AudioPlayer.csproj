@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Commands\Audio.cs" />
     <Compile Include="Commands\SubCommands\Add.cs" />
+    <Compile Include="Commands\SubCommands\LookAt.cs" />
     <Compile Include="Commands\SubCommands\Loop.cs" />
     <Compile Include="Commands\SubCommands\VoiceChannel.cs" />
     <Compile Include="Commands\SubCommands\Enqueue.cs" />
@@ -48,6 +49,8 @@
     <Compile Include="Commands\SubCommands\Stop.cs" />
     <Compile Include="Commands\SubCommands\Volume.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="FakeConnection.cs" />
+    <Compile Include="HarmonyPatchs.cs" />
     <Compile Include="Other\DLC\SpecialEvents.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Other\BotsList.cs" />
@@ -70,12 +73,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass.dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass %282%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass (2).dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized%281%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized(1).dll</HintPath>
+    <Reference Include="Assembly-CSharp-Publicized %282%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized (2).dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -93,30 +95,31 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\DnsClient.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API %281%29, Version=8.0.2.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API (1).dll</HintPath>
+    <Reference Include="Exiled.API %282%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API (2).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CreditTags %281%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags (1).dll</HintPath>
+    <Reference Include="Exiled.CreditTags %282%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags (2).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events %281%29, Version=8.0.2.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events (1).dll</HintPath>
+    <Reference Include="Exiled.Events %282%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events (2).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader %281%29, Version=8.0.2.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader (1).dll</HintPath>
+    <Reference Include="Exiled.Loader %282%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader (2).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Permissions %281%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions (1).dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Updater %281%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Updater (1).dll</HintPath>
+    <Reference Include="Exiled.Permissions %282%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions (2).dll</HintPath>
     </Reference>
     <Reference Include="Facepunch.Steamworks.Posix, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Facepunch.Steamworks.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="Facepunch.Steamworks.Win64, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Facepunch.Steamworks.Win64.dll</HintPath>
+    </Reference>
+    <Reference Include="MapEditorReborn">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\MapEditorReborn.dll</HintPath>
     </Reference>
     <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -136,6 +139,10 @@
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NorthwoodLib, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -271,6 +278,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ARModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\UnityEngine.ARModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\UnityEngine.AssetBundleModule.dll</HintPath>
@@ -346,6 +357,10 @@
     <Reference Include="UnityEngine.LocalizationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.NVIDIAModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\UnityEngine.NVIDIAModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

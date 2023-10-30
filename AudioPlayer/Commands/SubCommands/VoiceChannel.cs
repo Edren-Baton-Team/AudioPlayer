@@ -33,10 +33,15 @@ public class VoiceChannel : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
+        if (!VoiceChatChannel.TryParse(arguments.At(1), out VoiceChatChannel result))
+        {
+            response = $"I couldn't find a VoiceChatChannel with the name - {arguments.At(1)}";
+            return false;
+        }
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
-            hub.audioplayer.BroadcastChannel = (VoiceChatChannel)Enum.Parse(typeof(VoiceChatChannel), arguments.At(1));
-            response = $"AudioChannel changed for ID {id} to {(VoiceChatChannel)Enum.Parse(typeof(VoiceChatChannel), arguments.At(1))}";
+            hub.audioplayer.BroadcastChannel = result;
+            response = $"AudioChannel changed for ID {id} to {result}";
             return true;
         }
         else

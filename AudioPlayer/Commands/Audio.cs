@@ -11,7 +11,7 @@ public class AudioCommand : ParentCommand
     public AudioCommand() => LoadGeneratedCommands();
     public override string Command => "audiocommand";
 
-    public override string[] Aliases => plugin.Config.CommandName;
+    public override string[] Aliases => plugin.Config.CommandName == null ? new string[] { "audio", "au" } : plugin.Config.CommandName;
 
     public override string Description => "Audio Command";
 

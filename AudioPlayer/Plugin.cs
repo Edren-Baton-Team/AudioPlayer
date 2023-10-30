@@ -1,6 +1,7 @@
 ﻿using AudioPlayer.Other;
 using AudioPlayer.Other.DLC;
 using Exiled.API.Features;
+using HarmonyLib;
 using SCPSLAudioApi;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,14 @@ public class Plugin : Plugin<Config>
 {
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
-    public override string Author => "Rysik5318 & Mariki & swd";
-    public override Version Version => new Version(3, 0, 7);
+    public override string Author => "Rysik5318 & Mariki";
+    public override Version Version => new Version(3, 0, 8);
     public static Plugin plugin; // troll 
 
     public static Dictionary<int, FakeConnectionList> FakeConnectionsIds = new(); // It's more convenient.
     internal EventHandler EventHandlers;
     internal SpecialEvents specialEvents;
+    internal Harmony harmony;
     public AudioFile LobbySong = null;
     public readonly string AudioPath = Path.Combine(Paths.Plugins, "audio");
 
@@ -30,7 +32,8 @@ public class Plugin : Plugin<Config>
             EventHandlers = new EventHandler();
             if (Config.SpecialEventsEnable)
                 specialEvents = new SpecialEvents();
-
+            harmony = new Harmony($"AudioPlayer - {DateTime.Now}");
+            harmony.PatchAll();
             Startup.SetupDependencies();
             Extensions.CreateDirectory();
         }
@@ -42,6 +45,7 @@ public class Plugin : Plugin<Config>
     }
     public override void OnDisabled()
     {
+        harmony.UnpatchAll();
         EventHandlers = null;
         specialEvents = null;
 

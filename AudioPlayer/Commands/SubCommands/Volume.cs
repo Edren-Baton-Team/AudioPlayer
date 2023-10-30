@@ -40,7 +40,7 @@ public class Volume : ICommand, IUsageProvider
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             hub.audioplayer.Volume = volume;
-            response = $"The volume has been changed for ID {id} to {float.Parse(arguments.At(1))}";
+            response = $"The volume has been changed for ID {id} to {volume}";
             return true;
         }
         else
