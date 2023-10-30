@@ -49,7 +49,7 @@
     <Compile Include="Commands\SubCommands\Stop.cs" />
     <Compile Include="Commands\SubCommands\Volume.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="FakeConnection.cs" />
+    <Compile Include="Other\FakeConnection.cs" />
     <Compile Include="HarmonyPatchs.cs" />
     <Compile Include="Other\DLC\SpecialEvents.cs" />
     <Compile Include="EventHandler.cs" />
