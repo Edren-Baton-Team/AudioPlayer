@@ -1,6 +1,5 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.API.Features.Components;
 using Mirror;
 using PlayerRoles;
 using SCPSLAudioApi.AudioCore;
@@ -18,6 +17,14 @@ public static class Extensions
     internal static void CreateDirectory() // Creates a directory if it does not exist.
     {
         if (!Directory.Exists(plugin.AudioPath)) Directory.CreateDirectory(plugin.AudioPath);
+    }
+    internal static void WarheadSoundControl(int botId, bool stopSong = true, bool CanBeStartedWarhead = false, List<AudioFile> audiolist = null)
+    {
+        if (!plugin.Config.WarheadStopping) return;
+        if (stopSong) API.AudioController.StopAudio(DLC.SpecialEvents.WarheadStartBotId);
+        if (!Warhead.CanBeStarted && CanBeStartedWarhead) return;
+        DLC.SpecialEvents.WarheadStartBotId = botId;
+        if (audiolist != null) PlayRandomAudioFile(plugin.Config.WarheadStoppingClip);
     }
     public static bool IsAudioBot(this ReferenceHub player) => FakeConnectionsIds.Values.Any(x => x.hubPlayer == player);
     public static bool IsAudioBot(this Player player) => FakeConnectionsIds.Values.Any(x => x.hubPlayer == player.ReferenceHub);
@@ -121,5 +128,26 @@ public static class Extensions
             hubPlayer.serverRoles.SetColor(bagdecolor);
         });
 
+    }
+    internal static (ushort horizontal, ushort vertical) ToClientUShorts(this Quaternion rotation)
+    {
+        const float ToHorizontal = ushort.MaxValue / 360f;
+        const float ToVertical = ushort.MaxValue / 176f;
+
+        float fixVertical = -rotation.eulerAngles.x;
+
+        if (fixVertical < -90f)
+        {
+            fixVertical += 360f;
+        }
+        else if (fixVertical > 270f)
+        {
+            fixVertical -= 360f;
+        }
+
+        float horizontal = Mathf.Clamp(rotation.eulerAngles.y, 0f, 360f);
+        float vertical = Mathf.Clamp(fixVertical, -88f, 88f) + 88f;
+
+        return ((ushort)Math.Round(horizontal * ToHorizontal), (ushort)Math.Round(vertical * ToVertical));
     }
 }

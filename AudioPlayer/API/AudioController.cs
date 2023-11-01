@@ -8,6 +8,22 @@ using Extensions = AudioPlayer.Other.Extensions;
 namespace AudioPlayer.API;
 public static class AudioController
 {
+    public static void SpawnDummy(int id, bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
+        => Extensions.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
+    public static void StopPlayerFromPlaying(List<int> players, int id = 99)
+        => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.BroadcastTo.RemoveAll(players.Contains);
+    public static void AddAudioEnqueue(string audio, int pos, int id = 99)
+        => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.Enqueue(audio, pos);
+    public static void LogDebugAudio(bool logdebug = true, int id = 99)
+        => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.LogDebug = logdebug;
+    public static void ContinueAudio(bool Continue = true, int id = 99)
+        => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.Continue = Continue;
+    public static void ShuffleAudio(bool shuffle = false, int id = 99)
+        => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.Shuffle = shuffle;
+    public static void LoopAudio(bool loop, int id = 99)
+    => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.Loop = loop;
+    public static void VolumeAudio(float volume, int id = 99)
+        => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.Volume = volume;
     public static void PlayAudioFromFile(string path, bool loop = false, float volume = 100, VoiceChatChannel channel = VoiceChatChannel.Intercom, bool shuffle = false, bool logdebug = false, bool Continue = true, int id = 99)
     {
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
@@ -22,13 +38,6 @@ public static class AudioController
             audioPlayer.Enqueue(path, -1);
             audioPlayer.Play(0);
         }
-    }
-    public static void SpawnDummy(int id, bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
-        => Extensions.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
-    public static void StopPlayerFromPlaying(List<int> players, int id = 99)
-    {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-            hub.audioplayer.BroadcastTo.RemoveAll(players.Contains);
     }
     public static void PlayFromFilePlayer(List<int> players, string path, bool loop = false, float volume = 100, VoiceChatChannel channel = VoiceChatChannel.Intercom, bool shuffle = false, bool logdebug = false, bool Continue = true, int id = 99)
     {
@@ -46,58 +55,20 @@ public static class AudioController
             audioPlayer.Play(0);
         }
     }
-    public static void AddAudioEnqueue(string audio, int pos, int id = 99)
-    {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-            hub.audioplayer.Enqueue(audio, pos);
-    }
-    public static void LogDebugAudio(bool logdebug = true, int id = 99)
-    {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-            hub.audioplayer.LogDebug = logdebug;
-    }
-    public static void ContinueAudio(bool Continue = true, int id = 99)
-    {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-            hub.audioplayer.Continue = Continue;
-    }
-    public static void ShuffleAudio(bool shuffle = false, int id = 99)
-    {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-            hub.audioplayer.Shuffle = shuffle;
-    }
     public static void StopAudio(int id = 99, bool clearAudioList = true)
     {
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             hub.audioplayer.Stoptrack(clearAudioList);
-            if (plugin.LobbySong != null)
-                plugin.LobbySong = null;
+            if (plugin.LobbySong != null) plugin.LobbySong = null;
         }
-    }
-    public static void LoopAudio(bool loop, int id = 99)
-    {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-        {
-            hub.audioplayer.Loop = loop;
-        }
-    }
-    public static void VolumeAudio(float volume, int id = 99)
-    {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-            hub.audioplayer.Volume = volume;
     }
     public static void DisconnectDummy(int id)
     {
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             Object.Destroy(hub.hubPlayer.gameObject);
-
-            try
-            {
-                hub.hubPlayer.OnDestroy();
-            } catch { }
-
+            try  {hub.hubPlayer.OnDestroy(); } catch { }
             FakeConnectionsIds.Remove(id);
         }
     }

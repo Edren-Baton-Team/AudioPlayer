@@ -1,5 +1,4 @@
-﻿using Exiled.API.Features;
-using Exiled.Events.EventArgs.Map;
+﻿using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Warhead;
@@ -10,7 +9,7 @@ namespace AudioPlayer.Other.DLC;
 
 internal class SpecialEvents
 {
-    private int WarheadStartBotId = 0;
+    internal static int WarheadStartBotId = 0;
     public SpecialEvents()
     {
         Exiled.Events.Handlers.Map.AnnouncingNtfEntrance += OnAnnouncingNtfEntrance;
@@ -40,47 +39,20 @@ internal class SpecialEvents
     internal void OnRoundEnded(RoundEndedEventArgs ev) => Extensions.PlayRandomAudioFile(plugin.Config.RoundEndClip);
     internal void OnVerified(VerifiedEventArgs ev) => Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerConnectedServer, ev.Player);
     internal void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev) => ev.IsAllowed = plugin.Config.CassieMtfSpawn;
+    internal void OnWarheadStarting(StartingEventArgs ev) => Extensions.WarheadSoundControl(Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip).BotId, false, true); // Getting a bot ID through a song, lol
+    internal void OnWarheadDetonated() => Extensions.WarheadSoundControl(0);
+    internal void OnWarheadStopping(StoppingEventArgs ev) => Extensions.WarheadSoundControl(0, audiolist: plugin.Config.WarheadStoppingClip);
     internal void OnDied(DiedEventArgs ev)
     {
         if (ev.Player == null || ev.Attacker == null || ev.DamageHandler.Type == Exiled.API.Enums.DamageType.Unknown) return;
-
         Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerDiedTargetClip, ev.Player);
         Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerDiedKillerClip, ev.Attacker);
     }
 
     internal void OnRespawningTeam(RespawningTeamEventArgs ev)
     {
-        switch (ev.NextKnownTeam)
-        {
-            case SpawnableTeamType.ChaosInsurgency:
-                Extensions.PlayRandomAudioFile(plugin.Config.ChaosSpawnClip);
-                break;
-            case SpawnableTeamType.NineTailedFox:
-                Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip);
-                break;
-        }
-    }
-
-    internal void OnWarheadStarting(StartingEventArgs ev)
-    {
-        if (!Warhead.CanBeStarted) return;
-        var song = Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip);
-        if (plugin.Config.WarheadStopping) WarheadStartBotId = song.BotId; // Getting a bot ID through a song, lol
-    }
-    internal void OnWarheadDetonated()
-    {
-        if (!plugin.Config.WarheadStopping) return;
-
-        API.AudioController.StopAudio(WarheadStartBotId);
-        WarheadStartBotId = 0;
-    }
-    internal void OnWarheadStopping(StoppingEventArgs ev)
-    {
-        if (plugin.Config.WarheadStopping)
-        {
-            API.AudioController.StopAudio(WarheadStartBotId);
-            WarheadStartBotId = 0;
-        }
-        Extensions.PlayRandomAudioFile(plugin.Config.WarheadStoppingClip);
+        if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency) 
+            Extensions.PlayRandomAudioFile(plugin.Config.ChaosSpawnClip);
+        else Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip);
     }
 }

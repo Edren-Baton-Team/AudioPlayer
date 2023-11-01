@@ -48,8 +48,7 @@ internal class EventHandler
     internal void OnWaitingForPlayers() => Extensions.PlayRandomAudioFile(null, true);
     internal void OnRoundStarted()
     {
-        if (plugin.LobbySong != null)
-            plugin.LobbySong.Stop(true);
+        if (plugin.LobbySong != null) plugin.LobbySong.Stop(true);
     }
     internal void OnInstanceModeChanged(ReferenceHub arg1, ClientInstanceMode arg2)
     {
@@ -57,13 +56,11 @@ internal class EventHandler
         {
             Log.Debug($"Replaced instancemode for dummy to host.");
             arg1.authManager.InstanceMode = ClientInstanceMode.Host;
-           
         }
     }
     internal void OnFinishedTrack(AudioPlayerBase playerBase, string track, bool directPlay, ref int nextQueuePos)
     {
-        if (!Round.IsLobby)
-            return;
+        if (!Round.IsLobby) return;
         Extensions.PlayRandomAudioFile(null, true);
     }
 

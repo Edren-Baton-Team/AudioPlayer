@@ -1,7 +1,7 @@
-﻿using AudioPlayer.Other;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Exiled.API.Interfaces;
 using System.Collections.Generic;
+using AudioPlayer.Other;
 
 namespace AudioPlayer;
 
