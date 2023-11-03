@@ -73,7 +73,7 @@ public static class Extensions
             return;
         }
         GameObject newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
-        FakeConnection fakeConnection = new FakeConnection(id);
+        FakeConnection fakeConnection = new FakeConnection(ReferenceHub.AllHubs.Count + 1);
         ReferenceHub hubPlayer = newPlayer.GetComponent<ReferenceHub>();
         FakeConnectionsIds.Add(id, new FakeConnectionList()
         {
@@ -83,14 +83,7 @@ public static class Extensions
             audioplayer = AudioPlayerBase.Get(hubPlayer),
             hubPlayer = hubPlayer,
         });
-        if (RecyclablePlayerId.FreeIds.Contains(id))
-        {
-            RecyclablePlayerId.FreeIds.RemoveFromQueue(id);
-        }
-        else if (RecyclablePlayerId._autoIncrement >= id)
-        {
-            RecyclablePlayerId._autoIncrement = id = RecyclablePlayerId._autoIncrement + 1;
-        }
+
         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
         if (!showplayer)
         {
@@ -104,15 +97,9 @@ public static class Extensions
             }
         }
 
-        try
-        {
-            hubPlayer.nicknameSync.Network_myNickSync = name;
-        }
-        catch (Exception)
-        {
-            //Ignore
-        }
-        MEC.Timing.CallDelayed(1, () =>
+        hubPlayer.nicknameSync.Network_myNickSync = name;
+
+        MEC.Timing.CallDelayed(0.3f, () =>
         {
             try
             {

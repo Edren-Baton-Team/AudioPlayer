@@ -68,7 +68,7 @@ public static class AudioController
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             Object.Destroy(hub.hubPlayer.gameObject);
-            try  {hub.hubPlayer.OnDestroy(); } catch { }
+            try { hub.hubPlayer.OnDestroy(); } catch { }
             FakeConnectionsIds.Remove(id);
         }
     }
