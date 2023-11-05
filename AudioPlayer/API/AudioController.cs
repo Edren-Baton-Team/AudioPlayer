@@ -1,4 +1,6 @@
 ﻿using AudioPlayer.Other;
+using Exiled.API.Features;
+using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 using VoiceChat;
@@ -63,12 +65,16 @@ public static class AudioController
             if (plugin.LobbySong != null) plugin.LobbySong = null;
         }
     }
-    public static void DisconnectDummy(int id)
+    public static void DisconnectDummy(int id = 99)
     {
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
-            Object.Destroy(hub.hubPlayer.gameObject);
+            if (hub.hubPlayer._playerId.Value <= RecyclablePlayerId._autoIncrement)
+                hub.hubPlayer._playerId.Destroy();
             try { hub.hubPlayer.OnDestroy(); } catch { }
+            try { NetworkServer.RemovePlayerForConnection(hub.fakeConnection.connectionToClient, true); } catch { }
+            try { CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection.connectionToClient); } catch { }
+            Object.Destroy(hub.hubPlayer.gameObject);
             FakeConnectionsIds.Remove(id);
         }
     }

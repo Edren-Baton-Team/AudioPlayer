@@ -2,6 +2,7 @@
 using CentralAuth;
 using Exiled.API.Features;
 using SCPSLAudioApi.AudioCore;
+using System.Linq;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer;

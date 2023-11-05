@@ -73,8 +73,8 @@ public static class Extensions
             return;
         }
         GameObject newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
-        FakeConnection fakeConnection = new FakeConnection(ReferenceHub.AllHubs.Count + 1);
         ReferenceHub hubPlayer = newPlayer.GetComponent<ReferenceHub>();
+        FakeConnection fakeConnection = new FakeConnection(GenerateUniqueID(hubPlayer));
         FakeConnectionsIds.Add(id, new FakeConnectionList()
         {
             BotID = id,
@@ -136,5 +136,20 @@ public static class Extensions
         float vertical = Mathf.Clamp(fixVertical, -88f, 88f) + 88f;
 
         return ((ushort)Math.Round(horizontal * ToHorizontal), (ushort)Math.Round(vertical * ToVertical));
+    }
+    internal static bool IsIdExists(int id, ReferenceHub hub)
+    {
+        foreach (var player in ReferenceHub.AllHubs.Where(x => x != hub))
+            if (player.PlayerId == id)
+                return true;
+        return false;
+    }
+
+    internal static int GenerateUniqueID(ReferenceHub hub)
+    {
+        int id = ReferenceHub.AllHubs.Count + 1;
+        while (IsIdExists(id, hub))
+            id++;
+        return id;
     }
 }

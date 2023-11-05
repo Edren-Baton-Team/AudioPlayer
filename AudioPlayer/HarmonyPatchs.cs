@@ -1,16 +1,36 @@
 ﻿using AudioPlayer.API;
 using CentralAuth;
+using Exiled.API.Features;
 using GameObjectPools;
 using HarmonyLib;
 using Mirror;
+using NorthwoodLib;
 using PluginAPI.Core;
 using PluginAPI.Events;
 using RoundRestarting;
 using System;
 using System.Linq;
 using System.Threading;
+using UnityEngine;
+using static Mono.Security.X509.X520;
 
 namespace AudioPlayer;
+
+[HarmonyPatch(typeof(ReferenceHub), nameof(ReferenceHub.Awake))]
+internal static class ReferenceHubAwake
+{
+    private static bool Prefix(ReferenceHub __instance)
+    {
+        ReferenceHub.AllHubs.Add(__instance);
+        ReferenceHub.HubsByGameObjects[__instance.gameObject] = __instance;
+        if (NetworkServer.active)
+        {
+            __instance.Network_playerId = new RecyclablePlayerId(Other.Extensions.GenerateUniqueID(__instance));
+            __instance.FriendlyFireHandler = new FriendlyFireHandler(__instance);
+        }
+        return false;
+    }
+}
 
 [HarmonyPatch(typeof(RoundRestart), nameof(RoundRestart.InitiateRoundRestart))]
 internal static class RestartingRound
