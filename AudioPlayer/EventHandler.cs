@@ -1,8 +1,8 @@
 ﻿using AudioPlayer.Other;
 using CentralAuth;
 using Exiled.API.Features;
+using Exiled.Events.EventArgs.Player;
 using SCPSLAudioApi.AudioCore;
-using System.Linq;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer;
@@ -15,6 +15,7 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated += OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+        Exiled.Events.Handlers.Player.Joined += OnJoined;
         AudioPlayerBase.OnFinishedTrack += OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -30,6 +31,7 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated -= OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
+        Exiled.Events.Handlers.Player.Joined -= OnJoined;
         AudioPlayerBase.OnFinishedTrack -= OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -38,6 +40,11 @@ internal class EventHandler
         AudioPlayerBase.OnTrackLoaded -= OnTrackLoaded;
         AudioPlayerBase.OnFinishedTrack -= OnFinishedTrackLog;
         Log.Warn($"SCPSLAudioApi Debug Enabled!");
+    }
+    internal void OnJoined(JoinedEventArgs ev)
+    {
+        if (Extensions.IsIdExists(ev.Player.Id, ev.Player.ReferenceHub))
+            ev.Player.Disconnect();
     }
     internal void OnGenerated()
     {
@@ -53,7 +60,7 @@ internal class EventHandler
     }
     internal void OnInstanceModeChanged(ReferenceHub arg1, ClientInstanceMode arg2)
     {
-        if ((arg2 != ClientInstanceMode.Unverified || arg2 != ClientInstanceMode.Host) && arg1.authManager.UserId.Contains("@audioplayerbot"))
+        if (arg1.authManager.UserId.Contains("@audioplayerbot"))
         {
             Log.Debug($"Replaced instancemode for dummy to host.");
             arg1.authManager.InstanceMode = ClientInstanceMode.Host;

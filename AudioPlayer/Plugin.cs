@@ -14,7 +14,7 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 & Mariki";
-    public override Version Version => new Version(3, 1, 0);
+    public override Version Version => new Version(3, 1, 1);
     public static Plugin plugin; // troll 
 
     public static Dictionary<int, FakeConnectionList> FakeConnectionsIds = new(); // It's more convenient.
@@ -32,8 +32,8 @@ public class Plugin : Plugin<Config>
             EventHandlers = new EventHandler();
             if (Config.SpecialEventsEnable)
                 specialEvents = new SpecialEvents();
-            harmony = new Harmony($"AudioPlayer - {DateTime.Now}");
-            harmony.PatchAll();
+            //harmony = new Harmony($"AudioPlayer - {DateTime.Now}");
+            //harmony.PatchAll();
             Startup.SetupDependencies();
             Extensions.CreateDirectory();
         }

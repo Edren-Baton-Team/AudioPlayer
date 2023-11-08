@@ -1,5 +1,5 @@
 ﻿using AudioPlayer.Other;
-using Exiled.API.Features;
+using MEC;
 using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,13 +69,17 @@ public static class AudioController
     {
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
-            if (hub.hubPlayer._playerId.Value <= RecyclablePlayerId._autoIncrement)
-                hub.hubPlayer._playerId.Destroy();
-            try { hub.hubPlayer.OnDestroy(); } catch { }
-            try { NetworkServer.RemovePlayerForConnection(hub.fakeConnection.connectionToClient, true); } catch { }
-            try { CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection.connectionToClient); } catch { }
-            Object.Destroy(hub.hubPlayer.gameObject);
-            FakeConnectionsIds.Remove(id);
+            try { hub.audioplayer.Stoptrack(true); } catch { }
+            Timing.CallDelayed(0.2f, () =>
+            {
+                if (hub.hubPlayer._playerId.Value <= RecyclablePlayerId._autoIncrement)
+                    hub.hubPlayer._playerId.Destroy();
+                hub.hubPlayer.OnDestroy();
+                try { NetworkServer.RemovePlayerForConnection(hub.fakeConnection.connectionToClient, true); } catch { }
+                try { CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection.connectionToClient); } catch { }
+                Object.Destroy(hub.hubPlayer.gameObject);
+                FakeConnectionsIds.Remove(id);
+            });
         }
     }
 }

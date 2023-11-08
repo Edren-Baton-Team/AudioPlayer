@@ -1,5 +1,9 @@
-﻿using Mirror;
+﻿using AudioPlayer.API;
+using Exiled.API.Features;
+using Mirror;
 using System;
+using System.Linq;
+
 namespace AudioPlayer.Other;
 
 public class FakeConnection : NetworkConnectionToClient

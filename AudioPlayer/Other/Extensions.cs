@@ -1,4 +1,4 @@
-﻿using Exiled.API.Extensions;
+﻿using CentralAuth;
 using Exiled.API.Features;
 using Mirror;
 using PlayerRoles;
@@ -10,6 +10,7 @@ using System.Linq;
 using UnityEngine;
 using Utils.NonAllocLINQ;
 using static AudioPlayer.Plugin;
+using static Mono.Security.X509.X520;
 
 namespace AudioPlayer.Other;
 public static class Extensions
@@ -65,14 +66,15 @@ public static class Extensions
     public static FakeConnectionList GetAudioBotFakeConnectionList(this int BotId) => FakeConnectionsIds.FirstOrDefault(x => x.Key == BotId).Value;
     public static BotsList GetAudioBotInBotsList(int id) => plugin.Config.BotsList.FirstOrDefault(x => x.BotId == id);
     public static BotsList GetAudioBotInBotsList(string name) => plugin.Config.BotsList.FirstOrDefault(x => x.BotName == name);
-    public static void SpawnDummy(string name = "Dedicated Server", bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
+    public static FakeConnectionList SpawnDummy(string name = "Dedicated Server", bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
     {
         if (IsThereAudioBot(id))
         {
             Log.Error("This id is already in use");
-            return;
+            return null;
         }
-        GameObject newPlayer = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
+        GameObject newPlayer =
+            UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
         ReferenceHub hubPlayer = newPlayer.GetComponent<ReferenceHub>();
         FakeConnection fakeConnection = new FakeConnection(GenerateUniqueID(hubPlayer));
         FakeConnectionsIds.Add(id, new FakeConnectionList()
@@ -86,19 +88,10 @@ public static class Extensions
 
         NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
         if (!showplayer)
-        {
-            try
-            {
-                hubPlayer.authManager.UserId = $"{id}@audioplayerbot";
-            }
-            catch (Exception)
-            {
-                //Ignore
-            }
-        }
+            try { hubPlayer.authManager.UserId = $"{id}@audioplayerbot"; } catch { }
+        hubPlayer.authManager.InstanceMode = ClientInstanceMode.Unverified;
 
         hubPlayer.nicknameSync.Network_myNickSync = name;
-
         MEC.Timing.CallDelayed(0.3f, () =>
         {
             try
@@ -109,12 +102,11 @@ public static class Extensions
             {
                 Log.Error($"Error on {nameof(SpawnDummy)}: Error on set dummy role {e}");
             }
-            Player.Get(hubPlayer).IsNPC = true;
-            hubPlayer.characterClassManager.GodMode = true;
+            //Player.Get(hubPlayer).IsNPC = true;
             hubPlayer.serverRoles.SetText(badgetext);
             hubPlayer.serverRoles.SetColor(bagdecolor);
         });
-
+        return FakeConnectionsIds.FirstOrDefault(x => x.Key == id).Value;
     }
     internal static (ushort horizontal, ushort vertical) ToClientUShorts(this Quaternion rotation)
     {
@@ -139,17 +131,17 @@ public static class Extensions
     }
     internal static bool IsIdExists(int id, ReferenceHub hub)
     {
-        foreach (var player in ReferenceHub.AllHubs.Where(x => x != hub))
-            if (player.PlayerId == id)
-                return true;
+        if (Player.List.Any(x => x.ReferenceHub != hub && x.Id == id))
+            return true;
         return false;
     }
 
     internal static int GenerateUniqueID(ReferenceHub hub)
     {
-        int id = ReferenceHub.AllHubs.Count + 1;
+        int id = ReferenceHub.AllHubs.Count;
         while (IsIdExists(id, hub))
             id++;
+        Log.Info($"Изменил айди на {id}");
         return id;
     }
 }
