@@ -73,11 +73,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass %282%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass (2).dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass%283%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass(3).dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized %282%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized (2).dll</HintPath>
+    <Reference Include="Assembly-CSharp-Publicized %283%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized (3).dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -95,20 +95,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\DnsClient.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API %282%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API (2).dll</HintPath>
+    <Reference Include="Exiled.API %283%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API (3).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CreditTags %282%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags (2).dll</HintPath>
+    <Reference Include="Exiled.CreditTags %283%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags (3).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events %282%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events (2).dll</HintPath>
+    <Reference Include="Exiled.Events %283%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events (3).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader %282%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader (2).dll</HintPath>
+    <Reference Include="Exiled.Loader %283%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader (3).dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Permissions %282%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions (2).dll</HintPath>
+    <Reference Include="Exiled.Permissions %283%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions (3).dll</HintPath>
     </Reference>
     <Reference Include="Facepunch.Steamworks.Posix, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

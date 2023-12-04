@@ -39,7 +39,7 @@ internal class SpecialEvents
     internal void OnRoundEnded(RoundEndedEventArgs ev) => Extensions.PlayRandomAudioFile(plugin.Config.RoundEndClip);
     internal void OnVerified(VerifiedEventArgs ev) => Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerConnectedServer, ev.Player);
     internal void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev) => ev.IsAllowed = plugin.Config.CassieMtfSpawn;
-    internal void OnWarheadStarting(StartingEventArgs ev) => Extensions.WarheadSoundControl(Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip).BotId, false, true); // Getting a bot ID through a song, lol
+    internal void OnWarheadStarting(StartingEventArgs ev) => Extensions.WarheadSoundControl(Extensions.PlayRandomAudioFile(plugin.Config.WarheadStartingClip).BotId, false, true); // Getting a bot ID through a song, lol
     internal void OnWarheadDetonated() => Extensions.WarheadSoundControl(0);
     internal void OnWarheadStopping(StoppingEventArgs ev) => Extensions.WarheadSoundControl(0, audiolist: plugin.Config.WarheadStoppingClip);
     internal void OnDied(DiedEventArgs ev)

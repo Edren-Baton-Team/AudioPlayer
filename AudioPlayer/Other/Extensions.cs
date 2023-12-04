@@ -1,5 +1,5 @@
-﻿using CentralAuth;
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
+using MEC;
 using Mirror;
 using PlayerRoles;
 using SCPSLAudioApi.AudioCore;
@@ -7,10 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Utils.NonAllocLINQ;
 using static AudioPlayer.Plugin;
-using static Mono.Security.X509.X520;
+using Object = UnityEngine.Object;
 
 namespace AudioPlayer.Other;
 public static class Extensions
@@ -66,45 +67,59 @@ public static class Extensions
     public static FakeConnectionList GetAudioBotFakeConnectionList(this int BotId) => FakeConnectionsIds.FirstOrDefault(x => x.Key == BotId).Value;
     public static BotsList GetAudioBotInBotsList(int id) => plugin.Config.BotsList.FirstOrDefault(x => x.BotId == id);
     public static BotsList GetAudioBotInBotsList(string name) => plugin.Config.BotsList.FirstOrDefault(x => x.BotName == name);
-    public static FakeConnectionList SpawnDummy(string name = "Dedicated Server", bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
+    // The code is officially taken from https://github.com/Exiled-Team/EXILED/pull/2313/
+    public static FakeConnectionList SpawnDummy(string name = "Dedicated Server", string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99)
     {
         if (IsThereAudioBot(id))
         {
             Log.Error("This id is already in use");
             return null;
         }
-        GameObject newPlayer =
-            UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
-        ReferenceHub hubPlayer = newPlayer.GetComponent<ReferenceHub>();
-        FakeConnection fakeConnection = new FakeConnection(GenerateUniqueID(hubPlayer));
-        FakeConnectionsIds.Add(id, new FakeConnectionList()
+
+        GameObject newObject = Object.Instantiate(NetworkManager.singleton.playerPrefab);
+        Npc npc = new(newObject)
         {
-            BotID = id,
+            IsNPC = true,
+        };
+        try { npc.ReferenceHub.roleManager.InitializeNewRole(RoleTypeId.None, RoleChangeReason.None); } catch { }
+
+        int IdBot = id;
+
+        if (!RecyclablePlayerId.FreeIds.Contains(id) && RecyclablePlayerId._autoIncrement >= id)
+        {
+            Log.Warn($"{Assembly.GetCallingAssembly().GetName().Name} tried to spawn an NPC with a duplicate PlayerID. Using auto-incremented ID instead to avoid issues..");
+            try
+            { id = new RecyclablePlayerId(false).Value; }
+            catch 
+            { id = new RecyclablePlayerId(true).Value; }
+        }
+
+        FakeConnection fakeConnection = new(id);
+        NetworkServer.AddPlayerForConnection(fakeConnection, newObject);
+
+        try { npc.ReferenceHub.authManager.UserId = $"{IdBot}@audioplayerbot"; } catch { }
+        npc.ReferenceHub.nicknameSync.Network_myNickSync = name;
+        Player.Dictionary.Add(newObject, npc);
+        FakeConnectionsIds.Add(IdBot, new FakeConnectionList()
+        {
+            BotID = IdBot,
             BotName = name,
             fakeConnection = fakeConnection.identity,
-            audioplayer = AudioPlayerBase.Get(hubPlayer),
-            hubPlayer = hubPlayer,
+            audioplayer = AudioPlayerBase.Get(npc.ReferenceHub),
+            hubPlayer = npc.ReferenceHub,
         });
-
-        NetworkServer.AddPlayerForConnection(fakeConnection, newPlayer);
-        if (!showplayer)
-            try { hubPlayer.authManager.UserId = $"{id}@audioplayerbot"; } catch { }
-        hubPlayer.authManager.InstanceMode = ClientInstanceMode.Unverified;
-
-        hubPlayer.nicknameSync.Network_myNickSync = name;
-        MEC.Timing.CallDelayed(0.3f, () =>
+        Timing.CallDelayed(0.1f, () =>
         {
             try
             {
-                hubPlayer.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
+                npc.ReferenceHub.roleManager.ServerSetRole(RoleTypeId.Overwatch, RoleChangeReason.RemoteAdmin);
             }
             catch (Exception e)
             {
                 Log.Error($"Error on {nameof(SpawnDummy)}: Error on set dummy role {e}");
             }
-            //Player.Get(hubPlayer).IsNPC = true;
-            hubPlayer.serverRoles.SetText(badgetext);
-            hubPlayer.serverRoles.SetColor(bagdecolor);
+            npc.ReferenceHub.serverRoles.SetText(badgetext);
+            npc.ReferenceHub.serverRoles.SetColor(bagdecolor);
         });
         return FakeConnectionsIds.FirstOrDefault(x => x.Key == id).Value;
     }

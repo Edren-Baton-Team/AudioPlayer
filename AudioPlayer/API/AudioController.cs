@@ -10,8 +10,8 @@ using Extensions = AudioPlayer.Other.Extensions;
 namespace AudioPlayer.API;
 public static class AudioController
 {
-    public static void SpawnDummy(int id, bool showplayer = false, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
-        => Extensions.SpawnDummy(name, showplayer, badgetext, bagdecolor, id);
+    public static void SpawnDummy(int id, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
+        => Extensions.SpawnDummy(name, badgetext, bagdecolor, id);
     public static void StopPlayerFromPlaying(List<int> players, int id = 99)
         => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.BroadcastTo.RemoveAll(players.Contains);
     public static void AddAudioEnqueue(string audio, int pos, int id = 99)
@@ -28,34 +28,34 @@ public static class AudioController
         => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.Volume = volume;
     public static void PlayAudioFromFile(string path, bool loop = false, float volume = 100, VoiceChatChannel channel = VoiceChatChannel.Intercom, bool shuffle = false, bool logdebug = false, bool Continue = true, int id = 99)
     {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-        {
-            var audioPlayer = hub.audioplayer;
-            audioPlayer.BroadcastChannel = channel;
-            audioPlayer.Volume = volume;
-            audioPlayer.Loop = loop;
-            audioPlayer.Shuffle = shuffle;
-            audioPlayer.Continue = Continue;
-            audioPlayer.LogDebug = logdebug; //Welcome to Error spam ZONE!
-            audioPlayer.Enqueue(path, -1);
-            audioPlayer.Play(0);
-        }
+        if (!Extensions.TryGetAudioBot(id, out FakeConnectionList hub)) return;
+
+        var audioPlayer = hub.audioplayer;
+        audioPlayer.BroadcastChannel = channel;
+        audioPlayer.Volume = volume;
+        audioPlayer.Loop = loop;
+        audioPlayer.Shuffle = shuffle;
+        audioPlayer.Continue = Continue;
+        audioPlayer.LogDebug = logdebug; //Welcome to Error spam ZONE!
+        audioPlayer.Enqueue(path, -1);
+        audioPlayer.Play(0);
+
     }
     public static void PlayFromFilePlayer(List<int> players, string path, bool loop = false, float volume = 100, VoiceChatChannel channel = VoiceChatChannel.Intercom, bool shuffle = false, bool logdebug = false, bool Continue = true, int id = 99)
     {
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
-        {
-            var audioPlayer = hub.audioplayer;
-            audioPlayer.BroadcastTo = players;
-            audioPlayer.BroadcastChannel = channel;
-            audioPlayer.Volume = volume;
-            audioPlayer.Loop = loop;
-            audioPlayer.Shuffle = shuffle;
-            audioPlayer.Continue = Continue;
-            audioPlayer.LogDebug = logdebug;
-            audioPlayer.Enqueue(path, -1);
-            audioPlayer.Play(0);
-        }
+        if (!Extensions.TryGetAudioBot(id, out FakeConnectionList hub)) return;
+
+        var audioPlayer = hub.audioplayer;
+        audioPlayer.BroadcastTo = players;
+        audioPlayer.BroadcastChannel = channel;
+        audioPlayer.Volume = volume;
+        audioPlayer.Loop = loop;
+        audioPlayer.Shuffle = shuffle;
+        audioPlayer.Continue = Continue;
+        audioPlayer.LogDebug = logdebug;
+        audioPlayer.Enqueue(path, -1);
+        audioPlayer.Play(0);
+
     }
     public static void StopAudio(int id = 99, bool clearAudioList = true)
     {
@@ -69,15 +69,15 @@ public static class AudioController
     {
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
-            try { hub.audioplayer.Stoptrack(true); } catch { }
-            Timing.CallDelayed(0.2f, () =>
+            if (hub.audioplayer.CurrentPlay != null)
             {
-                if (hub.hubPlayer._playerId.Value <= RecyclablePlayerId._autoIncrement)
-                    hub.hubPlayer._playerId.Destroy();
-                hub.hubPlayer.OnDestroy();
-                try { NetworkServer.RemovePlayerForConnection(hub.fakeConnection.connectionToClient, true); } catch { }
-                try { CustomNetworkManager.TypedSingleton.OnServerDisconnect(hub.fakeConnection.connectionToClient); } catch { }
-                Object.Destroy(hub.hubPlayer.gameObject);
+                hub.audioplayer.Stoptrack(true);
+                hub.audioplayer.OnDestroy();
+            }
+            hub.hubPlayer.gameObject.transform.position = new Vector3(-9999f, -9999f, -9999f);
+            Timing.CallDelayed(0.5f, () =>
+            {
+                NetworkServer.Destroy(hub.hubPlayer.gameObject);
                 FakeConnectionsIds.Remove(id);
             });
         }

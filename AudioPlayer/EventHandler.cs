@@ -1,9 +1,8 @@
-﻿using AudioPlayer.Other;
-using CentralAuth;
+﻿using CentralAuth;
 using Exiled.API.Features;
-using Exiled.Events.EventArgs.Player;
 using SCPSLAudioApi.AudioCore;
 using static AudioPlayer.Plugin;
+using Extensions = AudioPlayer.Other.Extensions;
 
 namespace AudioPlayer;
 
@@ -15,7 +14,6 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated += OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
-        Exiled.Events.Handlers.Player.Joined += OnJoined;
         AudioPlayerBase.OnFinishedTrack += OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -31,7 +29,6 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated -= OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
-        Exiled.Events.Handlers.Player.Joined -= OnJoined;
         AudioPlayerBase.OnFinishedTrack -= OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -41,17 +38,12 @@ internal class EventHandler
         AudioPlayerBase.OnFinishedTrack -= OnFinishedTrackLog;
         Log.Warn($"SCPSLAudioApi Debug Enabled!");
     }
-    internal void OnJoined(JoinedEventArgs ev)
-    {
-        if (Extensions.IsIdExists(ev.Player.Id, ev.Player.ReferenceHub))
-            ev.Player.Disconnect();
-    }
     internal void OnGenerated()
     {
         if (FakeConnectionsIds != null || FakeConnectionsIds.Count > 0) FakeConnectionsIds.Clear();
         if (plugin.Config.SpawnBot)
             foreach (var cfg in plugin.Config.BotsList)
-                Extensions.SpawnDummy(cfg.BotName, cfg.ShowPlayerList, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
+                Extensions.SpawnDummy(cfg.BotName, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
     }
     internal void OnWaitingForPlayers() => Extensions.PlayRandomAudioFile(null, true);
     internal void OnRoundStarted()
@@ -60,11 +52,10 @@ internal class EventHandler
     }
     internal void OnInstanceModeChanged(ReferenceHub arg1, ClientInstanceMode arg2)
     {
-        if (arg1.authManager.UserId.Contains("@audioplayerbot"))
-        {
-            Log.Debug($"Replaced instancemode for dummy to host.");
-            arg1.authManager.InstanceMode = ClientInstanceMode.Host;
-        }
+        if (!arg1.authManager.UserId.Contains("@audioplayerbot")) return;
+
+        Log.Debug($"Replaced instancemode for dummy to host.");
+        arg1.authManager.InstanceMode = ClientInstanceMode.Host;
     }
     internal void OnFinishedTrack(AudioPlayerBase playerBase, string track, bool directPlay, ref int nextQueuePos)
     {
