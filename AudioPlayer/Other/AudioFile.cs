@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Features;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using VoiceChat;
 using AudioController = AudioPlayer.API.AudioController;
 
@@ -15,7 +16,16 @@ public class AudioFile
     public int BotId { get; set; } = 99;
     public void Play()
     {
-        if (!System.IO.File.Exists(Path))
+        if (File.Exists(Path))
+        {
+            Log.Debug("The full path was specified, I'm skipping it");
+        }
+        else if (File.Exists(Plugin.plugin.AudioPath + "/" + Path))
+        {
+            Path = Plugin.plugin.AudioPath + "/" + Path;
+            Log.Debug("An incomplete path was specified, I am looking for the .ogg file in the audio folder");
+        }
+        else
         {
             Log.Debug($"File not found on path {Path}");
             return;
@@ -25,7 +35,16 @@ public class AudioFile
     }
     public void PlayFromFilePlayer(List<int> players)
     {
-        if (!System.IO.File.Exists(Path))
+        if (File.Exists(Path))
+        {
+            Log.Debug("The full path was specified, I'm skipping it");
+        }
+        else if (File.Exists(Plugin.plugin.AudioPath + "/" + Path))
+        {
+            Path = Plugin.plugin.AudioPath + "/" + Path;
+            Log.Debug("An incomplete path was specified, I am looking for the .ogg file in the audio folder");
+        }
+        else
         {
             Log.Debug($"File not found on path {Path}");
             return;
