@@ -1,5 +1,6 @@
 ﻿using AudioPlayer.Other;
 using CommandSystem;
+using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using System;
 using System.IO;
@@ -38,7 +39,16 @@ public class Play : ICommand, IUsageProvider
         {
             string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x));
 
-            if (!File.Exists(path))
+            if (File.Exists(path))
+            {
+                Log.Debug("The full path was specified, I'm skipping it");
+            }
+            else if (File.Exists(Plugin.plugin.AudioPath + "/" + path))
+            {
+                path = Plugin.plugin.AudioPath + "/" + path;
+                Log.Debug("An incomplete path was specified, I am looking for the .ogg file in the audio folder");
+            }
+            else
             {
                 response = $"No files exist inside that path.\nPath: {path}";
                 return false;

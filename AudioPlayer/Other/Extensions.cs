@@ -150,13 +150,4 @@ public static class Extensions
             return true;
         return false;
     }
-
-    internal static int GenerateUniqueID(ReferenceHub hub)
-    {
-        int id = ReferenceHub.AllHubs.Count;
-        while (IsIdExists(id, hub))
-            id++;
-        Log.Info($"Изменил айди на {id}");
-        return id;
-    }
 }

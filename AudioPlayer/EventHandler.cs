@@ -1,5 +1,7 @@
 ﻿using CentralAuth;
 using Exiled.API.Features;
+using Exiled.Events.EventArgs.Server;
+using MEC;
 using SCPSLAudioApi.AudioCore;
 using static AudioPlayer.Plugin;
 using Extensions = AudioPlayer.Other.Extensions;
@@ -14,6 +16,8 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated += OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers += OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
+        Exiled.Events.Handlers.Server.RoundEnded += OnRoundEnded;
+        Exiled.Events.Handlers.Server.RestartingRound += OnRestartingRound;
         AudioPlayerBase.OnFinishedTrack += OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -29,6 +33,8 @@ internal class EventHandler
         Exiled.Events.Handlers.Map.Generated -= OnGenerated;
         Exiled.Events.Handlers.Server.WaitingForPlayers -= OnWaitingForPlayers;
         Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
+        Exiled.Events.Handlers.Server.RoundEnded -= OnRoundEnded;
+        Exiled.Events.Handlers.Server.RestartingRound -= OnRestartingRound;
         AudioPlayerBase.OnFinishedTrack -= OnFinishedTrack;
 
         if (!plugin.Config.ScpslAudioApiDebug) return;
@@ -46,6 +52,26 @@ internal class EventHandler
                 Extensions.SpawnDummy(cfg.BotName, cfg.BadgeText, cfg.BadgeColor, cfg.BotId);
     }
     internal void OnWaitingForPlayers() => Extensions.PlayRandomAudioFile(null, true);
+    internal void OnRoundEnded(RoundEndedEventArgs ev)
+    {
+        float timeRestart = ev.TimeToRestart - 0.6f;
+        if (timeRestart < 0)
+        {
+            ev.TimeToRestart = 1; 
+            timeRestart = ev.TimeToRestart - 0.6f;
+        }
+        Timing.CallDelayed(timeRestart, () =>
+        {
+            foreach (var npc in FakeConnectionsIds)
+                API.AudioController.DisconnectDummy(npc.Key);
+        });
+    }
+    internal void OnRestartingRound()
+    {
+        if (FakeConnectionsIds.Count == 0) return;
+        ServerStatic.StopNextRound = ServerStatic.NextRoundAction.Restart; //In case there's an AudioPlayer left on the server.
+        Log.Warn("The server will be restarted as soft restart. Because of the AudioPlayer bot that was left on the server.");
+    }
     internal void OnRoundStarted()
     {
         if (plugin.LobbySong != null) plugin.LobbySong.Stop(true);
@@ -53,7 +79,6 @@ internal class EventHandler
     internal void OnInstanceModeChanged(ReferenceHub arg1, ClientInstanceMode arg2)
     {
         if (!arg1.authManager.UserId.Contains("@audioplayerbot")) return;
-
         Log.Debug($"Replaced instancemode for dummy to host.");
         arg1.authManager.InstanceMode = ClientInstanceMode.Host;
     }

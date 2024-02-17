@@ -76,8 +76,8 @@
     <Reference Include="Assembly-CSharp-firstpass%283%29">
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass(3).dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized %283%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized (3).dll</HintPath>
+    <Reference Include="Assembly-CSharp-Publicized %284%29">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized (4).dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -156,8 +156,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Pooling.dll</HintPath>
     </Reference>
-    <Reference Include="SCPSLAudioApi, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SCPSLAudioApi">
       <HintPath>C:\Users\Rysik5318\Downloads\SCPSLAudioApi.dll</HintPath>
     </Reference>
     <Reference Include="SemanticVersioning, Version=2.0.2.0, Culture=neutral, PublicKeyToken=a89bb7dc6f7a145c, processorArchitecture=MSIL">
