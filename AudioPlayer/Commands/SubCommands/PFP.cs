@@ -2,6 +2,7 @@
 using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.API.Features;
+using Exiled.Loader;
 using Exiled.Permissions.Extensions;
 using System;
 using System.Collections.Generic;
@@ -42,11 +43,8 @@ public class PFP : ICommand, IUsageProvider
         {
             string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x && arguments.At(1) != x));
             string textToResponse = string.Empty;
-            if (!File.Exists(path))
-            {
-                response = $"No files exist inside that path.\nPath: {path}";
-                return false;
-            }
+
+            path = Extensions.PathCheck(path);
             List<Player> list = new List<Player>();
 
             foreach (string s in arguments.At(1).Trim('.').Split('.'))

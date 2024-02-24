@@ -16,39 +16,19 @@ public class AudioFile
     public int BotId { get; set; } = 99;
     public void Play()
     {
-        if (File.Exists(Path))
+        Path = Extensions.PathCheck(Path);
+        try
         {
-            Log.Debug("The full path was specified, I'm skipping it");
+            AudioController.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel, id: BotId);
         }
-        else if (File.Exists(Plugin.plugin.AudioPath + "/" + Path))
+        catch (Exception ex)
         {
-            Path = Plugin.plugin.AudioPath + "/" + Path;
-            Log.Debug("An incomplete path was specified, I am looking for the .ogg file in the audio folder");
+            Log.Debug(ex.ToString());
         }
-        else
-        {
-            Log.Debug($"File not found on path {Path}");
-            return;
-        }
-
-        AudioController.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel, id: BotId);
     }
     public void PlayFromFilePlayer(List<int> players)
     {
-        if (File.Exists(Path))
-        {
-            Log.Debug("The full path was specified, I'm skipping it");
-        }
-        else if (File.Exists(Plugin.plugin.AudioPath + "/" + Path))
-        {
-            Path = Plugin.plugin.AudioPath + "/" + Path;
-            Log.Debug("An incomplete path was specified, I am looking for the .ogg file in the audio folder");
-        }
-        else
-        {
-            Log.Debug($"File not found on path {Path}");
-            return;
-        }
+        Path = Extensions.PathCheck(Path);
         try
         {
             AudioController.PlayFromFilePlayer(players, Path, Loop, Volume, VoiceChatChannel, id: BotId);

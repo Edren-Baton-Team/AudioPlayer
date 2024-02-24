@@ -90,7 +90,7 @@ public static class Extensions
             Log.Warn($"{Assembly.GetCallingAssembly().GetName().Name} tried to spawn an NPC with a duplicate PlayerID. Using auto-incremented ID instead to avoid issues..");
             try
             { id = new RecyclablePlayerId(false).Value; }
-            catch 
+            catch
             { id = new RecyclablePlayerId(true).Value; }
         }
 
@@ -144,10 +144,23 @@ public static class Extensions
 
         return ((ushort)Math.Round(horizontal * ToHorizontal), (ushort)Math.Round(vertical * ToVertical));
     }
-    internal static bool IsIdExists(int id, ReferenceHub hub)
+    internal static string PathCheck(string path)
     {
-        if (Player.List.Any(x => x.ReferenceHub != hub && x.Id == id))
-            return true;
-        return false;
+        if (File.Exists(path))
+        {
+            Log.Debug("The full path was specified, I'm skipping it");
+            return path;
+        }
+        else if (File.Exists(Plugin.plugin.AudioPath + "/" + path))
+        {
+            path = Plugin.plugin.AudioPath + "/" + path;
+            Log.Debug("An incomplete path was specified, I am looking for the .ogg file in the audio folder");
+            return path;
+        }
+        else
+        {
+            Log.Debug($"No files exist inside that path.\nPath: {path}");
+            return path;
+        }
     }
 }

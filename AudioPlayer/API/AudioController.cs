@@ -1,7 +1,9 @@
 ﻿using AudioPlayer.Other;
+using Exiled.API.Features;
 using MEC;
 using Mirror;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VoiceChat;
 using static AudioPlayer.Plugin;
@@ -13,7 +15,10 @@ public static class AudioController
     public static void SpawnDummy(int id, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server")
         => Extensions.SpawnDummy(name, badgetext, bagdecolor, id);
     public static void StopPlayerFromPlaying(List<int> players, int id = 99)
-        => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.BroadcastTo.RemoveAll(players.Contains);
+    {
+        foreach (var player in players)
+            Extensions.GetAudioBotFakeConnectionList(id).audioplayer.BroadcastTo.Remove(player);
+    }
     public static void AddAudioEnqueue(string audio, int pos, int id = 99)
         => Extensions.GetAudioBotFakeConnectionList(id).audioplayer.Enqueue(audio, pos);
     public static void LogDebugAudio(bool logdebug = true, int id = 99)
@@ -37,6 +42,7 @@ public static class AudioController
         audioPlayer.Shuffle = shuffle;
         audioPlayer.Continue = Continue;
         audioPlayer.LogDebug = logdebug; //Welcome to Error spam ZONE!
+        path = Extensions.PathCheck(path);
         audioPlayer.Enqueue(path, -1);
         audioPlayer.Play(0);
 
@@ -53,6 +59,7 @@ public static class AudioController
         audioPlayer.Shuffle = shuffle;
         audioPlayer.Continue = Continue;
         audioPlayer.LogDebug = logdebug;
+        path = Extensions.PathCheck(path);
         audioPlayer.Enqueue(path, -1);
         audioPlayer.Play(0);
 

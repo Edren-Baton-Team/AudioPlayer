@@ -38,21 +38,7 @@ public class Play : ICommand, IUsageProvider
         if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
         {
             string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x));
-
-            if (File.Exists(path))
-            {
-                Log.Debug("The full path was specified, I'm skipping it");
-            }
-            else if (File.Exists(Plugin.plugin.AudioPath + "/" + path))
-            {
-                path = Plugin.plugin.AudioPath + "/" + path;
-                Log.Debug("An incomplete path was specified, I am looking for the .ogg file in the audio folder");
-            }
-            else
-            {
-                response = $"No files exist inside that path.\nPath: {path}";
-                return false;
-            }
+            path = Extensions.PathCheck(path);
 
             hub.audioplayer.Enqueue(path, -1);
             hub.audioplayer.Play(0);
