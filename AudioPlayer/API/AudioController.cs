@@ -58,7 +58,6 @@ public static class AudioController
         audioPlayer.Shuffle = shuffle;
         audioPlayer.Continue = Continue;
         audioPlayer.LogDebug = logdebug;
-        path = Extensions.PathCheck(path);
         audioPlayer.Enqueue(path, -1);
         audioPlayer.Play(0);
 
