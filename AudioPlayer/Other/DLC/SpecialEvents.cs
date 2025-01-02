@@ -2,7 +2,7 @@
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using Exiled.Events.EventArgs.Warhead;
-using Respawning;
+using PlayerRoles;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer.Other.DLC;
@@ -22,18 +22,6 @@ internal class SpecialEvents
         Exiled.Events.Handlers.Player.Verified += OnVerified;
         Exiled.Events.Handlers.Player.Died += OnDied;
     }
-    ~SpecialEvents()
-    {
-        Exiled.Events.Handlers.Map.AnnouncingNtfEntrance -= OnAnnouncingNtfEntrance;
-        Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
-        Exiled.Events.Handlers.Server.RoundEnded -= OnRoundEnded;
-        Exiled.Events.Handlers.Server.RespawningTeam -= OnRespawningTeam;
-        Exiled.Events.Handlers.Warhead.Starting -= OnWarheadStarting;
-        Exiled.Events.Handlers.Warhead.Detonated -= OnWarheadDetonated;
-        Exiled.Events.Handlers.Warhead.Stopping -= OnWarheadStopping;
-        Exiled.Events.Handlers.Player.Verified -= OnVerified;
-        Exiled.Events.Handlers.Player.Died -= OnDied;
-    }
     // Stole the code from the old AudioPlayer :jermasus:
     internal void OnRoundStarted() => Extensions.PlayRandomAudioFile(plugin.Config.RoundStartClip);
     internal void OnRoundEnded(RoundEndedEventArgs ev) => Extensions.PlayRandomAudioFile(plugin.Config.RoundEndClip);
@@ -51,8 +39,9 @@ internal class SpecialEvents
 
     internal void OnRespawningTeam(RespawningTeamEventArgs ev)
     {
-        if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency) 
+        if (ev.NextKnownTeam == Faction.FoundationStaff) 
             Extensions.PlayRandomAudioFile(plugin.Config.ChaosSpawnClip);
-        else Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip);
+        else 
+            Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip);
     }
 }

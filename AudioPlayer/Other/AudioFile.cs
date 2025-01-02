@@ -1,7 +1,7 @@
-﻿using Exiled.API.Features;
+﻿using AudioPlayer.API.Container;
+using Exiled.API.Features;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using VoiceChat;
 using AudioController = AudioPlayer.API.AudioController;
 
@@ -14,33 +14,38 @@ public class AudioFile
     public int Volume { get; set; } = 100;
     public VoiceChatChannel VoiceChatChannel { get; set; } = VoiceChatChannel.Intercom;
     public int BotId { get; set; } = 99;
+    private AudioPlayerBot audioPlayer => AudioController.TryGetAudioPlayerContainer(BotId);
+    
     public void Play()
     {
-        Path = Extensions.PathCheck(Path);
         try
         {
-            AudioController.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel, id: BotId);
+            audioPlayer.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel);
         }
         catch (Exception ex)
         {
             Log.Debug(ex.ToString());
         }
     }
+
     public void PlayFromFilePlayer(List<int> players)
     {
-        Path = Extensions.PathCheck(Path);
         try
         {
-            AudioController.PlayFromFilePlayer(players, Path, Loop, Volume, VoiceChatChannel, id: BotId);
+            audioPlayer.PlayFromFilePlayer(players, Path, Loop, Volume, VoiceChatChannel);
         }
         catch (Exception ex)
         {
             Log.Debug(ex.ToString());
         }
     }
+    
     public void Stop(bool lobbyPlaylist = false)
     {
-        if (lobbyPlaylist) Plugin.plugin.LobbySong = null;
-        AudioController.StopAudio(BotId);
+        if (lobbyPlaylist)
+        {
+            Plugin.plugin.LobbySong = null;
+        }
+        audioPlayer.StopAudio();
     }
 }

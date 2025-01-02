@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
@@ -11,11 +12,11 @@ public class SPFP : ICommand, IUsageProvider
 {
     public string Command => "stopplayfromplayers";
 
-    public string[] Aliases { get; } = { "spfp", "stoppfp" };
+    public string[] Aliases => ["spfp", "stoppfp"];
 
     public string Description => "AudioPlayer Bot stop audio playback for certain players";
 
-    public string[] Usage { get; } = { "Bot ID", "PlayerList" };
+    public string[] Usage => ["Bot ID", "PlayerList"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -24,18 +25,20 @@ public class SPFP : ICommand, IUsageProvider
             response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
             return false;
         }
+
         if (arguments.Count <= 1)
         {
             response = "Usage: audio spfp {Bot ID} {PlayerList}";
             return false;
         }
+
         if (!int.TryParse(arguments.At(0), out int id))
         {
             response = "Specify a number, other characters are not accepted";
             return true;
         }
 
-        List<int> list = new();
+        List<int> list = [];
         string textToResponse = string.Empty;
 
         foreach (string s in arguments.At(1).Trim('.').Split('.'))
@@ -50,11 +53,11 @@ public class SPFP : ICommand, IUsageProvider
             return false;
         }
 
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
             foreach (var playersList in list)
             {
-                hub.audioplayer.BroadcastTo.Remove(playersList);
+                hub.AudioPlayerBase.BroadcastTo.Remove(playersList);
             }
             response = $"Stopped the sound at ID {id} for the next player: {textToResponse}";
             return true;

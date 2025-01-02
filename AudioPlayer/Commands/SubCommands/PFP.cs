@@ -1,14 +1,10 @@
 ﻿using AudioPlayer.API;
-using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.API.Features;
-using Exiled.Loader;
 using Exiled.Permissions.Extensions;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace AudioPlayer.Commands.SubCommands;
 
@@ -16,11 +12,11 @@ public class PFP : ICommand, IUsageProvider
 {
     public string Command => "playfromplayers";
 
-    public string[] Aliases { get; } = { "pfp" };
+    public string[] Aliases => ["pfp"];
 
     public string Description => "AudioPlayer Bot plays the sound in a certain player";
 
-    public string[] Usage { get; } = { "Bot ID", "PlayerList", "Path" };
+    public string[] Usage => ["Bot ID", "PlayerList", "Path"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -39,12 +35,11 @@ public class PFP : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
             string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x && arguments.At(1) != x));
             string textToResponse = string.Empty;
 
-            path = Extensions.PathCheck(path);
             List<Player> list = new List<Player>();
 
             foreach (string s in arguments.At(1).Trim('.').Split('.'))
@@ -60,11 +55,8 @@ public class PFP : ICommand, IUsageProvider
                 return false;
             }
 
-            hub.audioplayer.Enqueue(path, -1);
-            foreach (Player ply in list)
-            {
-                AudioController.PlayFromFilePlayer(new List<int>() { ply.Id }, path, id: id);
-            }
+            hub.AudioPlayerBase.Enqueue(path, -1);
+            hub.PlayFromFilePlayer(list.Select(p => p.Id).ToList(), path);
             response = $"Started playing audio from ID {id}, players {textToResponse}, along path {path}";
             return true;
         }

@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -14,7 +15,7 @@ public class Stop : ICommand, IUsageProvider
 
     public string Description => "Stop AudioPlayer bot audio playback";
 
-    public string[] Usage { get; } = { "Bot ID" };
+    public string[] Usage => ["Bot ID"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -33,9 +34,9 @@ public class Stop : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
-            hub.audioplayer.Stoptrack(true);
+            hub.AudioPlayerBase.Stoptrack(true);
             if (plugin.LobbySong != null)
                 plugin.LobbySong = null;
         }

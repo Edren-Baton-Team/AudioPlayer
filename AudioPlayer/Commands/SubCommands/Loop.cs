@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -13,7 +14,7 @@ public class Loop : ICommand, IUsageProvider
 
     public string Description => "Make the AudioPlayer Bot loop playback";
 
-    public string[] Usage { get; } = { "Bot ID", "false/true" };
+    public string[] Usage => ["Bot ID", "false/true"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -32,9 +33,9 @@ public class Loop : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
-            hub.audioplayer.Loop = Convert.ToBoolean(arguments.At(1));
+            hub.Loop = Convert.ToBoolean(arguments.At(1));
             response = $"Looping is enabled for ID {id}";
             return true;
         }

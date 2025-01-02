@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
@@ -12,11 +13,11 @@ public class Play : ICommand, IUsageProvider
 {
     public string Command => "play";
 
-    public string[] Aliases { get; } = { "playback", "replay" };
+    public string[] Aliases => ["playback", "replay"];
 
     public string Description => "Play the sound by path";
 
-    public string[] Usage { get; } = { "Bot ID", "Path" };
+    public string[] Usage => ["Bot ID", "Path"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -35,13 +36,12 @@ public class Play : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
             string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x));
-            path = Extensions.PathCheck(path);
 
-            hub.audioplayer.Enqueue(path, -1);
-            hub.audioplayer.Play(0);
+            hub.AudioPlayerBase.Enqueue(path, -1);
+            hub.AudioPlayerBase.Play(0);
             response = $"Started playing audio at ID {id}, by path {path}";
             return true;
         }

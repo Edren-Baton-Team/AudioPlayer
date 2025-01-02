@@ -13,7 +13,7 @@ public class Config : IConfig
     [Description("Enable developer mode? (AudioPlayer debug)")]
     public bool Debug { get; set; } = false;
     [Description("Command to use AudioPlayer")]
-    public string[] CommandName { get; private set; } = { "audio", "au" };
+    public string[] CommandName { get; private set; } = ["audio", "au"];
     [Description("Enable developer mode SCPSLAudioApi?")]
     public bool ScpslAudioApiDebug { get; private set; } = false;
     [Description("Create a bot automatically when the server starts?")]

@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -9,11 +10,11 @@ public class Volume : ICommand, IUsageProvider
 {
     public string Command => "volume";
 
-    public string[] Aliases { get; } = { "vol", "v" };
+    public string[] Aliases => ["vol", "v"];
 
     public string Description => "Sets the volume of the AudioPlayer Bot";
 
-    public string[] Usage { get; } = { "Bot ID", "Number" };
+    public string[] Usage => ["Bot ID", "Number"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -22,24 +23,28 @@ public class Volume : ICommand, IUsageProvider
             response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
             return false;
         }
+
         if (arguments.Count <= 1)
         {
             response = "Usage: audio volume {Bot ID} {Number}";
             return false;
         }
+
         if (!int.TryParse(arguments.At(0), out int id))
         {
             response = "Specify a number, other characters are not accepted";
             return true;
         }
+
         if (!float.TryParse(arguments.At(1), out float volume))
         {
             response = "Couldn't parse that volume, make sure it is a integer between 0 and 100";
             return false;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
-            hub.audioplayer.Volume = volume;
+            hub.AudioPlayerBase.Volume = volume;
             response = $"The volume has been changed for ID {id} to {volume}";
             return true;
         }

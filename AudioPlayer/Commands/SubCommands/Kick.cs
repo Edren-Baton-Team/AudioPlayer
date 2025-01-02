@@ -10,11 +10,11 @@ public class Kick : ICommand, IUsageProvider
 {
     public string Command => "kick";
 
-    public string[] Aliases { get; } = { "delete", "del", "remove", "rem", "destroy" };
+    public string[] Aliases => ["delete", "del", "remove", "rem", "destroy"];
 
     public string Description => "Kick AudioPlayer Bot";
 
-    public string[] Usage { get; } = { "Bot ID" };
+    public string[] Usage => ["Bot ID"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -33,7 +33,7 @@ public class Kick : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList _))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
             AudioController.DisconnectDummy(id);
         }

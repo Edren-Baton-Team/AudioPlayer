@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -13,7 +14,7 @@ public class Enqueue : ICommand, IUsageProvider
 
     public string Description => "Adds audio to the queue";
 
-    public string[] Usage { get; } = { "Bot ID", "Path", "Position" };
+    public string[] Usage => ["Bot ID", "Path", "Position"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -32,9 +33,9 @@ public class Enqueue : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
-            hub.audioplayer.Enqueue(arguments.At(1), arguments.Count >= 4 ? Convert.ToInt32(arguments.At(2)) : -1);
+            hub.AudioPlayerBase.Enqueue(arguments.At(1), arguments.Count >= 4 ? Convert.ToInt32(arguments.At(2)) : -1);
         }
         else
         {

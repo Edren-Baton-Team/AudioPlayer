@@ -1,4 +1,5 @@
-﻿using AudioPlayer.Other;
+﻿using AudioPlayer.API;
+using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
@@ -11,11 +12,11 @@ public class NickName : ICommand, IUsageProvider
 {
     public string Command => "nickname";
 
-    public string[] Aliases { get; } = { "setnickname", "setnick", "nick", "name" };
+    public string[] Aliases => ["setnickname", "setnick", "nick", "name"];
 
     public string Description => "Sets name of AudioPlayer Bot";
 
-    public string[] Usage { get; } = { "Bot ID", "Text" };
+    public string[] Usage => ["Bot ID", "Text"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
@@ -34,10 +35,10 @@ public class NickName : ICommand, IUsageProvider
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (Extensions.TryGetAudioBot(id, out FakeConnectionList hub))
+        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
         {
             string nickname = string.Join(" ", arguments.Where(x => arguments.At(0) != x));
-            hub.hubPlayer.nicknameSync.Network_myNickSync = nickname;
+            hub.Player.ReferenceHub.nicknameSync.Network_myNickSync = nickname;
             response = $"Set the nickname ID {id}, at {nickname}";
             return true;
         }

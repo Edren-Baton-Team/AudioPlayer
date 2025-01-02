@@ -35,9 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\Container\AudioPlayerBot.cs" />
     <Compile Include="Commands\Audio.cs" />
     <Compile Include="Commands\SubCommands\Add.cs" />
-    <Compile Include="Commands\SubCommands\LookAt.cs" />
     <Compile Include="Commands\SubCommands\Loop.cs" />
     <Compile Include="Commands\SubCommands\VoiceChannel.cs" />
     <Compile Include="Commands\SubCommands\Enqueue.cs" />
@@ -49,14 +49,11 @@
     <Compile Include="Commands\SubCommands\Stop.cs" />
     <Compile Include="Commands\SubCommands\Volume.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Other\FakeConnection.cs" />
-    <Compile Include="HarmonyPatchs.cs" />
     <Compile Include="Other\DLC\SpecialEvents.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Other\BotsList.cs" />
     <Compile Include="Other\AudioFile.cs" />
     <Compile Include="Other\Extensions.cs" />
-    <Compile Include="Other\FakeConnectionList.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="API\AudioController.cs" />
@@ -73,11 +70,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass%283%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass(3).dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized %284%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized (4).dll</HintPath>
+    <Reference Include="Assembly-CSharp-Publicized">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -95,39 +92,47 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\DnsClient.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API %283%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API (3).dll</HintPath>
+    <Reference Include="Exiled.API 1">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.API 1.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CreditTags %283%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags (3).dll</HintPath>
+    <Reference Include="Exiled.CreditTags">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CreditTags.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events %283%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events (3).dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Loader %283%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader (3).dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Permissions %283%29">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions (3).dll</HintPath>
-    </Reference>
-    <Reference Include="Facepunch.Steamworks.Posix, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Exiled.CustomItems, Version=8.12.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Facepunch.Steamworks.Posix.dll</HintPath>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.CustomItems.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Events 1">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Events 1.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Loader">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Loader.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Permissions">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Exiled.Permissions.dll</HintPath>
     </Reference>
     <Reference Include="Facepunch.Steamworks.Win64, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Facepunch.Steamworks.Win64.dll</HintPath>
     </Reference>
-    <Reference Include="MapEditorReborn">
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\MapEditorReborn.dll</HintPath>
-    </Reference>
-    <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mirror.dll</HintPath>
+    <Reference Include="Mirror-Publicized">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mirror-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="Mirror.Components, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mirror.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -140,15 +145,14 @@
     <Reference Include="netstandard">
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\netstandard.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="NorthwoodLib, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\NorthwoodLib.dll</HintPath>
     </Reference>
-    <Reference Include="PluginAPI, Version=12.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="NVorbis">
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="PluginAPI, Version=13.1.2.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\PluginAPI.dll</HintPath>
     </Reference>
@@ -156,18 +160,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\Pooling.dll</HintPath>
     </Reference>
-    <Reference Include="SCPSLAudioApi">
-      <HintPath>C:\Users\Rysik5318\Downloads\SCPSLAudioApi.dll</HintPath>
+    <Reference Include="SCPSLAudioApi, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\SCPSLAudioApi.dll</HintPath>
     </Reference>
     <Reference Include="SemanticVersioning, Version=2.0.2.0, Culture=neutral, PublicKeyToken=a89bb7dc6f7a145c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Rysik5318\Desktop\EXILED\SemanticVersioning.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Rysik5318\Desktop\EXILED\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
