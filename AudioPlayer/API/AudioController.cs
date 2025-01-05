@@ -4,16 +4,15 @@ using Exiled.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
-using Extensions = AudioPlayer.Other.Extensions;
 
 namespace AudioPlayer.API;
 public static class AudioController
 {
-    public static AudioPlayerBot SpawnDummy(int id = 99, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server", RoleTypeId roleTypeId = RoleTypeId.None)
-        => Extensions.SpawnDummy(name, badgetext, bagdecolor, id, roleTypeId);
+    public static AudioPlayerBot SpawnDummy(int id = 99, string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", string name = "Dedicated Server", RoleTypeId roleTypeId = RoleTypeId.None, bool ignored = true)
+        => AudioPlayerBot.SpawnDummy(name, badgetext, bagdecolor, id, roleTypeId, ignored);
     public static void DisconnectDummy(int id = 99)
     {
-        if (TryGetAudioPlayerContainer(id) is not API.Container.AudioPlayerBot container)
+        if (TryGetAudioPlayerContainer(id) is not AudioPlayerBot container)
         {
             return;
         }

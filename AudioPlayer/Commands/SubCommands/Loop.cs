@@ -1,5 +1,4 @@
 ﻿using AudioPlayer.API;
-using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -23,27 +22,28 @@ public class Loop : ICommand, IUsageProvider
             response = "You dont have perms to do that. Not enough perms: audioplayer.{Command}";
             return false;
         }
+
         if (arguments.Count <= 1)
         {
             response = "Usage: audio loop {Bot ID} {false/true}";
             return false;
         }
+
         if (!int.TryParse(arguments.At(0), out int id))
         {
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
-        {
-            hub.Loop = Convert.ToBoolean(arguments.At(1));
-            response = $"Looping is enabled for ID {id}";
-            return true;
-        }
-        else
+
+        if (AudioController.TryGetAudioPlayerContainer(id) is not API.Container.AudioPlayerBot hub)
         {
             response = $"Bot with the ID {id} was not found.";
             return false;
         }
 
+        hub.Loop = Convert.ToBoolean(arguments.At(1));
+
+        response = $"Looping is enabled for ID {id}";
+        return true;
     }
 }

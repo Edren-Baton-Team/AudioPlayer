@@ -1,5 +1,4 @@
 ﻿using AudioPlayer.API;
-using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -43,16 +42,15 @@ public class VoiceChannel : ICommand, IUsageProvider
             return false;
         }
 
-        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
-        {
-            hub.AudioPlayerBase.BroadcastChannel = voiceChatChannel;
-            response = $"AudioChannel changed for ID {id} to {voiceChatChannel}";
-            return true;
-        }
-        else
+        if (AudioController.TryGetAudioPlayerContainer(id) is not API.Container.AudioPlayerBot hub)
         {
             response = $"Bot with the ID {id} was not found.";
             return false;
         }
+
+        hub.VoiceChatChannel = voiceChatChannel;
+
+        response = $"AudioChannel changed for ID {id} to {voiceChatChannel}";
+        return true;
     }
 }

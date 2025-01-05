@@ -5,7 +5,6 @@ namespace AudioPlayer.Other;
 public class BotsList
 {
     public string BotName { get; set; } = "Dedicated Server";
-
     public int BotId { get; set; } = 99;
 
     [Description("What will be written in Badge? (Only works if BadgeBots = true) | Set null to turn off")]

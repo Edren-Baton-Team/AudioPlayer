@@ -1,10 +1,10 @@
 ﻿using AudioPlayer.API;
-using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AudioPlayer.Commands.SubCommands;
 
@@ -38,34 +38,27 @@ public class SPFP : ICommand, IUsageProvider
             return true;
         }
 
-        List<int> list = [];
-        string textToResponse = string.Empty;
+        string[] playerNames = arguments.At(1).Trim('.').Split('.');
+        Player[] list = playerNames.Select(name => Player.Get(name)).ToArray();
 
-        foreach (string s in arguments.At(1).Trim('.').Split('.'))
-        {
-            Player players = Player.Get(s);
-            textToResponse += players.Nickname + ", ";
-            list.Add(players.Id);
-        }
-        if (list == null || list.Count == 0)
+        if (!list.Any())
         {
             response = "No players found";
             return false;
         }
 
-        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
-        {
-            foreach (var playersList in list)
-            {
-                hub.AudioPlayerBase.BroadcastTo.Remove(playersList);
-            }
-            response = $"Stopped the sound at ID {id} for the next player: {textToResponse}";
-            return true;
-        }
-        else
+        if (AudioController.TryGetAudioPlayerContainer(id) is not API.Container.AudioPlayerBot hub)
         {
             response = $"Bot with the ID {id} was not found.";
             return false;
         }
+
+        foreach (var target in list)
+        {
+            hub.AudioPlayerBase.BroadcastTo.Remove(target.Id);
+        }
+
+        response = $"Stopped the sound at ID {id} for the next player: {string.Join(", ", list.Select(player => player.Id))}";
+        return true;
     }
 }

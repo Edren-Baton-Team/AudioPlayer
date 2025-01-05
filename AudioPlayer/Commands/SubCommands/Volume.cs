@@ -1,5 +1,4 @@
 ﻿using AudioPlayer.API;
-using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -9,11 +8,8 @@ namespace AudioPlayer.Commands.SubCommands;
 public class Volume : ICommand, IUsageProvider
 {
     public string Command => "volume";
-
     public string[] Aliases => ["vol", "v"];
-
     public string Description => "Sets the volume of the AudioPlayer Bot";
-
     public string[] Usage => ["Bot ID", "Number"];
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
@@ -42,16 +38,15 @@ public class Volume : ICommand, IUsageProvider
             return false;
         }
 
-        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
-        {
-            hub.AudioPlayerBase.Volume = volume;
-            response = $"The volume has been changed for ID {id} to {volume}";
-            return true;
-        }
-        else
+        if (AudioController.TryGetAudioPlayerContainer(id) is not API.Container.AudioPlayerBot hub)
         {
             response = $"Bot with the ID {id} was not found.";
             return false;
         }
+
+        hub.AudioPlayerBase.Volume = volume;
+
+        response = $"The volume has been changed for ID {id} to {volume}";
+        return true;
     }
 }

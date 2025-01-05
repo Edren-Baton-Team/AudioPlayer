@@ -1,10 +1,8 @@
 ﻿using AudioPlayer.API;
 using AudioPlayer.Other;
 using CommandSystem;
-using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
 using System;
-using System.IO;
 using System.Linq;
 
 namespace AudioPlayer.Commands.SubCommands;
@@ -26,29 +24,31 @@ public class Play : ICommand, IUsageProvider
             response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
             return false;
         }
+
         if (arguments.Count <= 1)
         {
             response = "Usage: audio play {Bot ID} {Path}";
             return false;
         }
+
         if (!int.TryParse(arguments.At(0), out int id))
         {
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
-        {
-            string path = string.Join(" ", arguments.Where(x => arguments.At(0) != x));
 
-            hub.AudioPlayerBase.Enqueue(path, -1);
-            hub.AudioPlayerBase.Play(0);
-            response = $"Started playing audio at ID {id}, by path {path}";
-            return true;
-        }
-        else
+        if (AudioController.TryGetAudioPlayerContainer(id) is not API.Container.AudioPlayerBot hub)
         {
             response = $"Bot with the ID {id} was not found.";
             return false;
         }
+
+        string path = Extensions.PathCheck(string.Join(" ", arguments.Where(x => arguments.At(0) != x)));
+        
+        hub.AudioPlayerBase.Enqueue(path, -1);
+        hub.AudioPlayerBase.Play(0);
+        
+        response = $"Started playing audio at ID {id}, by path {path}";
+        return true;
     }
 }

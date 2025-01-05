@@ -14,14 +14,17 @@ public class Plugin : Plugin<Config>
     public override string Prefix => "AudioPlayer";
     public override string Name => "AudioPlayer";
     public override string Author => "Rysik5318 & Mariki";
-    public override Version Version => new Version(4, 0, 0);
+    public override Version Version => new Version(4, 1, 0);
 
     public static Dictionary<int, AudioPlayerBot> AudioPlayerList = [];
 
-    public static Plugin plugin;
-    internal EventHandler EventHandlers;
-    internal SpecialEvents SpecialEvents;
-    public AudioFile LobbySong = null;
+    public static Plugin plugin { get; private set; }
+
+    internal static EventHandler EventHandlers;
+    internal static SpecialEvents SpecialEvents;
+    internal static WarheadEvents WarheadEvents;
+    internal static LobbyEvents LobbyEvents;
+
     public readonly string AudioPath = Path.Combine(Paths.Plugins, "audio");
 
     public override void OnEnabled()
@@ -29,11 +32,20 @@ public class Plugin : Plugin<Config>
         try
         {
             plugin = this;
+
+            Extensions.EmptyClip = new AudioFile();
+            Extensions.EmptyClip.BotId = -1;
+            Extensions.EmptyClip.Path = "";
+
             EventHandlers = new();
+
             if (Config.SpecialEventsEnable)
             {
                 SpecialEvents = new();
+                WarheadEvents = new();
+                LobbyEvents = new();
             }
+
             Startup.SetupDependencies();
             Extensions.CreateDirectory();
         }
@@ -47,6 +59,8 @@ public class Plugin : Plugin<Config>
     {
         EventHandlers = null;
         SpecialEvents = null;
+        WarheadEvents = null;
+        LobbyEvents = null;
 
         plugin = null;
 

@@ -21,7 +21,7 @@ public class AudioCommand : ParentCommand
         RegisterCommand(new Enqueue());
         RegisterCommand(new Kick());
         RegisterCommand(new Loop());
-        RegisterCommand(new NickName());
+        RegisterCommand(new Nickname());
         RegisterCommand(new PFP());
         RegisterCommand(new Play());
         RegisterCommand(new SPFP());

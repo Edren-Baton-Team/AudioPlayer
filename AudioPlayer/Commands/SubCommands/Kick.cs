@@ -1,5 +1,4 @@
 ﻿using AudioPlayer.API;
-using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
@@ -23,25 +22,27 @@ public class Kick : ICommand, IUsageProvider
             response = $"You dont have perms to do that. Not enough perms: audioplayer.{Command}";
             return false;
         }
+
         if (arguments.Count == 0)
         {
             response = "Usage: audio kick {Bot ID}";
             return false;
         }
+
         if (!int.TryParse(arguments.At(0), out int id))
         {
             response = "Specify a number, other characters are not accepted";
             return true;
         }
-        if (AudioController.TryGetAudioPlayerContainer(id) is API.Container.AudioPlayerBot hub)
-        {
-            AudioController.DisconnectDummy(id);
-        }
-        else
+
+        if (AudioController.TryGetAudioPlayerContainer(id) is not API.Container.AudioPlayerBot hub)
         {
             response = $"Bot with the ID {id} was not found.";
             return false;
         }
+
+        AudioController.DisconnectDummy(id);
+
         response = $"Kicked the bot out of the ID {id}";
         return true;
     }

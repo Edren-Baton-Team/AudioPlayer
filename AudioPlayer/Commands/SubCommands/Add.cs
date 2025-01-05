@@ -1,4 +1,5 @@
 ﻿using AudioPlayer.API;
+using AudioPlayer.API.Container;
 using AudioPlayer.Other;
 using CommandSystem;
 using Exiled.Permissions.Extensions;
@@ -42,7 +43,7 @@ public class Add : ICommand, IUsageProvider
             return false;
         }
 
-        Extensions.SpawnDummy(id: id);
+        AudioPlayerBot.SpawnDummy(id: id);
 
         response = $"Added bot with ID {id}";
         return true;

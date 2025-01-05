@@ -14,13 +14,13 @@ public class AudioFile
     public int Volume { get; set; } = 100;
     public VoiceChatChannel VoiceChatChannel { get; set; } = VoiceChatChannel.Intercom;
     public int BotId { get; set; } = 99;
-    private AudioPlayerBot audioPlayer => AudioController.TryGetAudioPlayerContainer(BotId);
-    
+    AudioPlayerBot AudioPlayer => AudioController.TryGetAudioPlayerContainer(BotId);
+
     public void Play()
     {
         try
         {
-            audioPlayer.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel);
+            AudioPlayer.PlayAudioFromFile(Path, Loop, Volume, VoiceChatChannel);
         }
         catch (Exception ex)
         {
@@ -32,20 +32,23 @@ public class AudioFile
     {
         try
         {
-            audioPlayer.PlayFromFilePlayer(players, Path, Loop, Volume, VoiceChatChannel);
+            AudioPlayer.PlayFromFilePlayer(players, Path, Loop, Volume, VoiceChatChannel);
         }
         catch (Exception ex)
         {
             Log.Debug(ex.ToString());
         }
     }
-    
-    public void Stop(bool lobbyPlaylist = false)
+
+    public void Stop()
     {
-        if (lobbyPlaylist)
+        try
         {
-            Plugin.plugin.LobbySong = null;
+            AudioPlayer.StopAudio();
         }
-        audioPlayer.StopAudio();
+        catch (Exception ex)
+        {
+            Log.Debug(ex.ToString());
+        }
     }
 }

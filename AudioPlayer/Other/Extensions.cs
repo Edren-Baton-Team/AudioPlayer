@@ -1,19 +1,10 @@
-﻿using AudioPlayer.API;
-using AudioPlayer.API.Container;
-using Exiled.API.Features;
-using MEC;
-using Mirror;
-using PlayerRoles;
-using SCPSLAudioApi.AudioCore;
+﻿using Exiled.API.Features;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using UnityEngine;
 using Utils.NonAllocLINQ;
 using static AudioPlayer.Plugin;
-using Object = UnityEngine.Object;
 
 namespace AudioPlayer.Other;
 public static class Extensions
@@ -27,90 +18,77 @@ public static class Extensions
 
         Directory.CreateDirectory(plugin.AudioPath);
     }
-    internal static void WarheadSoundControl(int botId, bool stopSong = true, bool CanBeStartedWarhead = false, List<AudioFile> audiolist = null)
+
+    public static AudioFile EmptyClip;
+
+    public static AudioFile GetRandomAudioClip(List<AudioFile> audioClips, string audioClipsName)
     {
-        if (!plugin.Config.WarheadStopping)
+        if (audioClips == null)
         {
-            return;
+            if (plugin.Config.Debug)
+            {
+                throw new ArgumentException($"{audioClipsName} is null");
+            }
+            else
+            {
+                return EmptyClip;
+            }
         }
 
-        if (stopSong)
+        foreach (AudioFile audioFile in audioClips.Where(clip => !AudioPlayerList.ContainsKey(clip.BotId)).ToArray())
         {
-            AudioController.TryGetAudioPlayerContainer(DLC.SpecialEvents.WarheadStartBotId).StopAudio();
+            audioClips.Remove(audioFile);
+            Log.Debug($"Removed AudioClip from {audioClipsName} because AudioPlayerBot is not present on the server");
         }
 
-        if (!Warhead.CanBeStarted && CanBeStartedWarhead)
+        if (!audioClips.Any())
         {
-            return;
+            if (plugin.Config.Debug)
+            {
+                throw new ArgumentException($"I didn't find any available AudioClips in {audioClipsName}, maybe you didn't specify AudioPlayerBot in the config or didn't spawn an AudioPlayerBot");
+            }
+            else
+            {
+                return EmptyClip;
+            }
         }
 
-        DLC.SpecialEvents.WarheadStartBotId = botId;
-
-        if (audiolist != null)
-        {
-            PlayRandomAudioFile(plugin.Config.WarheadStoppingClip);
-        }
+        return audioClips.RandomItem();
     }
-    
-    // Переписать
-    public static AudioFile PlayRandomAudioFile(List<AudioFile> audioClip, bool lobbyPlaylist = false, bool noBaseEvent = false)
+
+    public static AudioFile PlayRandomAudioFile(List<AudioFile> audioClips, string audioClipsName = "")
     {
-        if (audioClip == null) // Solves two problems, the first is that I don't have to write lobbysong every time. The second is that there may never be a null value here :troll:
-        {
-            audioClip = plugin.Config.LobbyPlaylist;
-        }
-
-        if ((!noBaseEvent && !plugin.Config.SpecialEventsEnable) || audioClip.Count == 0)
-        {
-            return null;
-        }
-
-        var randomClip = audioClip.RandomItem();
+        AudioFile randomClip = GetRandomAudioClip(audioClips, audioClipsName);
         randomClip.Play();
 
-        if (lobbyPlaylist && AudioController.GetAllGetAudioPlayer().Any() && Round.IsLobby)
-        {
-            plugin.LobbySong = randomClip;
-        }
-
         return randomClip;
     }
-    public static AudioFile PlayRandomAudioFileFromPlayer(List<AudioFile> audioClip, Player player, bool noBaseEvent = false)
+
+    public static AudioFile PlayRandomAudioFileFromPlayer(List<AudioFile> audioClips, Player player, string audioClipsName = "")
     {
-        if (audioClip == null)
-        {
-            audioClip = plugin.Config.LobbyPlaylist;
-        }
-
-        if ((!noBaseEvent && !plugin.Config.SpecialEventsEnable) || audioClip.Count == 0)
-        {
-            return null;
-        }
-
-        var randomClip = audioClip.RandomItem();
-        randomClip.PlayFromFilePlayer(new List<int>() { player.Id });
+        AudioFile randomClip = GetRandomAudioClip(audioClips, audioClipsName);
+        randomClip.PlayFromFilePlayer([player.Id]);
 
         return randomClip;
     }
 
-    public static AudioPlayerBot SpawnDummy(string name = "Dedicated Server", string badgetext = "AudioPlayer BOT", string bagdecolor = "orange", int id = 99, RoleTypeId roleTypeId = RoleTypeId.Overwatch)
+    public static string PathCheck(string path)
     {
-        if (AudioController.IsAudioPlayer(id))
+        if (File.Exists(path))
         {
-            Log.Error("This id is already in use");
-            return null;
+            Log.Debug("Full path was specified, skipping the check.");
+            return path;
         }
-
-        var npc = Npc.Spawn(name, roleTypeId);
-        npc.ReferenceHub.nicknameSync.Network_myNickSync = name;
-
-        var container = new AudioPlayerBot(id, name, AudioPlayerBase.Get(npc.ReferenceHub), npc);
-
-        AudioPlayerList.Add(id, container);
-
-        npc.RankName = badgetext;
-        npc.RankColor = bagdecolor;
-
-        return container;
+        else if (File.Exists(Path.Combine(plugin.AudioPath, path)))
+        {
+            path = Path.Combine(plugin.AudioPath, path);
+            Log.Debug("An incomplete path was given, I found the .ogg file in the audio folder.");
+            return path;
+        }
+        else
+        {
+            Log.Debug($"I didn't find the file.\nPath: {path}");
+            return path;
+        }
     }
 }
