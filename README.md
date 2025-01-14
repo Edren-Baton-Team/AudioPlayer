@@ -4,7 +4,7 @@ This plugin adds the ability to play .ogg audio files in the game.<br>
 It also has a convenient API for using it in your plugins.
 
 # Installation
-You will need **latest** [EXILED Version](https://github.com/Exiled-Team/EXILED/releases/latest) installed on your server.
+You will need **latest** [EXILED Version](https://github.com/ExMod-Team/EXILED/releases/latest) installed on your server.
 
 Put your [`AudioPlayer.dll`](https://github.com/Edren-Baton-Team/AudioPlayer/releases/latest) file in `EXILED/Plugins` path.<br>
 Put your [`dependencies`](https://github.com/Edren-Baton-Team/AudioPlayer/releases/latest) file in `EXILED/Plugins/dependencies` path
