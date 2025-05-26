@@ -38,5 +38,5 @@ or using the website [convertio.co](https://convertio.co/mp3-ogg/)<br>
 ```
 # Credits
 - Plugin is supported by [Rysik5318](https://github.com/Rysik5318)
-- Creator of the first version of AudioPlayer on SCP SL 12.0 by [Mariki](https://github.com/Marikider)
+- Creator of the first version of AudioPlayer on SCP SL 12.0 by [Mariki](https://github.com/Mar1ki)
 - Creator of SCPSLAudioApi by [ced777ric](https://github.com/ced777ric)
