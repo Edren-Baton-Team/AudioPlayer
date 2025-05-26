@@ -1,19 +1,30 @@
-﻿using AudioPlayer.API.Container;
-using Exiled.API.Features;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using AudioPlayer.API.Container;
+using Exiled.API.Features;
 using VoiceChat;
 using AudioController = AudioPlayer.API.AudioController;
 
 namespace AudioPlayer.Other;
 
-public class AudioFile(string path, bool loop = false, int volume = 100, VoiceChatChannel voiceChatChannel = VoiceChatChannel.Intercom, int botId = 99)
+public class AudioFile
 {
-    public string Path { get; set; } = path;
-    public bool Loop { get; set; } = loop;
-    public int Volume { get; set; } = volume;
-    public VoiceChatChannel VoiceChatChannel { get; set; } = voiceChatChannel;
-    public int BotId { get; set; } = botId;
+    public AudioFile() { } // YamlDotNet Moment
+    
+    public AudioFile(string path, bool loop = false, int volume = 100, VoiceChatChannel voiceChatChannel = VoiceChatChannel.Intercom, int botId = 99)
+    {
+        Path = path;
+        Loop = loop;
+        Volume = volume;
+        VoiceChatChannel = voiceChatChannel;
+        BotId = botId;
+    }
+    
+    public string Path { get; set; }
+    public bool Loop { get; set; }
+    public int Volume { get; set; } = 100;
+    public VoiceChatChannel VoiceChatChannel { get; set; } = VoiceChatChannel.Intercom;
+    public int BotId { get; set; } = 99;
     AudioPlayerBot AudioPlayer => AudioController.TryGetAudioPlayerContainer(BotId);
 
     public void Play()

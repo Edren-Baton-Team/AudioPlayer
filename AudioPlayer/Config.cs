@@ -12,10 +12,13 @@ public class Config : IConfig
 
     [Description("Enable developer mode? (AudioPlayer debug)")]
     public bool Debug { get; set; } = false;
+
     [Description("Command to use AudioPlayer")]
     public string[] CommandName { get; private set; } = ["audio", "au"];
+
     [Description("Enable developer mode SCPSLAudioApi?")]
     public bool ScpslAudioApiDebug { get; private set; } = false;
+
     [Description("Create a bot automatically when the server starts?")]
     public bool SpawnBot { get; private set; } = false;
 
@@ -28,58 +31,66 @@ public class Config : IConfig
     [Description("Special Events Automatic Music, blank to disable.")]
     public List<AudioFile> LobbyPlaylist { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
     public List<AudioFile> RoundStartClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
     public List<AudioFile> RoundEndClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
+
     [Description("Play CASSIE when the MTF arrives?")]
     public bool CassieMtfSpawn { get; private set; } = true;
+
     public List<AudioFile> MtfSpawnClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
+
     public List<AudioFile> ChaosSpawnClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
+
     public List<AudioFile> WarheadStartingClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
 
     [Description("Stop audio playback if the warhead has been disabled? (true = yes, false = no)")]
     public bool WarheadStopping { get; private set; } = false;
+
     public List<AudioFile> WarheadStoppingClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
+
     public List<AudioFile> PlayerDiedTargetClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
+
     public List<AudioFile> PlayerDiedKillerClip { get; private set; } =
     [
-        new(path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
 
-        new(path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
+
     public List<AudioFile> PlayerConnectedServer { get; private set; } =
     [
-        new (path: "/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
-        new (path: "/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
+        new("/my/path/to/file.ogg", botId: 100, loop: false, voiceChatChannel: VoiceChat.VoiceChatChannel.Intercom, volume: 100),
+        new("/my/path/to/file1.ogg", botId: 101, loop: true, voiceChatChannel: VoiceChat.VoiceChatChannel.Proximity, volume: 100),
     ];
 }
