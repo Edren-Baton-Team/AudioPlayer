@@ -8,7 +8,7 @@ namespace AudioPlayer.Commands.SubCommands;
 public class Stop : ICommand, IUsageProvider
 {
     public string Command => "stop";
-    public string[] Aliases => Array.Empty<string>();
+    public string[] Aliases => [];
     public string Description => "Stop AudioPlayer bot audio playback";
     public string[] Usage => ["Bot ID"];
 

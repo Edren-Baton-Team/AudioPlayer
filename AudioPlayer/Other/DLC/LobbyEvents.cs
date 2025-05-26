@@ -6,9 +6,6 @@ namespace AudioPlayer.Other.DLC;
 
 internal class LobbyEvents
 {
-    private static AudioFile CurrentAudioFile = null;
-    private static bool FirstPlayerJoinServer = false;
-
     public LobbyEvents()
     {
         Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
@@ -16,16 +13,19 @@ internal class LobbyEvents
         AudioPlayerBase.OnFinishedTrack += OnFinishedTrack;
     }
 
-    void OnVerified(VerifiedEventArgs ev) // This is done because AudioPlayerBot doesn't have time to log into the server + Why play audio to an empty server?
+    static AudioFile currentAudioFile;
+    static bool firstPlayerJoinServer;
+
+    static void OnVerified(VerifiedEventArgs ev) // This is done because AudioPlayerBot doesn't have time to log into the server + Why play audio to an empty server?
     {
-        if (!FirstPlayerJoinServer && !ev.Player.IsNPC && !Round.IsStarted)
+        if (!firstPlayerJoinServer && !ev.Player.IsNPC && !Round.IsStarted)
         {
-            FirstPlayerJoinServer = true;
+            firstPlayerJoinServer = true;
             LobbySoundControl();
         }
     }
 
-    void OnRoundStarted() => CurrentAudioFile?.Stop();
+    static void OnRoundStarted() => currentAudioFile?.Stop();
 
     void OnFinishedTrack(AudioPlayerBase playerBase, string track, bool directPlay, ref int nextQueuePos)
     {
@@ -35,7 +35,7 @@ internal class LobbyEvents
             return;
         }
 
-        if (CurrentAudioFile?.Path == track)
+        if (currentAudioFile?.Path == track)
         {
             LobbySoundControl();
         }
@@ -46,12 +46,12 @@ internal class LobbyEvents
         Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
         Exiled.Events.Handlers.Player.Verified -= OnVerified;
         AudioPlayerBase.OnFinishedTrack -= OnFinishedTrack;
-        CurrentAudioFile = null;
+        currentAudioFile = null;
         Plugin.LobbyEvents = null;
     }
 
     static void LobbySoundControl()
     {
-        CurrentAudioFile = Extensions.PlayRandomAudioFile(Plugin.plugin.Config.LobbyPlaylist, "LobbyPlaylist");
+        currentAudioFile = Extensions.PlayRandomAudioFile(Plugin.Instance.Config.LobbyPlaylist, "LobbyPlaylist");
     }
 }

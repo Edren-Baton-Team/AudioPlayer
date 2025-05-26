@@ -7,7 +7,6 @@ namespace AudioPlayer.Other.DLC;
 
 internal class WarheadEvents
 {
-    private static AudioFile CurrentAudioFile = null;
     public WarheadEvents()
     {
         Exiled.Events.Handlers.Warhead.Starting += OnWarheadStarting;
@@ -15,33 +14,35 @@ internal class WarheadEvents
         Exiled.Events.Handlers.Warhead.Detonated += OnWarheadDetonated;
     }
 
-    void OnWarheadStarting(StartingEventArgs ev)
+    static AudioFile currentAudioFile;
+
+    static void OnWarheadStarting(StartingEventArgs ev)
     {
         if (!Warhead.CanBeStarted)
         {
             return;
         }
 
-        WarheadSoundControl(plugin.Config.WarheadStartingClip, "WarheadStartingClip");
+        WarheadSoundControl(Instance.Config.WarheadStartingClip, "WarheadStartingClip");
     }
 
-    void OnWarheadDetonated()
+    static void OnWarheadDetonated()
     {
-        CurrentAudioFile?.Stop();
+        currentAudioFile?.Stop();
     }
 
-    void OnWarheadStopping(StoppingEventArgs ev)
+    static void OnWarheadStopping(StoppingEventArgs ev)
     {
-        if (plugin.Config.WarheadStopping)
+        if (Instance.Config.WarheadStopping)
         {
-            CurrentAudioFile?.Stop();
+            currentAudioFile?.Stop();
         }
 
-        WarheadSoundControl(plugin.Config.WarheadStoppingClip, "WarheadStoppingClip");
+        WarheadSoundControl(Instance.Config.WarheadStoppingClip, "WarheadStoppingClip");
     }
 
     static void WarheadSoundControl(List<AudioFile> audiolist, string audioClipsName)
     {
-        CurrentAudioFile = Extensions.PlayRandomAudioFile(audiolist, audioClipsName);
+        currentAudioFile = Extensions.PlayRandomAudioFile(audiolist, audioClipsName);
     }
 }

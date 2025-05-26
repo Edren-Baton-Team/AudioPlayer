@@ -42,11 +42,10 @@ public class Play : ICommand, IUsageProvider
             response = $"Bot with the ID {id} was not found.";
             return false;
         }
-
+        
         string path = Extensions.PathCheck(string.Join(" ", arguments.Where(x => arguments.At(0) != x)));
         
-        hub.AudioPlayerBase.Enqueue(path, -1);
-        hub.AudioPlayerBase.Play(0);
+        hub.PlayAudioFromFile(path);
         
         response = $"Started playing audio at ID {id}, by path {path}";
         return true;

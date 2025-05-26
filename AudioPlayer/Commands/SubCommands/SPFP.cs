@@ -39,7 +39,7 @@ public class SPFP : ICommand, IUsageProvider
         }
 
         string[] playerNames = arguments.At(1).Trim('.').Split('.');
-        Player[] list = playerNames.Select(name => Player.Get(name)).ToArray();
+        Player[] list = playerNames.Select(Player.Get).ToArray();
 
         if (!list.Any())
         {
@@ -53,7 +53,7 @@ public class SPFP : ICommand, IUsageProvider
             return false;
         }
 
-        foreach (var target in list)
+        foreach (Player target in list)
         {
             hub.AudioPlayerBase.BroadcastTo.Remove(target.Id);
         }

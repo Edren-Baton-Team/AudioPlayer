@@ -37,7 +37,7 @@ public class Add : ICommand, IUsageProvider
             return true;
         }
 
-        if (AudioController.IsAudioPlayer(id))
+        if (id.IsAudioPlayer())
         {
             response = $"Bot with an ID {id} already exists";
             return false;

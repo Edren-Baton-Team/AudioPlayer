@@ -2,6 +2,7 @@
 using CommandSystem;
 using Exiled.Permissions.Extensions;
 using System;
+using static System.Array;
 
 namespace AudioPlayer.Commands.SubCommands;
 
@@ -9,7 +10,7 @@ public class Enqueue : ICommand, IUsageProvider
 {
     public string Command => "enqueue";
 
-    public string[] Aliases { get; } = Array.Empty<string>();
+    public string[] Aliases => [];
 
     public string Description => "Adds audio to the queue";
 
@@ -42,7 +43,7 @@ public class Enqueue : ICommand, IUsageProvider
         }
 
         hub.AudioPlayerBase.Enqueue(arguments.At(1), arguments.Count >= 4 ? Convert.ToInt32(arguments.At(2)) : -1);
-        
+
         response = $"Moved the audio playback at ID {id} to the position {(arguments.Count >= 3 ? Convert.ToInt32(arguments.At(2)) : -1)}, on the path {arguments.At(1)}";
         return true;
     }

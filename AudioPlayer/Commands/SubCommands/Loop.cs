@@ -9,7 +9,7 @@ public class Loop : ICommand, IUsageProvider
 {
     public string Command => "loop";
 
-    public string[] Aliases { get; } = Array.Empty<string>();
+    public string[] Aliases => [];
 
     public string Description => "Make the AudioPlayer Bot loop playback";
 

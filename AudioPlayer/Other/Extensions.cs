@@ -7,25 +7,26 @@ using Utils.NonAllocLINQ;
 using static AudioPlayer.Plugin;
 
 namespace AudioPlayer.Other;
+
 public static class Extensions
 {
+    public static readonly AudioFile EmptyClip = new("", botId: -1);
+
     internal static void CreateDirectory()
     {
-        if (Directory.Exists(plugin.AudioPath))
+        if (Directory.Exists(Instance.AudioPath))
         {
             return;
         }
 
-        Directory.CreateDirectory(plugin.AudioPath);
+        Directory.CreateDirectory(Instance.AudioPath);
     }
-
-    public static AudioFile EmptyClip;
 
     public static AudioFile GetRandomAudioClip(List<AudioFile> audioClips, string audioClipsName)
     {
         if (audioClips == null)
         {
-            if (plugin.Config.Debug)
+            if (Instance.Config.Debug)
             {
                 throw new ArgumentException($"{audioClipsName} is null");
             }
@@ -43,7 +44,7 @@ public static class Extensions
 
         if (!audioClips.Any())
         {
-            if (plugin.Config.Debug)
+            if (Instance.Config.Debug)
             {
                 throw new ArgumentException($"I didn't find any available AudioClips in {audioClipsName}, maybe you didn't specify AudioPlayerBot in the config or didn't spawn an AudioPlayerBot");
             }
@@ -79,9 +80,9 @@ public static class Extensions
             Log.Debug("Full path was specified, skipping the check.");
             return path;
         }
-        else if (File.Exists(Path.Combine(plugin.AudioPath, path)))
+        else if (File.Exists(Path.Combine(Instance.AudioPath, path)))
         {
-            path = Path.Combine(plugin.AudioPath, path);
+            path = Path.Combine(Instance.AudioPath, path);
             Log.Debug("An incomplete path was given, I found the .ogg file in the audio folder.");
             return path;
         }

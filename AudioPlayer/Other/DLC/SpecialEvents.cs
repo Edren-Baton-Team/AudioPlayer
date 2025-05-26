@@ -20,27 +20,27 @@ internal class SpecialEvents
         Exiled.Events.Handlers.Map.AnnouncingNtfEntrance += OnAnnouncingNtfEntrance;
     }
 
-    void OnRoundStarted() => Extensions.PlayRandomAudioFile(plugin.Config.RoundStartClip, "RoundStartClip");
-    
-    void OnRoundEnded(RoundEndedEventArgs ev) => Extensions.PlayRandomAudioFile(plugin.Config.RoundEndClip, "RoundEndClip");
-    
-    void OnVerified(VerifiedEventArgs ev) => Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerConnectedServer, ev.Player, "PlayerConnectedServer");
-    
-    void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev) => ev.IsAllowed = plugin.Config.CassieMtfSpawn;
-    
-    void OnDied(DiedEventArgs ev)
+    static void OnRoundStarted() => Extensions.PlayRandomAudioFile(Instance.Config.RoundStartClip, "RoundStartClip");
+
+    static void OnRoundEnded(RoundEndedEventArgs ev) => Extensions.PlayRandomAudioFile(Instance.Config.RoundEndClip, "RoundEndClip");
+
+    static void OnVerified(VerifiedEventArgs ev) => Extensions.PlayRandomAudioFileFromPlayer(Instance.Config.PlayerConnectedServer, ev.Player, "PlayerConnectedServer");
+
+    static void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev) => ev.IsAllowed = Instance.Config.CassieMtfSpawn;
+
+    static void OnDied(DiedEventArgs ev)
     {
         if (ev.Player == null || ev.Attacker == null || ev.DamageHandler.Type == Exiled.API.Enums.DamageType.Unknown) return;
 
-        Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerDiedTargetClip, ev.Player, "PlayerDiedTargetClip");
-        Extensions.PlayRandomAudioFileFromPlayer(plugin.Config.PlayerDiedKillerClip, ev.Attacker, "PlayerDiedKillerClip");
+        Extensions.PlayRandomAudioFileFromPlayer(Instance.Config.PlayerDiedTargetClip, ev.Player, "PlayerDiedTargetClip");
+        Extensions.PlayRandomAudioFileFromPlayer(Instance.Config.PlayerDiedKillerClip, ev.Attacker, "PlayerDiedKillerClip");
     }
 
-    void OnRespawningTeam(RespawningTeamEventArgs ev)
+    static void OnRespawningTeam(RespawningTeamEventArgs ev)
     {
-        if (ev.NextKnownTeam == Faction.FoundationStaff) 
-            Extensions.PlayRandomAudioFile(plugin.Config.ChaosSpawnClip, "ChaosSpawnClip");
-        else 
-            Extensions.PlayRandomAudioFile(plugin.Config.MtfSpawnClip, "MtfSpawnClip");
+        if (ev.NextKnownTeam == Faction.FoundationStaff)
+            Extensions.PlayRandomAudioFile(Instance.Config.ChaosSpawnClip, "ChaosSpawnClip");
+        else
+            Extensions.PlayRandomAudioFile(Instance.Config.MtfSpawnClip, "MtfSpawnClip");
     }
 }

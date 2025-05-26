@@ -36,7 +36,7 @@ public class VoiceChannel : ICommand, IUsageProvider
             return true;
         }
 
-        if (!VoiceChatChannel.TryParse(arguments.At(1), out VoiceChatChannel voiceChatChannel))
+        if (!Enum.TryParse(arguments.At(1), out VoiceChatChannel voiceChatChannel))
         {
             response = $"I couldn't find a VoiceChatChannel with the name - {arguments.At(1)}";
             return false;
