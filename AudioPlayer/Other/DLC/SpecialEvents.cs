@@ -39,8 +39,8 @@ internal class SpecialEvents
     static void OnRespawningTeam(RespawningTeamEventArgs ev)
     {
         if (ev.NextKnownTeam == Faction.FoundationStaff)
-            Extensions.PlayRandomAudioFile(Instance.Config.ChaosSpawnClip, "ChaosSpawnClip");
-        else
             Extensions.PlayRandomAudioFile(Instance.Config.MtfSpawnClip, "MtfSpawnClip");
+        else
+            Extensions.PlayRandomAudioFile(Instance.Config.ChaosSpawnClip, "ChaosSpawnClip");
     }
 }
