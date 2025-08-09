@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d249637a-13de-4b23-b673-33024770b33d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/AudioPlayer/Commands/Audio.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AudioPlayer/Commands/Audio.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Assembly-CSharp-firstpass.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Assembly-CSharp-firstpass.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/CommandSystem.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/CommandSystem.Core.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Exiled.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Exiled.API.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Exiled.CreditTags.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Exiled.CreditTags.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Exiled.CustomItems.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Exiled.CustomItems.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Exiled.CustomRoles.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Exiled.CustomRoles.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Exiled.Events.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Exiled.Events.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Exiled.Permissions.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Exiled.Permissions.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/LabApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/LabApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Mirror.Components.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Mirror.Components.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_ProjectDependencies/Mirror.dll" beforeDir="false" afterPath="$PROJECT_DIR$/_ProjectDependencies/Mirror.dll" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Rysik5318&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Edren-Baton-Team/AudioPlayer&quot;,
+    &quot;accountId&quot;: &quot;ebfc0752-2e2b-4f73-8579-aa3d518d9545&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2343be033e9f4e37923f780ece756d8e3c6800/5d/f2fced4a/ReferenceHub.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2343be033e9f4e37923f780ece756d8e3c6800/e3/10b21986/CharacterClassManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4b66735d39f84bff971ced976c05c3d386400/14/aaae86c5/Npc.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bafa4dee19b44c2a9457c8b00f75036e1d800/78/aeb88da7/AudioPlayerBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/dec7204ce1954269b817ba527628b785d2600/4f/3c70ad2c/Server.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fba24a13802445559d6435422e829b75285000/8c/ee692b48/DescriptionAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/AudioPlayer/Other/DLC/SpecialEvents.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2xdTPRknSO2rQB811ffgE9CWrp6" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="useMixedMode" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d249637a-13de-4b23-b673-33024770b33d" name="Changes" comment="" />
+      <created>1695886080999</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695886080999</updated>
+      <workItem from="1748266929636" duration="4026000" />
+      <workItem from="1748271440588" duration="49000" />
+      <workItem from="1748271501924" duration="18000" />
+      <workItem from="1748271525740" duration="2012000" />
+      <workItem from="1754744615582" duration="2295000" />
+    </task>
+    <task id="LOCAL-00001" summary="Refactoring code, fixed SCPSLAudioApi">
+      <option name="closed" value="true" />
+      <created>1748271184301</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1748271184301</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fixed The chaos and mtf events are reversed">
+      <option name="closed" value="true" />
+      <created>1748271323535</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748271323535</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix Config">
+      <option name="closed" value="true" />
+      <created>1748273247626</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1748273247626</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Refactoring code, fixed SCPSLAudioApi" />
+    <MESSAGE value="Fixed The chaos and mtf events are reversed" />
+    <MESSAGE value="Fix Config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Config" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

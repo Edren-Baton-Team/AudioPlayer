@@ -32,7 +32,7 @@ public class AudioCommand : ParentCommand
         RegisterCommand(new Volume());
     }
 
-    public override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
+    protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
         response = AllCommands.Where(command => sender.CheckPermission($"audioplayer.{command.Command}")).Aggregate("\nPlease enter a valid subcommand:", (current, command) => current + $"\n\n<color=yellow><b>- {command.Command} ({string.Join(", ", command.Aliases)})\naudiocommand {command.Command} {"{" + string.Join("} {", (command as IUsageProvider)!.Usage) + "}"}</b></color>\n<color=white>{command.Description}</color>");
 
